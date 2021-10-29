@@ -100,7 +100,7 @@ var tilemap = [
 
 ];
 
-
+//class for main character using array of animations
 class Kratos{
   constructor(x, y, scale){
     this.x = x;
@@ -141,6 +141,7 @@ class Kratos{
   }
 }
 
+//class for game logo
 class Omega{
   constructor(x, y){
     this.x = x;
@@ -182,6 +183,8 @@ class Omega{
     noFill();
   }
 }
+
+//class for runes on game logo
 class Runes{
   constructor(x, y){
     this.x = x;
@@ -211,6 +214,7 @@ class Runes{
   }
 }
 
+//class for basic skeleton enemy type
 class Skeleton{
   constructor(x, y, scale){
     this.x = x;
@@ -229,6 +233,7 @@ class Skeleton{
   }
 }
 
+//class for final boss Zeus
 class Zeus{
   constructor(x, y, scale){
     this.x = x;
@@ -256,6 +261,8 @@ class Zeus{
     }
   }
 }
+
+//class for the intro screen, complete with background and ground textures, and player and enemy animations
 class IntroScreen{
   constructor(){
     this.omega = new Omega(200, 100);
@@ -336,6 +343,8 @@ class IntroScreen{
     }
   }
 }
+
+//class for instructions screen
 class InstructionScreen{
   constructor(){
     this.kratos = new Kratos(100, 230, 80);
@@ -397,6 +406,7 @@ class InstructionScreen{
   }
 }
 
+//class for the sky background utilizing an image from a free image set
 class bgsky{
   constructor(x, y, scale, scale1){
     this.x = x;
@@ -411,6 +421,8 @@ class bgsky{
     image(this.img, this.x, this.y, this.scale, this.scale1);
   }
 }
+
+//class for red sky background, based upon the image used in the bgsky class
 class redsky{
   constructor(x, y, scale, scale1){
     this.x = x;
@@ -426,6 +438,7 @@ class redsky{
   }
 }
 
+//class for mountains in the background
 class mountain{
   constructor(x, y, scale, scale1){
     this.x = x;
@@ -440,6 +453,8 @@ class mountain{
     image(this.img, this.x, this.y, this.scale, this.scale1);
   }
 }
+
+//class for rock wall textures
 class Wall{
   constructor(x, y){
     this.x = x;
@@ -451,6 +466,7 @@ class Wall{
   }
 }
 
+//class for grass platform textures
 class Platform{
   constructor(x, y){
     this.x = x;
@@ -462,6 +478,7 @@ class Platform{
   }
 }
 
+//base game class foundation
 class Game{
   constructor(walls, grass, kratos){
     this.wallsArray = walls;
@@ -481,7 +498,7 @@ class Game{
   }
 }
 
-
+//checks for key pressed and released
 function keyPressed() {
   keyArray[keyCode] = 1;
 }
@@ -495,6 +512,8 @@ let kratossp0;
 let kratossp1;
 let kratosarray;
 let skelarray;
+
+//preloads fonts, music, and images to improve performance
 function preload(){
   myFont = loadFont('Godofwar-wPz6.ttf');
   song = loadSound('makai-symphony-dragon-slayer.mp3');
@@ -506,6 +525,7 @@ function preload(){
   skelarray = [sksp0,sksp0,sksp1,sksp1];
 }
 
+//intializes tilemap based upon the letters in the tilemap array
 function initTileMap(){
   for (var i = 0; i < tilemap.length; i++) {
     for (var j = 0; j < tilemap[i].length; j++) {
@@ -521,13 +541,17 @@ function initTileMap(){
 
 var instr;
 var zeus;
+
+//creates canvas and necessary assets
 function setup() {
   createCanvas(400, 400);
   //customChar();
   textFont(myFont);
   initTileMap();
-  //getAudioContext().resume();
-  //song.play();
+  song.stop();
+  
+  song.play();
+  getAudioContext().resume();
   
   // song.loop();
   kratos = new Kratos(180, 180, 40);
@@ -536,7 +560,9 @@ function setup() {
   instr = new InstructionScreen();
   game = new Game(walls, grass, kratos);
 }
+var transition = false;
 
+//draws the intro screen and transitions to the instructions screen when the proper conditions are met
 function draw() {
   background(255);
   if(intro){
@@ -548,9 +574,13 @@ function draw() {
       intro.animate();
     }
     if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 100){
-      intro.moveOut();
+      transition = true;
       
     }
+    if(transition == true) {
+      intro.moveOut();
+    }
+
     if(!intro){
       instruct = true;
     }
