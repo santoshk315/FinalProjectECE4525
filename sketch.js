@@ -1,3 +1,10 @@
+intro = false;
+gameScreen = true;
+images = [];
+keyArray = [];
+grass = [];
+walls = [];
+
 var tilemap = [
   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
   "w                                                                                                 w",
@@ -7,8 +14,8 @@ var tilemap = [
   "w                                                                                                 w",
   "w                                                                                                 w",
   "w                                                                                                 w",
-  "w                                                                                                 w",
-  "w                                                                                                 w",
+  "wpppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppw",
+  "w          pppppppppppppppppppppppp                                                               w",
   "w                                                                                                 w",
   "w                                                                                                 w",
   "w                                                                                                 w",
@@ -62,7 +69,7 @@ var tilemap = [
   "w                                                                                                 w",
   "w                                                                                                 w",
   "w                                             k                                                   w",
-  "w                                                                                                 w",
+  "w                                      pppppppppppppp                                             w",
   "w                                                                                                 w",
   "w                                                                                                 w",
   "w                                                                                                 w",
@@ -214,13 +221,46 @@ class IntroScreen{
   }
 }
 
+class Wall{
+  constructor(x, y){
+    this.x = x;
+    this.y = y;
+    this.wall = loadImage("grassland_tileset/grassland_tileset/PNG/terrain_center.png");
+  }
+  draw(){
+    image(this.wall, this.x, this.y, 40, 40);
+  }
+}
+class Platform{
+  constructor(x, y){
+    this.x = x;
+    this.y = y;
+    this.platform = loadImage("grassland_tileset/grassland_tileset/PNG/terrain_platform_center.png");;
+  }
+  draw(){
+    image(this.platform, this.x, this.y, 40, 40);
+  }
+}
 
-intro = true;
-gameScreen = false;
-images = [];
-keyArray = [];
-grass = [];
-walls = [];
+class Game{
+  constructor(walls, grass, kratos){
+    this.wallsArray = walls;
+    this.grassArray = grass;
+    this.kratos = kratos;
+  }
+  drawBackground(){
+    for(var i = 0; i < walls.length; i++){
+
+      walls[i].draw();
+    }
+    for(var j = 0; j < grass.length; j++){
+      grass[j].draw();
+    }
+    
+  }
+}
+
+
 function keyPressed() {
   keyArray[keyCode] = 1;
 }
@@ -228,14 +268,29 @@ function keyReleased() {
   keyArray[keyCode] = 0;
 }
 
-function initTileMap(){
 
+
+
+function initTileMap(){
+  for (var i = 0; i < tilemap.length; i++) {
+    for (var j = 0; j < tilemap[i].length; j++) {
+      if(tilemap[i][j] == "w"){
+        walls.push(new Wall(j * 40, i * 40));
+      }
+      else if(tilemap[i][j] == "p"){
+        grass.push(new Platform(j * 40, i * 40));
+      }
+    }
+  }
 }
 
 function setup() {
   createCanvas(400, 400);
+  //customChar();
+  initTileMap();
   kratos = new Kratos(180, 180, 40);
   intro = new IntroScreen();
+  game = new Game(walls, grass, kratos);
 }
 
 function draw() {
@@ -244,6 +299,12 @@ function draw() {
     intro.draw();
   }
   else if(gameScreen){
-
+    push();
+    translate(200 - kratos.x, 200-kratos.y);
+    kratos.draw();
+    kratos.move();
+    game.drawBackground();
+    //wall.draw();
+    pop();
   }
 }
