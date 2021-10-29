@@ -509,6 +509,9 @@ class InstructionScreen{
         text("Zeus", 100, 50);
         rect(50, 25, 50, 40);
         text("Go Back", 50, 25, 50, 50);
+        rect(50, 100, 35, 25);
+        textSize(12.5);
+        text("Next", 50, 100, 35, 50);
         noStroke();
         noFill();
         var z = new Zeus(95, 50, 60);
