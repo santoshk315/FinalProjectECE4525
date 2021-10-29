@@ -198,29 +198,53 @@ class Runes{
 class IntroScreen{
   constructor(){
     this.omega = new Omega(200, 100);
-    this.kratos = new Kratos(180, 200, 80);
+    this.kratos = new Kratos(180, 230, 80);
+    this.bg = new bgsky(0,0,400,300);
+    this.grass = [new Platform(200,300,40,40),new Platform(160,300,40,40),new Platform(120,300,40,40),new Platform(80,300,40,40),new Platform(40,300,40,40),new Platform(0,300,40,40),new Platform(200,300,40,40),new Platform(240,300,40,40),new Platform(280,300,40,40),new Platform(320,300,40,40),new Platform(360,300,40,40)];
+    this.rocks = [new Wall(200,335,40,40),new Wall(160,335,40,40),new Wall(120,335,40,40),new Wall(80,335,40,40),new Wall(40,335,40,40),new Wall(0,335,40,40),new Wall(200,335,40,40),new Wall(240,335,40,40),new Wall(280,335,40,40),new Wall(320,335,40,40),new Wall(360,335,40,40),new Wall(200,375,40,40),new Wall(160,375,40,40),new Wall(120,375,40,40),new Wall(80,375,40,40),new Wall(40,375,40,40),new Wall(0,375,40,40),new Wall(200,375,40,40),new Wall(240,375,40,40),new Wall(280,375,40,40),new Wall(320,375,40,40),new Wall(360,375,40,40)];
   }
   draw(){
     
-    fill(194, 178, 128);
-    rect(0, 300, 400, 100);
-    fill(135,206,235);
-    rect(0, 0, 400, 300);
+    this.bg.draw();
+    //fill(194, 178, 128);
+    //rect(0, 300, 400, 100);
+    //fill(135,206,235);
+    //rect(0, 0, 400, 300);
     stroke(0);
-    fill(0,154,23);
-    rect(0, 250, 400, 50);
-    fill(135, 206, 235);
+    //fill(0,154,23);
+    //rect(0, 250, 400, 50);
+    //fill(135, 206, 235);
     rect(0, 0, 100, 50);
-    fill(135, 206, 235);
+    //fill(135, 206, 235);
     rect(300, 0, 100, 50);
     noFill();
     text("Instructions", 15, 25);
     text("Options", 330, 25);
+    
     this.omega.draw();
+    for(var j = 0; j < this.rocks.length; j++) {
+      this.rocks[j].draw();
+    }
+    for(var i = 0; i < this.grass.length; i++) {
+      this.grass[i].draw();
+    }
     this.kratos.draw();
   }
 }
-
+class bgsky{
+  constructor(x, y, scale, scale1){
+    this.x = x;
+    this.y = y;
+    this.scale = scale;
+    this.scale1 = scale1;
+    
+    this.img = loadImage("grassland_tileset/grassland_tileset/PNG/bg4.png");
+    
+  }
+  draw(){
+    image(this.img, this.x, this.y, this.scale, this.scale1);
+  }
+}
 class Wall{
   constructor(x, y){
     this.x = x;
