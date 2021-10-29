@@ -358,6 +358,13 @@ class InstructionScreen{
     this.animateSkeleton = 1;
     this.textX = 100;
     this.textY = 420;
+    this.base = true;
+    this.characters = false;
+    this.instructions = false;
+    this.leftTransition = false;
+    this.rightTransition = false;
+    this.kratosBio = true;
+    this.zeusBio = false;
   }
   draw(){
     
@@ -374,14 +381,38 @@ class InstructionScreen{
     for(var i = 0; i < this.grass.length; i++) {
       this.grass[i].draw();
     }
-    
+    fill(255);
+    circle(120, 200, 40);
+    circle(140, 200, 40);
+    circle(160, 200, 40);
+    circle(130, 210, 40);
+    circle(150, 210, 40);
+    noFill();
+    stroke(255, 0, 0);
+    textFont(myFont);
+    textSize(15);
+    text("Kratos", 110, 210);
+    noStroke();
     this.kratos.draw();
     this.kratos.animate();
+    fill(255);
+    circle(260, 150, 40);
+    circle(280, 150, 40);
+    circle(300, 150, 40);
+    circle(270, 160, 40);
+    circle(290, 160, 40);
+    noFill();
+    stroke(0);
+    textFont(myFont);
+    textSize(15);
+    text("Zeus", 260, 160);
+    noStroke();
     this.zeus.draw();
     this.zeus.animate();
     //this.skeleton.animate();
     noStroke();
     noFill();
+    this.drawInstructs();
   }
   animate(){
     this.kratos.x += this.animateKratos;
@@ -398,10 +429,102 @@ class InstructionScreen{
   moveOut(){
     if(this.kratos.x > -150){
       this.kratos.x += -5;
-      this.skeleton.x += -5;
+      this.zeus.x += -5;
     }
     else{
-      intro = false;
+      intro = true;
+    }
+  }
+  drawInstructs(){
+    if(this.base){
+      fill(245,245,220);
+      rect(50, 25, 300, 100);
+      noFill();
+      stroke(0);
+      rect(75, 50, 100, 50);
+      rect(200, 50, 100, 50);
+      textSize(15);
+      text("Characters", 75, 50, 175, 50);
+      text("Instructions", 200, 50, 300, 50);
+      noStroke();
+    }
+    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 75 && mouseX < 175 && mouseY > 50 && mouseY < 100 && this.base){
+      this.base = false;
+      this.characters = true;
+      this.instructions = false;
+      
+    }
+    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 200 && mouseX < 300 && mouseY > 50 && mouseY < 100 && this.base){
+      this.base = false;
+      this.instructions = true;
+      this.characters = false;
+      
+    }
+    if(this.instructions){
+      
+    }
+    else if(this.characters){
+      //Kratos Character Card
+      if(this.kratosBio){
+        fill(245,245,220);
+        rect(50, 25, 300, 100);
+        stroke(0);
+        textSize(15);
+        textFont(myFont);
+        text("Kratos", 100, 50);
+        rect(50, 25, 50, 40);
+        text("Go Back", 50, 25, 50, 50);
+        rect(315, 100, 35, 25);
+        textSize(12.5);
+        text("Next", 315, 100, 35, 50);
+        noStroke();
+        noFill();
+        var krat = new Kratos(95, 50, 60);
+        krat.draw();
+        stroke(255, 0, 0);
+        textFont('Helvetica');
+        textSize(7.5);
+        text("Kratos:  The savage God of War who experienced multiple, bloody, lives for years on end, travels across time chasing his father Zeus to get revenge for causing daddy issues.  However, Kratos gets thrown across time in his battles with Zeus as he chases him to end Zeus's torture once and for all.", 170, 40, 150, 150);
+        noStroke();
+        if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75){
+          this.base = true;
+          this.instructions = false;
+          this.characters = false;
+          
+        }
+        if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 315 && mouseX < 350 && mouseY > 100 && mouseY < 125 && this.kratosBio){
+          this.kratosBio = false;
+          this.zeusBio = true;
+          
+        }
+      
+      }
+      else if(this.zeusBio){
+        //Zeus Character Card
+        fill(245,245,220);
+        rect(50, 25, 300, 100);
+        stroke(0);
+        textFont(myFont);
+        textSize(15);
+        text("Zeus", 100, 50);
+        rect(50, 25, 50, 40);
+        text("Go Back", 50, 25, 50, 50);
+        noStroke();
+        noFill();
+        var z = new Zeus(95, 50, 60);
+        z.draw();
+        stroke(255, 0, 0);
+        textFont('Helvetica');
+        textSize(7.5);
+        text("Zeus: The King of the Gods, and the God of Lightning, and a terrible father, Zeus abandonded Kratos as a child and left him for dead, prompting Kratos's thirst for his blood.  To end Kratos reign of Chaos over the world, Zeus confronts him and battles him across time with his legion of undead warriors, hoping to end his son's quest for recognition and love once and for all.", 170, 40, 150, 150);
+        noStroke();
+        if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75){
+          this.base = true;
+          this.instructions = false;
+          this.characters = false;
+          
+        }
+      }
     }
   }
 }
@@ -568,12 +691,13 @@ function draw() {
   if(intro){
     // song.rate(.5)
     //song.play();
-    intro.draw();
+    
     if(frameCount > 60){
       //song.play();
+      intro.draw();
       intro.animate();
     }
-    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 100){
+    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 50){
       transition = true;
       
     }
