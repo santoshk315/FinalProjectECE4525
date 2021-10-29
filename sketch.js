@@ -365,8 +365,10 @@ function keyReleased() {
 }
 
 let myFont;
+let song;
 function preload(){
   myFont = loadFont('Godofwar-wPz6.ttf');
+  song = loadSound('makai-symphony-dragon-slayer.mp3');
 }
 
 function initTileMap(){
@@ -387,6 +389,7 @@ function setup() {
   //customChar();
   textFont(myFont);
   initTileMap();
+  // song.loop();
   kratos = new Kratos(180, 180, 40);
   intro = new IntroScreen();
   game = new Game(walls, grass, kratos);
@@ -395,8 +398,11 @@ function setup() {
 function draw() {
   background(255);
   if(intro){
+    // song.rate(.5)
+    // song.play();
     intro.draw();
     if(frameCount > 60){
+      //song.play();
       intro.animate();
     }
     if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 100){
