@@ -1,3 +1,98 @@
+var tilemap = [
+  "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                             k                                                   w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "w                                                                                                 w",
+  "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+
+];
+
+
 class Kratos{
   constructor(x, y, scale){
     this.x = x;
@@ -7,6 +102,20 @@ class Kratos{
   }
   draw(){
     image(this.img, this.x, this.y, this.scale, this.scale);
+  }
+  move(){
+    if(keyArray[UP_ARROW] === 1){
+      this.y -= 5;
+    }
+    if(keyArray[DOWN_ARROW] === 1){
+      this.y += 5;
+    }
+    if(keyArray[LEFT_ARROW] === 1){
+      this.x -= 5;
+    }
+    if(keyArray[RIGHT_ARROW] === 1){
+      this.x += 5;
+    }
   }
 }
 
@@ -105,17 +214,36 @@ class IntroScreen{
   }
 }
 
+
+intro = true;
+gameScreen = false;
 images = [];
+keyArray = [];
+grass = [];
+walls = [];
+function keyPressed() {
+  keyArray[keyCode] = 1;
+}
+function keyReleased() {
+  keyArray[keyCode] = 0;
+}
+
+function initTileMap(){
+
+}
+
 function setup() {
   createCanvas(400, 400);
   kratos = new Kratos(180, 180, 40);
-  omega = new Omega(200, 100);
-  omega.draw();
-  images.push(get(0, 0, 400, 400));
   intro = new IntroScreen();
 }
 
 function draw() {
   background(255);
-  intro.draw();
+  if(intro){
+    intro.draw();
+  }
+  else if(gameScreen){
+
+  }
 }
