@@ -106,10 +106,24 @@ class Kratos{
     this.x = x;
     this.y = y;
     this.scale = scale;
-    this.img = loadImage("kratossprite.png");
+    this.index = 0;
+    this.len = kratosarray.length;
+    //this.img = loadImage("kratossprite.png");
   }
   draw(){
-    image(this.img, this.x, this.y, this.scale, this.scale);
+    /*image(kratossp0,this.x, this.y, this.scale, this.scale);
+    image(kratossp0,this.x, this.y, this.scale, this.scale);
+    if(frameCount % 25 === 0) {
+      erase();
+      image(kratossp1, this.x, this.y, this.scale, this.scale);
+      image(kratossp1, this.x, this.y, this.scale, this.scale);
+    }*/
+    let index = floor(this.index) % this.len;
+    image(kratosarray[index],this.x,this.y,this.scale,this.scale);
+    
+  }
+  animate() {
+    this.index += 0.25;
   }
   move(){
     if(keyArray[UP_ARROW] === 1){
@@ -202,13 +216,46 @@ class Skeleton{
     this.x = x;
     this.y = y;
     this.scale = scale;
-    this.img = loadImage("skeleton.png");
+    this.len = skelarray.length;
+    this.index = 0;
   }
   draw(){
-    image(this.img, this.x, this.y, this.scale, this.scale);
+    let index = floor(this.index) % this.len;
+    image(skelarray[index],this.x,this.y,this.scale,this.scale);
+    
+  }
+  animate() {
+    this.index += 0.25;
   }
 }
 
+class Zeus{
+  constructor(x, y, scale){
+    this.x = x;
+    this.y = y;
+    this.scale = scale;
+    this.dir = 0.5;
+    this.img = loadImage('zeussprite.png');
+    //this.len = skelarray.length;
+    this.index = 0;
+  }
+  draw(){
+    /*let index = floor(this.index) % this.len;
+    image(skelarray[index],this.x,this.y,this.scale,this.scale);*/
+    image(this.img,this.x,this.y,this.scale,this.scale);
+    
+  }
+  animate() {
+    //this.index += 0.25;
+    this.y += this.dir;
+    if(this.y > 210) {
+      this.dir = -0.5;
+    }
+    else if(this.y < 170) {
+      this.dir = 0.5;
+    }
+  }
+}
 class IntroScreen{
   constructor(){
     this.omega = new Omega(200, 100);
@@ -256,7 +303,9 @@ class IntroScreen{
     }
     
     this.kratos.draw();
+    this.kratos.animate();
     this.skeleton.draw();
+    this.skeleton.animate();
     noStroke();
     noFill();
   }
@@ -287,6 +336,67 @@ class IntroScreen{
     }
   }
 }
+class InstructionScreen{
+  constructor(){
+    this.kratos = new Kratos(100, 230, 80);
+    this.zeus = new Zeus(240,180,80);
+    this.bg = new redsky(0,0,400,300);
+    this.grass = [new Platform(200,300,40,40),new Platform(160,300,40,40),new Platform(120,300,40,40),new Platform(80,300,40,40),new Platform(40,300,40,40),new Platform(0,300,40,40),new Platform(200,300,40,40),new Platform(240,300,40,40),new Platform(280,300,40,40),new Platform(320,300,40,40),new Platform(360,300,40,40)];
+    this.rocks = [new Wall(200,335,40,40),new Wall(160,335,40,40),new Wall(120,335,40,40),new Wall(80,335,40,40),new Wall(40,335,40,40),new Wall(0,335,40,40),new Wall(200,335,40,40),new Wall(240,335,40,40),new Wall(280,335,40,40),new Wall(320,335,40,40),new Wall(360,335,40,40),new Wall(200,375,40,40),new Wall(160,375,40,40),new Wall(120,375,40,40),new Wall(80,375,40,40),new Wall(40,375,40,40),new Wall(0,375,40,40),new Wall(200,375,40,40),new Wall(240,375,40,40),new Wall(280,375,40,40),new Wall(320,375,40,40),new Wall(360,375,40,40)];
+    this.mtns = [new mountain(100,120,200,200),new mountain(-100,120,200,200),new mountain(300,120,200,200)];
+    this.animateKratos = 1;
+    this.skeleton = new Skeleton(200, 230, 80);
+    this.animateSkeleton = 1;
+    this.textX = 100;
+    this.textY = 420;
+  }
+  draw(){
+    
+    this.bg.draw();
+
+    for(var j = 0; j < this.mtns.length; j++) {
+      this.mtns[j].draw();
+    }
+    
+    
+    for(var j = 0; j < this.rocks.length; j++) {
+      this.rocks[j].draw();
+    }
+    for(var i = 0; i < this.grass.length; i++) {
+      this.grass[i].draw();
+    }
+    
+    this.kratos.draw();
+    this.kratos.animate();
+    this.zeus.draw();
+    this.zeus.animate();
+    //this.skeleton.animate();
+    noStroke();
+    noFill();
+  }
+  animate(){
+    this.kratos.x += this.animateKratos;
+    if(this.kratos.x > 300 || this.kratos.x < 0){
+      this.animateKratos = -this.animateKratos;
+    }
+    this.skeleton.x += this.animateSkeleton;
+    if(this.skeleton.x > 400 || this.skeleton.x < 100){
+      this.animateSkeleton = -this.animateSkeleton;
+    }
+
+    
+  }
+  moveOut(){
+    if(this.kratos.x > -150){
+      this.kratos.x += -5;
+      this.skeleton.x += -5;
+    }
+    else{
+      intro = false;
+    }
+  }
+}
+
 class bgsky{
   constructor(x, y, scale, scale1){
     this.x = x;
@@ -295,6 +405,20 @@ class bgsky{
     this.scale1 = scale1;
     
     this.img = loadImage("grassland_tileset/grassland_tileset/PNG/bg4.png");
+    
+  }
+  draw(){
+    image(this.img, this.x, this.y, this.scale, this.scale1);
+  }
+}
+class redsky{
+  constructor(x, y, scale, scale1){
+    this.x = x;
+    this.y = y;
+    this.scale = scale;
+    this.scale1 = scale1;
+    
+    this.img = loadImage("grassland_tileset/grassland_tileset/PNG/bg4_red.png");
     
   }
   draw(){
@@ -343,6 +467,7 @@ class Game{
     this.wallsArray = walls;
     this.grassArray = grass;
     this.kratos = kratos;
+    
   }
   drawBackground(){
     for(var i = 0; i < walls.length; i++){
@@ -366,9 +491,19 @@ function keyReleased() {
 
 let myFont;
 let song;
+let kratossp0;
+let kratossp1;
+let kratosarray;
+let skelarray;
 function preload(){
   myFont = loadFont('Godofwar-wPz6.ttf');
   song = loadSound('makai-symphony-dragon-slayer.mp3');
+  kratossp0 = loadImage("kratossprite.png");
+  kratossp1 = loadImage("kratossprite_shift.png");
+  sksp0 = loadImage("skeleton.png");
+  sksp1 = loadImage("skeleton_shift.png");
+  kratosarray = [kratossp0,kratossp0,kratossp1,kratossp1];
+  skelarray = [sksp0,sksp0,sksp1,sksp1];
 }
 
 function initTileMap(){
@@ -384,14 +519,21 @@ function initTileMap(){
   }
 }
 
+var instr;
+var zeus;
 function setup() {
   createCanvas(400, 400);
   //customChar();
   textFont(myFont);
   initTileMap();
+  //getAudioContext().resume();
+  //song.play();
+  
   // song.loop();
   kratos = new Kratos(180, 180, 40);
+  zeus = new Zeus(210,160,40);
   intro = new IntroScreen();
+  instr = new InstructionScreen();
   game = new Game(walls, grass, kratos);
 }
 
@@ -399,7 +541,7 @@ function draw() {
   background(255);
   if(intro){
     // song.rate(.5)
-    // song.play();
+    //song.play();
     intro.draw();
     if(frameCount > 60){
       //song.play();
@@ -415,7 +557,7 @@ function draw() {
 
   }
   else if(instruct){
-    background(255);
+    instr.draw();
   }
   else if(gameScreen){
     push();
