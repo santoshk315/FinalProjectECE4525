@@ -240,14 +240,14 @@ class Zeus{
     this.y = y;
     this.scale = scale;
     this.dir = 0.5;
-    this.img = loadImage('zeussprite.png');
-    //this.len = skelarray.length;
+   
+    this.len = zeusarray.length;
     this.index = 0;
   }
   draw(){
-    /*let index = floor(this.index) % this.len;
-    image(skelarray[index],this.x,this.y,this.scale,this.scale);*/
-    image(this.img,this.x,this.y,this.scale,this.scale);
+    let index = floor(this.index) % this.len;
+    image(zeusarray[index],this.x,this.y,this.scale,this.scale);
+    //image(this.img,this.x,this.y,this.scale,this.scale);
     
   }
   animate() {
@@ -638,7 +638,8 @@ let kratossp0;
 let kratossp1;
 let kratosarray;
 let skelarray;
-
+let zeussp;
+let zeusarray;
 //preloads fonts, music, and images to improve performance
 function preload(){
   myFont = loadFont('Godofwar-wPz6.ttf');
@@ -647,8 +648,10 @@ function preload(){
   kratossp1 = loadImage("kratossprite_shift.png");
   sksp0 = loadImage("skeleton.png");
   sksp1 = loadImage("skeleton_shift.png");
+  zeussp = loadImage('zeussprite.png');
   kratosarray = [kratossp0,kratossp0,kratossp1,kratossp1];
   skelarray = [sksp0,sksp0,sksp1,sksp1];
+  zeusarray = [zeussp,zeussp];
 }
 
 //intializes tilemap based upon the letters in the tilemap array
