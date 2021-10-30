@@ -178,6 +178,8 @@ class Omega{
     this.rune3.draw_rune3();
     this.rune4.draw_rune4();
     stroke(100, 0, 0, this.alpha);
+    text("Aman Mathur",50,100);
+    text("Santosh Krishnan",235,100);
     
     //noStroke();
     noFill();
@@ -319,6 +321,8 @@ class IntroScreen{
     rect(150, 350, 100, 50);
     textFont(myFont);
     textSize(15);
+    //text("Aman Mathur",50,100);
+    //text("Santosh Krishnan",235,100);
     text("Play Game", 160, 380);
     noStroke();
     noStroke();
