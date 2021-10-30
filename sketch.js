@@ -749,7 +749,11 @@ function draw() {
       instructionsS = true;
       transition = false;
     }
-
+    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 100 && mouseY > 50){
+      introS = false;
+      instructionsS = false;
+      gameScreen = true;
+    }
   }
   else if(instructionsS){
     instr.draw();
