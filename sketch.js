@@ -1,5 +1,5 @@
 introS = true;
-instructions = false;
+instructionsS = false;
 gameScreen = false;
 images = [];
 keyArray = [];
@@ -432,7 +432,7 @@ class InstructionScreen{
       this.zeus.x += -5;
     }
     else{
-      instructTrans = false;
+      instructionsS = false;
       //introS = true;
     }
   }
@@ -740,11 +740,11 @@ function draw() {
     }
 
     if(!introS){
-      instruct = true;
+      instructionsS = true;
     }
 
   }
-  else if(instruct){
+  else if(instructionsS){
     instr.draw();
     if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 112 && mouseX < 212 && mouseY > 100 && mouseY < 125){
       instructTrans = true;
@@ -754,8 +754,8 @@ function draw() {
       instr.moveOut();
 
     }
-    if(!instructTrans){
-      introS = true;
+    if(!instructionsS){
+      instroS = true;
     }
     
     
