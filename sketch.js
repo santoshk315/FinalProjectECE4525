@@ -1,4 +1,4 @@
-intro = true;
+introS = true;
 instructions = false;
 gameScreen = false;
 images = [];
@@ -339,7 +339,7 @@ class IntroScreen{
       this.skeleton.x += -5;
     }
     else{
-      intro = false;
+      introS = false;
     }
   }
 }
@@ -432,7 +432,7 @@ class InstructionScreen{
       this.zeus.x += -5;
     }
     else{
-      intro = true;
+      introS = true;
     }
   }
   drawInstructs(){
@@ -441,27 +441,50 @@ class InstructionScreen{
       rect(50, 25, 300, 100);
       noFill();
       stroke(0);
-      rect(75, 50, 100, 50);
-      rect(200, 50, 100, 50);
+      rect(50, 25, 100, 50);
+      rect(245, 25, 105, 50);
+      rect(112.5, 100, 200, 25);
       textSize(15);
-      text("Characters", 75, 50, 175, 50);
-      text("Instructions", 200, 50, 300, 50);
+      text("Characters", 50, 25, 175, 50);
+      text("Instructions", 245, 25, 300, 50);
+      text("Go Back To Start", 140, 120);
       noStroke();
+      if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 50 && mouseX < 150 && mouseY > 25 && mouseY < 75 && this.base){
+        this.base = false;
+        this.characters = true;
+        this.instructions = false;
+        
+      }
+      if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 245 && mouseX < 350 && mouseY > 25 && mouseY < 75 && this.base){
+        this.base = false;
+        this.instructions = true;
+        this.characters = false;
+        
+      }
     }
-    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 75 && mouseX < 175 && mouseY > 50 && mouseY < 100 && this.base){
-      this.base = false;
-      this.characters = true;
-      this.instructions = false;
-      
-    }
-    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 200 && mouseX < 300 && mouseY > 50 && mouseY < 100 && this.base){
-      this.base = false;
-      this.instructions = true;
-      this.characters = false;
-      
-    }
+    
     if(this.instructions){
-      
+      fill(245,245,220);
+      rect(50, 25, 300, 100);
+      stroke(0);
+      textSize(15);
+      textFont(myFont);
+      rect(50, 25, 50, 40);
+      text("Go Back", 50, 25, 50, 50);
+      noStroke();
+      noFill();
+      stroke(255, 0, 0);
+      text("Instructions", 160, 50);
+      textFont('Helvetica');
+      textSize(7.5);
+      text("Use the Arrow Keys to move Kratos throughout the world, and use the spacebar to attack enemies.  If Kratos attacks enough enemies, shift can engage a special attack.", 160, 60, 100, 50);
+      noStroke();
+      if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75 && this.instructions){
+        this.base = true;
+        this.instructions = false;
+        this.characters = false;
+        
+      }
     }
     else if(this.characters){
       //Kratos Character Card
@@ -511,7 +534,7 @@ class InstructionScreen{
         text("Go Back", 50, 25, 50, 50);
         rect(50, 100, 35, 25);
         textSize(12.5);
-        text("Next", 50, 100, 35, 50);
+        text("Back", 50, 100, 35, 50);
         noStroke();
         noFill();
         var z = new Zeus(95, 50, 60);
@@ -525,6 +548,11 @@ class InstructionScreen{
           this.base = true;
           this.instructions = false;
           this.characters = false;
+          
+        }
+        if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 50 && mouseX < 85 && mouseY > 100 && mouseY < 150){
+          this.kratosBio = true;
+          this.zeusBio = false;
           
         }
       }
@@ -690,14 +718,13 @@ function setup() {
   game = new Game(walls, grass, kratos);
 }
 var transition = false;
-
+var instructTrans = false;
 //draws the intro screen and transitions to the instructions screen when the proper conditions are met
 function draw() {
   background(255);
-  if(intro){
+  if(introS){
     // song.rate(.5)
     //song.play();
-    
     if(frameCount > 60){
       //song.play();
       intro.draw();
@@ -711,13 +738,23 @@ function draw() {
       intro.moveOut();
     }
 
-    if(!intro){
+    if(!introS){
       instruct = true;
     }
 
   }
   else if(instruct){
     instr.draw();
+    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 112 && mouseX < 212 && mouseY > 100 && mouseY < 125){
+      instructTrans = true;
+      
+    }
+    if(instructTrans == true) {
+      instr.moveOut();
+
+    }
+    instructTrans = false;
+    
   }
   else if(gameScreen){
     push();
