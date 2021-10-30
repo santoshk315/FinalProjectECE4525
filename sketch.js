@@ -288,6 +288,7 @@ class IntroScreen{
     //fill(0,154,23);
     //rect(0, 250, 400, 50);
     //fill(135, 206, 235);
+    
     rect(0, 0, 100, 50);
     noFill();
     this.omega.draw();
@@ -314,6 +315,12 @@ class IntroScreen{
     this.kratos.animate();
     this.skeleton.draw();
     this.skeleton.animate();
+    stroke(255);
+    rect(150, 350, 100, 50);
+    textFont(myFont);
+    textSize(15);
+    text("Play Game", 160, 380);
+    noStroke();
     noStroke();
     noFill();
   }
@@ -748,16 +755,19 @@ function draw() {
     if(!introS){
       instructionsS = true;
       transition = false;
+      gameScreen = false;
     }
-    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 100 && mouseY > 50){
+    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 150 && mouseX < 250 && mouseY > 350 && mouseY < 400){
+      
       introS = false;
       instructionsS = false;
       gameScreen = true;
+      
     }
   }
   else if(instructionsS){
     instr.draw();
-    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 112 && mouseX < 212 && mouseY > 100 && mouseY < 125){
+    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 112 && mouseX < 212 && mouseY > 100 && mouseY < 125 && instr.base){
       instructTrans = true;
       
     }
@@ -768,6 +778,7 @@ function draw() {
     if(!instructionsS){
       introS = true;
       instructTrans = false;
+      gameScreen = false;
     }
     
   }
