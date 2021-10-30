@@ -432,7 +432,8 @@ class InstructionScreen{
       this.zeus.x += -5;
     }
     else{
-      introS = true;
+      instructTrans = false;
+      //introS = true;
     }
   }
   drawInstructs(){
@@ -753,7 +754,10 @@ function draw() {
       instr.moveOut();
 
     }
-    instructTrans = false;
+    if(!instructTrans){
+      introS = true;
+    }
+    
     
   }
   else if(gameScreen){
