@@ -467,13 +467,13 @@ class InstructionScreen{
       text("Instructions", 245, 25, 300, 50);
       text("Go Back To Start", 140, 120);
       noStroke();
-      if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 50 && mouseX < 150 && mouseY > 25 && mouseY < 75 && this.base){
+      if((mouseIsPressed) && mouseX > 50 && mouseX < 150 && mouseY > 25 && mouseY < 75 && this.base){
         this.base = false;
         this.characters = true;
         this.instructions = false;
         
       }
-      if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 245 && mouseX < 350 && mouseY > 25 && mouseY < 75 && this.base){
+      if((mouseIsPressed) && mouseX > 245 && mouseX < 350 && mouseY > 25 && mouseY < 75 && this.base){
         this.base = false;
         this.instructions = true;
         this.characters = false;
@@ -497,7 +497,7 @@ class InstructionScreen{
       textSize(7.5);
       text("Use the Arrow Keys to move Kratos throughout the world, and use the spacebar to attack enemies.  If Kratos attacks enough enemies, shift can engage a special attack.", 160, 60, 100, 50);
       noStroke();
-      if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75 && this.instructions){
+      if((mouseIsPressed) && mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75 && this.instructions){
         this.base = true;
         this.instructions = false;
         this.characters = false;
@@ -513,8 +513,8 @@ class InstructionScreen{
         textSize(15);
         textFont(myFont);
         text("Kratos", 100, 50);
-        rect(50, 25, 50, 40);
-        text("Go Back", 50, 25, 50, 50);
+        rect(50, 85, 50, 40);
+        text("Go Back", 50, 85, 50, 50);
         rect(315, 100, 35, 25);
         textSize(12.5);
         text("Next", 315, 100, 35, 50);
@@ -527,13 +527,13 @@ class InstructionScreen{
         textSize(7.5);
         text("Kratos:  The savage God of War who experienced multiple, bloody, lives for years on end, travels across time chasing his father Zeus to get revenge for causing daddy issues.  However, Kratos gets thrown across time in his battles with Zeus as he chases him to end Zeus's torture once and for all.", 170, 40, 150, 150);
         noStroke();
-        if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75){
+        if((mouseIsPressed) && mouseX > 50 && mouseX < 100 && mouseY > 85 && mouseY < 125){
           this.base = true;
           this.instructions = false;
           this.characters = false;
           
         }
-        if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 315 && mouseX < 350 && mouseY > 100 && mouseY < 125 && this.kratosBio){
+        if((mouseIsPressed) && mouseX > 315 && mouseX < 350 && mouseY > 100 && mouseY < 125 && this.kratosBio){
           this.kratosBio = false;
           this.zeusBio = true;
           
@@ -562,13 +562,13 @@ class InstructionScreen{
         textSize(7.5);
         text("Zeus: The King of the Gods, and the God of Lightning, and a terrible father, Zeus abandonded Kratos as a child and left him for dead, prompting Kratos's thirst for his blood.  To end Kratos reign of Chaos over the world, Zeus confronts him and battles him across time with his legion of undead warriors, hoping to end his son's quest for recognition and love once and for all.", 170, 40, 150, 150);
         noStroke();
-        if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75){
+        if((mouseIsPressed) && mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75){
           this.base = true;
           this.instructions = false;
           this.characters = false;
           
         }
-        if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 50 && mouseX < 85 && mouseY > 100 && mouseY < 150){
+        if((mouseIsPressed) && mouseX > 50 && mouseX < 85 && mouseY > 100 && mouseY < 150){
           this.kratosBio = true;
           this.zeusBio = false;
           
@@ -748,7 +748,7 @@ function draw() {
       intro.draw();
       intro.animate();
     }
-    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 50){
+    if((mouseIsPressed) && mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 50){
       transition = true;
       
     }
@@ -761,7 +761,7 @@ function draw() {
       transition = false;
       gameScreen = false;
     }
-    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 150 && mouseX < 250 && mouseY > 350 && mouseY < 400){
+    if((mouseIsPressed) && mouseX > 150 && mouseX < 250 && mouseY > 350 && mouseY < 400){
       
       introS = false;
       instructionsS = false;
@@ -771,7 +771,7 @@ function draw() {
   }
   else if(instructionsS){
     instr.draw();
-    if((mouseButton == LEFT || mouseButton == RIGHT || mouseButton == CENTER) && mouseX > 112 && mouseX < 212 && mouseY > 100 && mouseY < 125 && instr.base){
+    if((mouseIsPressed) && mouseX > 112 && mouseX < 212 && mouseY > 100 && mouseY < 125 && instr.base){
       instructTrans = true;
       
     }
