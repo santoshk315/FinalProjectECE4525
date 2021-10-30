@@ -293,6 +293,7 @@ class IntroScreen{
     this.omega.draw();
     if(frameCount > 60){
     textSize(12);
+    textFont(myFont);
     text("Instructions", 10, 25);
     textSize(15);
     text("GOD OF WAR: LOST IN TIME", this.textX, this.textY);
@@ -340,6 +341,8 @@ class IntroScreen{
     }
     else{
       introS = false;
+      this.kratos.x = 100;
+      this.skeleton.x = 200;
     }
   }
 }
@@ -434,6 +437,9 @@ class InstructionScreen{
     else{
       instructionsS = false;
       //introS = true;
+      this.kratos.x = 100;
+      this.zeus.x = 240;
+      
     }
   }
   drawInstructs(){
@@ -741,6 +747,7 @@ function draw() {
 
     if(!introS){
       instructionsS = true;
+      transition = false;
     }
 
   }
@@ -755,9 +762,9 @@ function draw() {
 
     }
     if(!instructionsS){
-      instroS = true;
+      introS = true;
+      instructTrans = false;
     }
-    
     
   }
   else if(gameScreen){
