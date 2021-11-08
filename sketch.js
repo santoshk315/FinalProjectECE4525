@@ -397,13 +397,13 @@ class IntroScreen{
     
   }
   moveOut(){
-    if(this.kratos.x > -150){
-      this.kratos.x += -5;
+    if(this.kratos.position.x > -150){
+      this.kratos.position.x += -5;
       this.skeleton.x += -5;
     }
     else{
       introS = false;
-      this.kratos.x = 100;
+      this.kratos.position.x = 100;
       this.skeleton.x = 200;
     }
   }
@@ -480,8 +480,8 @@ class InstructionScreen{
     this.drawInstructs();
   }
   animate(){
-    this.kratos.x += this.animateKratos;
-    if(this.kratos.x > 300 || this.kratos.x < 0){
+    this.kratos.position.x += this.animateKratos;
+    if(this.kratos.position.x > 300 || this.kratos.position.x < 0){
       this.animateKratos = -this.animateKratos;
     }
     this.skeleton.x += this.animateSkeleton;
@@ -492,14 +492,14 @@ class InstructionScreen{
     
   }
   moveOut(){
-    if(this.kratos.x > -150){
-      this.kratos.x += -5;
+    if(this.kratos.position.x > -150){
+      this.kratos.position.x += -5;
       this.zeus.x += -5;
     }
     else{
       instructionsS = false;
       //introS = true;
-      this.kratos.x = 100;
+      this.kratos.position.x = 100;
       this.zeus.x = 240;
       
     }
