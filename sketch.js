@@ -96,6 +96,10 @@ var tilemap = [
   "w             p                                     p                                             w",
   "w            p                                       p                                            w",
   "w           p                                         p                                           w",
+  "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+  "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+  "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+  "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
 
 ];
@@ -114,6 +118,8 @@ class Kratos{
     this.jump = 0;
     this.angle = 0;
     this.scalar = 1;
+    this.walkani = 0;
+    this.swing = 0;
     //this.img = loadImage("kratossprite.png");
   }
   applyForce(force){
@@ -131,6 +137,7 @@ class Kratos{
     translate(this.position.x, this.position.y);
     let index = floor(this.index) % this.len;
     if(keyArray[LEFT_ARROW] === 1){
+      
       this.angle = 3 * PI/2;
       this.scalar = -1;
       //scale(-1, 1);
@@ -141,8 +148,26 @@ class Kratos{
       this.scalar = 1;
       
     }
-    scale(this.scalar, 1);
-    image(kratosarray[index], 0, 0,this.scale,this.scale);
+
+    //scale(this.scalar, 1);
+    if(this.walkani === 0 && !introS){
+      if(this.swing === 1) {
+        image(kratosattack[index], 0, 0,this.scale,this.scale);
+      }
+      if(this.swing === 0) {
+        image(kratosarray[index], 0, 0,this.scale,this.scale);
+      }
+    }
+
+    if(this.walkani === 1 || introS){
+      if(this.swing === 1) {
+        image(kratosattack[index], 0, 0,this.scale,this.scale);
+      }
+      if(this.swing === 0) {
+        image(kratoswalking[index], 0, 0,this.scale,this.scale);
+      }
+    }
+    
 
     //rotate(this.angle);
     
@@ -156,23 +181,33 @@ class Kratos{
   }
   move(){
     this.acceleration.set(0, 0);
+    this.walkani = 0;
+    this.swing = 0;
+    if(keyArray[32] === 1) {
+      this.swing = 1;
+    }
     if(keyArray[UP_ARROW] === 1){
       if(this.jump == 0 && this.velocity.y == 0){
+        this.walkani = 0;
         this.jump = 2;
       }
       
       
     }
     if(keyArray[LEFT_ARROW] === 1){
+      
+      this.walkani = 1;
       this.position.x -= 5;
       //this.angle = PI;
     }
     if(keyArray[RIGHT_ARROW] === 1){
+      this.walkani = 1;
       this.position.x += 5;
       //this.angle = 0;
 
     }
     if(this.jump === 2){
+      this.walkani = 0;
       this.applyForce(jumpForce);
       this.jump = 1;
     }
@@ -185,10 +220,10 @@ class Kratos{
       this.velocity.y = 0;
       this.jump = 0;
     }
-    if(this.jump != 0){
+    /*if(this.jump != 0){
       this.index += .25;
       this.index += .25;
-    }
+    }*/
   }
 }
 
@@ -733,6 +768,7 @@ class Game{
   play(){
     this.drawBackground();
     this.kratos.draw();
+    this.kratos.animate();
     this.kratos.move();
     this.platformCollision();
   }
@@ -750,7 +786,10 @@ let myFont;
 let song;
 let kratossp0;
 let kratossp1;
+let kratosspwalk;
 let kratosarray;
+let kratoswalking;
+let kratosattack;
 let skelarray;
 let zeussp;
 let zeusarray;
@@ -759,11 +798,15 @@ function preload(){
   myFont = loadFont('Godofwar-wPz6.ttf');
   song = loadSound('makai-symphony-dragon-slayer.mp3');
   kratossp0 = loadImage("kratossprite.png");
+  kratosspwalk = loadImage("kratossprite_walk.png");
   kratossp1 = loadImage("kratossprite_shift.png");
   sksp0 = loadImage("skeleton.png");
   sksp1 = loadImage("skeleton_shift.png");
   zeussp = loadImage('zeussprite.png');
+  kratosspattk = loadImage("kratossprite_attack1.png")
   kratosarray = [kratossp0,kratossp0,kratossp1,kratossp1];
+  kratoswalking = [kratossp0,kratossp0,kratosspwalk,kratosspwalk];
+  kratosattack = [kratossp0,kratossp0,kratosspattk,kratosspattk];
   skelarray = [sksp0,sksp0,sksp1,sksp1];
   zeusarray = [zeussp,zeussp];
 }
