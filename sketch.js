@@ -1000,6 +1000,11 @@ let kratosattack_rev;
 let kratoswalking;
 let kratosattack;
 let skelarray;
+let skelarray_rev;
+let sksp0;
+let sksp_rev;
+let sksp1;
+let sksp1_rev;
 let zeussp;
 let zeusarray;
 let rock;
@@ -1021,6 +1026,10 @@ function preload(){
 
   sksp0 = loadImage("skeleton_wings.png");
   sksp1 = loadImage("skeleton_flying.png");
+
+  sksp0_rev = loadImage("skeleton_wings_rev.png");
+  sksp1_rev = loadImage("skeleton_flying_rev.png");
+
   zeussp = loadImage('zeussprite.png');
   kratosspattk = loadImage("kratossprite_attack1.png")
   wall = loadImage("grassland_tileset/grassland_tileset/PNG/terrain_center.png");
@@ -1036,6 +1045,7 @@ function preload(){
   kratosattack = [kratossp0,kratossp0,kratosspattk,kratosspattk];
   kratosattack_rev = [kratossp0_rev,kratossp0_rev,kratosspattk_rev,kratosspattk_rev];
   skelarray = [sksp0,sksp0,sksp1,sksp1];
+  skelarray_rev = [sksp0_rev,sksp0_rev,sksp1_rev,sksp1_rev];
   zeusarray = [zeussp,zeussp];
 }
 
