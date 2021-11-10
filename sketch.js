@@ -327,6 +327,8 @@ class Skeleton{
     this.health = 6;
     this.timer = 0;
     this.blood = [];
+    this.angle = random(0, PI);
+    this.attackTimer = 0;
     //this.ammo = [];
   }
   draw(){
@@ -359,8 +361,19 @@ class Skeleton{
     
   }
   attackedAnimation(){
-    strokeWeight(5);
-    arc(this.x, this.y, 15, 15, PI/2, 0);
+    
+    if(this.attackTimer < 1000){
+      this.attackTimer++;
+      this.angle -= PI/180;
+      strokeWeight(5);
+      stroke(255, 0, 0);
+      arc(this.x + 10, this.y + 5, 15, 15, this.angle, this.angle + PI/2);
+      strokeWeight(1);
+      noStroke();
+      //print("attacked")
+    }
+    this.angle = random(0, PI);
+    this.attackTimer = 0;
   }
   deathAnimation(){
     this.blood.push(new skelBlood(random(this.x, this.x + 20), random(this.y + 20, this.y + 40)));
@@ -868,8 +881,10 @@ class Game{
   }
   combat(){
     for(var i = 0; i < this.enemies.length; i++){
-      if(dist(this.kratos.position.x, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1 && this.kratos.timer % 100 === 0){
-        this.enemies[i].health--;
+      if(dist(this.kratos.position.x, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1){
+        if(this.kratos.timer % 100 === 0){
+          this.enemies[i].health--;
+        }
         this.enemies[i].attackedAnimation();
       }
     }
