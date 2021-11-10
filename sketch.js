@@ -119,6 +119,7 @@ class Kratos{
     this.position = new p5.Vector(this.x, this.y);
     this.velocity = new p5.Vector(0, 0);
     this.acceleration = new p5.Vector(0, 0);
+    this.dir = 0;
     this.jump = 0;
     this.angle = 0;
     this.scalar = 1;
@@ -153,6 +154,7 @@ class Kratos{
 
     }
     else if(keyArray[RIGHT_ARROW] === 1){
+      
       this.scalar = 1;
       
     }
@@ -160,19 +162,40 @@ class Kratos{
     //scale(this.scalar, 1);
     if(this.walkani === 0 && !introS){
       if(this.swing === 1) {
-        image(kratosattack[index], 0, 0,this.scale,this.scale);
+        if(this.dir === -1) {
+          image(kratosattack_rev[index], 0, 0,this.scale,this.scale);
+        }
+        else {
+          image(kratosattack[index], 0, 0,this.scale,this.scale);
+        }
       }
       if(this.swing === 0) {
-        image(kratosarray[index], 0, 0,this.scale,this.scale);
+        if(this.dir === -1) {
+          image(kratosarray_rev[index], 0, 0,this.scale,this.scale);
+        }
+        else {
+          image(kratosarray[index], 0, 0,this.scale,this.scale);
+        }
       }
     }
 
     if(this.walkani === 1 || introS){
       if(this.swing === 1) {
-        image(kratosattack[index], 0, 0,this.scale,this.scale);
+        if(this.dir === -1) {
+          image(kratosattack_rev[index], 0, 0,this.scale,this.scale);
+        }
+        else {
+          image(kratosattack[index], 0, 0,this.scale,this.scale);
+        }
       }
       if(this.swing === 0) {
-        image(kratoswalking[index], 0, 0,this.scale,this.scale);
+        if(this.dir === -1) {
+          image(kratoswalking_rev[index], 0, 0,this.scale,this.scale);
+        }
+        else {
+          image(kratoswalking[index], 0, 0,this.scale,this.scale);
+        }
+        
       }
     }
     
@@ -233,13 +256,14 @@ class Kratos{
       //this.velocity.set(0, 0);
     }
     if(keyArray[LEFT_ARROW] === 1 && this.position.x > 40 ){
-      
+      this.dir = -1;
       this.walkani = 1;
       this.position.x -= 5;
       //this.angle = PI;
     }
     if(keyArray[RIGHT_ARROW] === 1 && this.position.x < 3880){
       this.walkani = 1;
+      this.dir = 1;
       this.position.x += 5;
       //this.angle = 0;
 
@@ -967,6 +991,12 @@ let kratossp0;
 let kratossp1;
 let kratosspwalk;
 let kratosarray;
+let kratossp0_rev;
+let kratossp1_rev;
+let kratosspwalk_rev;
+let kratosarray_rev;
+let kratoswalking_rev;
+let kratosattack_rev;
 let kratoswalking;
 let kratosattack;
 let skelarray;
@@ -982,8 +1012,15 @@ function preload(){
   kratossp0 = loadImage("kratossprite.png");
   kratosspwalk = loadImage("kratossprite_walk.png");
   kratossp1 = loadImage("kratossprite_shift.png");
-  sksp0 = loadImage("skeleton.png");
-  sksp1 = loadImage("skeleton_shift.png");
+  kratosspattk = loadImage("kratossprite_attack1.png");
+
+  kratossp0_rev = loadImage("kratossprite_rev.png");
+  kratosspwalk_rev = loadImage("kratossprite_walk_rev.png");
+  kratossp1_rev = loadImage("kratossprite_shift_rev.png");
+  kratosspattk_rev = loadImage("kratossprite_attack1_rev.png");
+
+  sksp0 = loadImage("skeleton_wings.png");
+  sksp1 = loadImage("skeleton_flying.png");
   zeussp = loadImage('zeussprite.png');
   kratosspattk = loadImage("kratossprite_attack1.png")
   wall = loadImage("grassland_tileset/grassland_tileset/PNG/terrain_center.png");
@@ -993,8 +1030,11 @@ function preload(){
   images.push(rock);
   images.push(ladder);
   kratosarray = [kratossp0,kratossp0,kratossp1,kratossp1];
+  kratosarray_rev = [kratossp0_rev,kratossp0_rev,kratossp1_rev,kratossp1_rev];
   kratoswalking = [kratossp0,kratossp0,kratosspwalk,kratosspwalk];
+  kratoswalking_rev = [kratossp0_rev,kratossp0_rev, kratosspwalk_rev, kratosspwalk_rev];
   kratosattack = [kratossp0,kratossp0,kratosspattk,kratosspattk];
+  kratosattack_rev = [kratossp0_rev,kratossp0_rev,kratosspattk_rev,kratosspattk_rev];
   skelarray = [sksp0,sksp0,sksp1,sksp1];
   zeusarray = [zeussp,zeussp];
 }
