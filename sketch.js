@@ -6,101 +6,105 @@ keyArray = [];
 grass = [];
 walls = [];
 enemies = [];
+ladders = [];
 images = [];
 var tilemap = [
-  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r                rrrrrrrrrr                rrr                                                    r",
-  "r              rrrrrrrrrrrr                 rr                                                    r",
-  "r             prrrrrrrrrrrr                  r                                                    r",
-  "r              rrrrrrrrrrrr                  r                                                    r",
-  "r            prrrrrrrrrrrr                   r                                                    r",
-  "r             rrrrrrrrrrrr                   r                                                    r",
-  "r            prrrrrrrrr                      r                                                    r",
-  "r             rrrrrrrr                       r                                                    r",
-  "rp            rrrrrrrr                       r                                                    r",
-  "r            prrrrr                          r                                                    r",
-  "r            rrr                             r                                                    r",
-  "r            rr                              r                                                    r",
-  "r                                            r                                                    r",
-  "r                                                                                                 r",
-  "rppppppppppppppppppppppp                          ppppppppppppppppppppppppppppppppppppppppppppppppr",
-  "rrrrrrrrrrrrrrrrrrrrrrrrpp                    pppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "rrrrrrrrrrrrrrrrr                       pppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "rrrrrrrr                         ppppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r                           ppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r                          prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r                         prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r                        prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r    pppppppppppppppppppprrrrrrrrrrrrrrrr                                                         r",
-  "r    r                                  r                                                         r",
-  "rp  p                                   r                                                         r",
-  "r                                      r                                                         r",
-  "rp    ppppp                             r                                                         r",
-  "rr     rrrrpppppp                       r                                                         r",
-  "rr r   rrrrrrrrrrp                                                                                r",
-  "rrrrrrrrrrrrrrrrrrpppppppppppppppppppppppppppppppppppppppppppppppppppppppp                        r",
-  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr                                                               r",
-  "rrrrrrrrrrrrrrrrrrrrrr                                                                            r",
-  "rrrrrrrrr                                                   ppppppppppppppppppppppppppppppppppppppr",
-  "rrrrr                                                ppppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r                                               pppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r                                         pppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r                                ppppppppprrrrrrrrrrrrrrrrrrrr                                    r",
-  "r                        pppppppprrrrrrrrrrrrrrrr                                                 r",
-  "r                 ppppppprrrrrrrrrrrrrrrr                                                         r",
-  "r            ppppprrrrrrrrrrrrrrrrrrr                                                             r",
-  "r                                                                                                 r",
-  "r                                                                                                 r",
-  "r                                                                                                 r",
-  "r                                                                                                 r",
-  "r                                                                                                 r",
-  "rpppppppp                                                                                         r",
-  "rrrrrrrrrpppppp                                                                                   r",
-  "rrrrrrrrrrrrrrrppppppppp                                                                          r",
-  "rrrrrrrrrrrrrrrrrrrrrrrrppp                                                                       r",
-  "r      rrrrrrrrrrrrrrrrrrrrpppppppppppp                                                           r",
-  "r             rrrrrrrrrrrrrrrrrrrrrrrrrppppppppppppppppp                                          r",
-  "r                                 rrrrrrrrrrrrrrrrrrrrrrppppppppppppppp                           r",
-  "r                                                                                                 r",
-  "r                                                                                                 r",
-  "r                                                                                                 r",
-  "r                                                                                                 r",
-  "r                                                                                                 r",
-  "r                                                                                                 r",
-  "rppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp            r",
-  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrpp           r",
-  "rrrrrrrrrrrrrrrrrrrr         rrrrrr                  rrrrrr                                 ppppppr",
-  "rrrrrrrrrrrrr                rrrr                      rrrr                           pppppprrrrrrr",
-  "rrrrrr                       rrr                        rrr                         prrrrrrrrrrrrrr",
-  "rrrr                         rr                          rr                         rrrrrrrrrrrrrrr",
-  "rr                           r                            r                      ppprrrrrrrrrrrrrrr",
-  "r                            r                            r     ppppppppppppppppprrrrrrrrrrrrrrrrrr",
-  "r                                                        r     prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r                             ppppppppppppppppppppppppppp    prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r                    pppp                                        rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "r  ppppppp           rrrr                                                     rrrrrrrrrrrrrrrrrrrrr",
-  "rpprrrrrrrpppppppp                                                                        rrrrrrrrr",
-  "rrrrrrrrrrrrrrrrrrppppppp                                                                 rrrrrrrrr",
-  "rrrrrrrrrrrrrrrrrrrrrrrrrppppp           e               e                                rrrrrrrrr",
-  "rrrrrrrrrrrrrrrrrrrrrrrrrrrr       ppppppppp         pppppppp                                rrrrrr",
-  "rrrrrrrrrrrrrrrrrrrrrrrr            rrrrrrr              rrr                             rrrrrrrrrr",
-  "rrrrrrrrrrrrr                        rrrrr                r                             rrrrrrrrrrr",
-  "rrrrrrrr                               r                           pppp                rrrrrrrrrrrr",
-  "rrrrr                                                               rr             rrrrrrrrrrrrrrrr",
-  "rrr                                                     pppppp                     r              r",
-  "r                                                        rrrr                      r              r",
-  "r                                   e                     rr                       r              r",
-  "r                    ppppppppppppppppppppppppppppppp                              r               r",
-  "r                   prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrp               rr            r               r",
-  "r                  prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrp             rrrr           r               r",
-  "r                 prrrrrrrr                 rrrrrrrrrrp          rrrrrrr                          r",
-  "r                prrrrr                         rrrrrrrp       rrrrrrrrrrr              r      rrrr",
-  "r       r       p                                 rrrrrrp      rrrrrrrrrrrr      r     rr     rrrrr",
-  "r      rr      p                                    rrrrrp    rrrrrrrrrrrrrr     r    rrr  r  rrrrr",
-  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
+  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                rrrrrrrrrr                rrr                                                    w",
+  "r                rrrrrrrrrr                rrr                                                    w",
+  "r              rrrrrrrrrrrr                 rr                                                    w",
+  "r              rrrrrrrrrrrr                 rr                                                    w",
+  "r             prrrrrrrrrrrr                  r                                                    w",
+  "r              rrrrrrrrrrrr                  r                                                    w",
+  "r            prrrrrrrrrrrr                   r                                                    w",
+  "r             rrrrrrrrrrrr                   r                                                    w",
+  "r            prrrrrrrrr                      r                                                    w",
+  "r             rrrrrrrr                       r                                                    w",
+  "rp            rrrrrrrr                       r                                                    w",
+  "r            prrrrr                          r                                                    w",
+  "r            rrr                             r                                                    w",
+  "r            rr                              r                                                    w",
+  "r                                            r                                                    w",
+  "r                                                                                                 w",
+  "rppppppppppppppppppppppp                          ppppppppppppppppppppppppppppppppppppppppppppppppw",
+  "rrrrrrrrrrrrrrrrrrrrrrrrpp                    pppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "rrrrrrrrrrrrrrrrr                       pppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "rrrrrrrr                         ppppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                           ppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                          prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                         prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                        prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r    pppppppppppppppppppprrrrrrrrrrrrrrrr                                                         w",
+  "r    r                                  r                                                         w",
+  "rp  p                                   r                                                         w",
+  "r                                      r                                                         rw",
+  "rp    ppppp                             r                                                         w",
+  "rr     rrrrpppppp                       r                                                         w",
+  "rr r   rrrrrrrrrrp                                                                                w",
+  "rrrrrrrrrrrrrrrrrrpppppppppppppppppppppppppppppppppppppppppppppppppppppppp                        w",
+  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr                                                               w",
+  "rrrrrrrrrrrrrrrrrrrrrr                                                                            w",
+  "rrrrrrrrr                                                   ppppppppppppppppppppppppppppppppppppppw",
+  "rrrrr                                                ppppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                                               pppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                                         pppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                                ppppppppprrrrrrrrrrrrrrrrrrrr                                    w",
+  "r                        pppppppprrrrrrrrrrrrrrrr                                                 w",
+  "r                 ppppppprrrrrrrrrrrrrrrr                                                         w",
+  "r            ppppprrrrrrrrrrrrrrrrrrr                                                             w",
+  "r                                                                                                 w",
+  "r                                                                                                 w",
+  "r                                                                                                 w",
+  "r                                                                                                 w",
+  "r                                                                                                 w",
+  "rpppppppp                                                                                         w",
+  "rrrrrrrrrpppppp                                                                                   w",
+  "rrrrrrrrrrrrrrrppppppppp                                                                          w",
+  "rrrrrrrrrrrrrrrrrrrrrrrrppp                                                                       w",
+  "r      rrrrrrrrrrrrrrrrrrrrpppppppppppp                                                           w",
+  "r             rrrrrrrrrrrrrrrrrrrrrrrrrppppppppppppppppp                                          w",
+  "r                                 rrrrrrrrrrrrrrrrrrrrrrppppppppppppppp                           w",
+  "r                                                                                                 w",
+  "r                                                                                                 w",
+  "r                                                                                                 w",
+  "r                                                                                                 w",
+  "r                                                                                                 w",
+  "r                                                                                                 w",
+  "rpppppppppppppppppppppppppppppppppppppppppppplpppppppppppppppppppppppppppppppppppppppp            w",
+  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrlrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrpp           w",
+  "rrrrrrrrrrrrrrrrrrrr         wrrrrr          l       rrrrrw                                 ppppppw",
+  "rrrrrrrrrrrrr                wrrr            l         rrrw                           pppppprrrrrrw",
+  "rrrrrr                       wrr             l          rrw                         prrrrrrrrrrrrrw",
+  "rrrr                         wr              l           rw                         rrrrrrrrrrrrrrw",
+  "rr                           w               l            w                      ppprrrrrrrrrrrrrrw",
+  "r                            w               l            w     ppppppppppppppppprrrrrrrrrrrrrrrrrw",
+  "r                                            l           r     prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                             ppppppppppppppppppppppppppp    prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                    pppp                                        rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r  ppppppp           rrrr                                                     rrrrrrrrrrrrrrrrrrrrw",
+  "rpprrrrrrrpppppppp                                                                        rrrrrrrrw",
+  "rrrrrrrrrrrrrrrrrrppppppp                                                                 rrrrrrrrw",
+  "rrrrrrrrrrrrrrrrrrrrrrrrrppppp           e               e                                rrrrrrrrw",
+  "rrrrrrrrrrrrrrrrrrrrrrrrrrrr       ppppppppp         pppppppp                                rrrrrw",
+  "rrrrrrrrrrrrrrrrrrrrrrrr            rrrrrrr              rrr                             pppprrrrrw",
+  "rrrrrrrrrrrrr                        rrrrr                r                             prrrrrrrrrw",
+  "rrrrrrrr                               r                           pppp                prrrrrrrrrrw",
+  "rrrrr                                                               rr             pppprrrrrrrrrrrw",
+  "rrr                                                     pppppp                     r              w",
+  "r                                                        rrrr                      r              w",
+  "r                                   e                     rr                       r              w",
+  "r                    pppppppppppplpppppppppppppppppp                              p               w",
+  "r                   prrrrrrrrrrrrlrrrrrrrrrrrrrrrrrrp               rr            r               w",
+  "r                  prrrrrrrrrrrrrlrrrrrrrrrrrrrrrrrrrp             rrrr           r               w",
+  "r                 prrrrrrrr      l          rrrrrrrrrrp          pprrrrr                          w",
+  "r                prrrrr          l              rrrrrrrp       pprrrrrrrrr              p      pppw",
+  "r       r       p                l                rrrrrrp      rrrrrrrrrrrr      r     pr     prrrw",
+  "r      rr      p                 l                  rrrrrp    prrrrrrrrrrrrr     r    prr  r  rrrrw",
+  "rpppppprrpppppprrrrrrrrrrrrrrrrrplprrrrrrrrrrrrrrrrrrrrrrrpppprrrrrrrrrrrrrrppppprpppprrrpprpprrrrw",
+  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw"
 
 ];
 
@@ -122,6 +126,7 @@ class Kratos{
     this.swing = 0;
     this.health = 6;
     this.timer = 0;
+    this.climb = 0;
     //this.img = loadImage("kratossprite.png");
   }
   applyForce(force){
@@ -182,6 +187,17 @@ class Kratos{
   animate() {
     this.index += 0.25;
   }
+  ladderCol(){
+    var c = 0;
+    for(var i = 0; i < ladders.length; i++){
+      if(this.position.x === ladders[i].x && this.position.y > ladders[i].y - 40 && this.position.y < ladders[i].y + 40){
+        c = 1;
+        print(c);
+      }
+      
+    }
+    return c;
+  }
   move(){
     this.acceleration.set(0, 0);
     this.walkani = 0;
@@ -189,13 +205,32 @@ class Kratos{
     if(keyArray[32] === 1) {
       this.swing = 1;
     }
+    if(this.ladderCol() === 1){
+      this.climb = 1;
+    }
+    else{
+      this.climb = 0;
+    }
     if(keyArray[UP_ARROW] === 1){
-      if(this.jump == 0 && this.velocity.y == 0){
+      if(this.ladderCol() === 1){
+        //print(this.position.y);
+        this.position.y -= 5;
+        this.jump = 0;
+        //print(this.position.y);
+        //this.jump = 0;
+        this.velocity.set(0, 0);
+      }
+      else if(this.jump == 0 && this.velocity.y == 0){
         this.walkani = 0;
         this.jump = 2;
       }
       
       
+    }
+    if(keyArray[DOWN_ARROW] === 1 && this.ladderCol() === 1){
+      this.position.y += 5;
+      //this.jump = 0;
+      //this.velocity.set(0, 0);
     }
     if(keyArray[LEFT_ARROW] === 1 && this.position.x > 40 ){
       
@@ -214,12 +249,15 @@ class Kratos{
       this.applyForce(jumpForce);
       this.jump = 1;
     }
-    this.applyForce(gravity);
-    this.velocity.add(this.acceleration);
-    this.position.add(this.velocity);
-    this.acceleration.set(0, 0);
-    if (this.position.y >= 3519.99) {
-      this.position.y = 3520;
+    if(this.climb === 0){
+      this.applyForce(gravity);
+      this.velocity.add(this.acceleration);
+      this.position.add(this.velocity);
+      this.acceleration.set(0, 0);
+    }
+
+    if (this.position.y >= 3819.99) {
+      this.position.y = 3820;
       this.velocity.y = 0;
       this.jump = 0;
     }
@@ -798,6 +836,9 @@ class Wall{
   }
 }
 
+
+
+
 //class for grass platform textures
 class Platform{
   constructor(x, y){
@@ -807,6 +848,16 @@ class Platform{
   }
   draw(){
     image(this.platform, this.x, this.y, 40, 40);
+  }
+}
+
+class Ladder{
+  constructor(x, y){
+    this.x = x;
+    this.y = y;
+  }
+  draw(){
+    image(images[2], this.x, this.y, 40, 40);
   }
 }
 
@@ -833,6 +884,9 @@ class Game{
       this.enemies[k].draw();
       this.enemies[k].animate();
       //print(this.enemies[k].health);
+    }
+    for(var l = 0; l < ladders.length; l++){
+      ladders[l].draw();
     }
     
   }
@@ -920,6 +974,7 @@ let zeussp;
 let zeusarray;
 let rock;
 let wall;
+let ladder;
 //preloads fonts, music, and images to improve performance
 function preload(){
   myFont = loadFont('Godofwar-wPz6.ttf');
@@ -933,8 +988,10 @@ function preload(){
   kratosspattk = loadImage("kratossprite_attack1.png")
   wall = loadImage("grassland_tileset/grassland_tileset/PNG/terrain_center.png");
   rock = loadImage("grassland_tileset/grassland_tileset/PNG/midground_center.png");
+  ladder = loadImage("grassland_tileset/grassland_tileset/PNG/rope_ladder_new.png");
   images.push(wall);
   images.push(rock);
+  images.push(ladder);
   kratosarray = [kratossp0,kratossp0,kratossp1,kratossp1];
   kratoswalking = [kratossp0,kratossp0,kratosspwalk,kratosspwalk];
   kratosattack = [kratossp0,kratossp0,kratosspattk,kratosspattk];
@@ -957,6 +1014,9 @@ function initTileMap(){
       }
       else if(tilemap[i][j] == "e"){
         enemies.push(new Skeleton(j * 40, i * 40, 40));
+      }
+      else if(tilemap[i][j] == "l"){
+        ladders.push(new Ladder(j * 40, i * 40, 40));
       }
     }
   }
