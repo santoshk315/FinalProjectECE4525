@@ -8,6 +8,10 @@ walls = [];
 enemies = [];
 ladders = [];
 images = [];
+var skelyDir;
+var skelxDir;
+let targetX;
+let targetY;
 backgroundArray = [];
 var tilemap = [
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
@@ -129,6 +133,7 @@ class Kratos{
     this.health = 6;
     this.timer = 0;
     this.climb = 0;
+    
     //this.img = loadImage("kratossprite.png");
   }
   applyForce(force){
@@ -380,6 +385,42 @@ class skelBlood{
     noFill();
   }
 }
+
+//class for enemy wandering state
+class skeleWander {
+  constructor() {
+    this.xDir = 1;
+    this.yDir = 1;
+  }
+
+  execute(me) {
+    me.y += this.yDir;
+    me.x += this.xDir;
+    if(frameCount % 120 === 0) {
+      skelyDir = random([-1,1]);
+      skelxDir = random([-1,1]);
+      this.yDir = skelyDir;
+      this.xDir = skelxDir;
+    }
+  }
+}
+
+
+class skeleChase {
+  constructor() {
+    this.xDir = 1 ;
+  }
+
+  execute(me) {
+    if(dist(targetX,targetY,me.x,me.y) < 350) {
+      me.step.set(targetX- me.x, targetY-me.y);
+      me.step.normalize();
+      me.angle = me.step.heading() + PI/2;
+      me.x += me.step.x;
+      me.y += me.step.y;
+    }
+  }
+}
 class Skeleton{
   constructor(x, y, scale){
     this.x = x;
@@ -392,8 +433,16 @@ class Skeleton{
     this.blood = [];
     this.angle = random(0, PI);
     this.attackTimer = 0;
+    this.step = new p5.Vector(0,-1);
+    this.state = [new skeleWander(), new skeleChase()];
+    this.currState = 1;
     //this.ammo = [];
   }
+
+  changeState(x) {
+    this.currState = x;
+  }
+
   draw(){
     if(this.health > 0){
       let index = floor(this.index) % this.len;
@@ -927,6 +976,7 @@ class Game{
     for(var k = 0; k < this.enemies.length; k++){
       this.enemies[k].draw();
       this.enemies[k].animate();
+      this.enemies[k].state[enemies[k].currState].execute(enemies[k]);
       //print(this.enemies[k].health);
     }
     for(var l = 0; l < ladders.length; l++){
@@ -944,40 +994,82 @@ class Game{
           this.kratos.velocity.set(0, 0);
         }
       }
+
+      for(var j = 0; j < this.enemies.length; j++) {
+        if(dist(this.enemies[j].x, this.enemies[j].y, this.grassArray[i].x, this.grassArray[i].y) < 40){
+          if(this.enemies[j].y < this.grassArray[i].y) {
+            this.enemies[j].y = this.grassArray[i].y -40;
+          }
+        }
+      }
     }
 
     for(var i = 0; i < this.wallsArray.length; i++) {
       if(dist(this.kratos.position.x, this.kratos.position.y, this.wallsArray[i].x, this.wallsArray[i].y) < 40){
-
-        if(this.kratos.position.x < this.wallsArray[i].x) {
-         
-          this.kratos.position.x -= 5;
-          //this.kratos.velocity.set(0, 0);
-          this.kratos.velocity.x = -this.kratos.velocity.x;
-          //print("left col");
-        }
-
-        if(this.kratos.position.x > this.wallsArray[i].x) {
+        if(this.kratos.position.y < this.wallsArray[i].y) {
           
-          this.kratos.position.x += 5;
-          //this.kratos.velocity.set(0, 0);
-          this.kratos.velocity.x = -this.kratos.velocity.x;
-          //print("right col");
-        }
-
-        if(this.kratos.position.y < this.wallsArray[i].y && this.kratos.velocity.y > 0) {
-          
-          this.kratos.position.y = this.wallsArray[i].y - 40 + 5;
+          this.kratos.position.y = this.wallsArray[i].y - 35;
           this.kratos.jump = 0;
           this.kratos.velocity.set(0, 0);
           //print("top col");
         }
+        else {
+          if(this.kratos.position.x < this.wallsArray[i].x) {
+            
+            this.kratos.position.x -= 5;
+            //this.kratos.velocity.set(0, 0);
+            this.kratos.velocity.x = -this.kratos.velocity.x;
+            //print("left col");
+          }
 
-        if(this.kratos.position.y > this.wallsArray[i].y) {
-          
-          this.kratos.position.y += 5; 
-          this.kratos.velocity.y = -this.kratos.velocity.y;
-          //print("bottom col");
+          if(this.kratos.position.x > this.wallsArray[i].x) {
+            
+            this.kratos.position.x += 5;
+            //this.kratos.velocity.set(0, 0);
+            this.kratos.velocity.x = -this.kratos.velocity.x;
+            //print("right col");
+          }
+
+
+          if(this.kratos.position.y > this.wallsArray[i].y) {
+            this.kratos.position.y += 5; 
+            this.kratos.velocity.y = -this.kratos.velocity.y;
+            //print("bottom col");
+          }
+      }
+    }
+  }
+
+    for(var j = 0; j < this.enemies.length; j++) {
+      for(var k = 0; k < this.wallsArray.length; k++) {
+        if(dist(this.enemies[j].x, this.enemies[j].y, this.wallsArray[k].x, this.wallsArray[k].y) < 40){
+
+          if(this.enemies[j].x < this.wallsArray[k].x) {
+           
+            this.enemies[j].x -= 5;
+
+            
+          }
+  
+          if(this.enemies[j].x > this.wallsArray[k].x) {
+            
+            this.enemies[j].x += 5;
+ 
+          }
+  
+          if(this.enemies[j].y < this.wallsArray[k].y) {
+            
+            this.enemies[j].y = this.wallsArray[k].y - 40 + 5;
+            
+
+          }
+  
+          if(this.enemies[j].y > this.wallsArray[k].y) {
+            
+            this.enemies[j].y += 5; 
+            skelyDir = 1;
+
+          }
         }
       }
     }
@@ -999,6 +1091,8 @@ class Game{
     this.kratos.move();
     this.platformCollision();
     this.combat();
+    targetX = this.kratos.position.x;
+    targetY = this.kratos.position.y;
   }
 }
 
