@@ -8,6 +8,7 @@ walls = [];
 enemies = [];
 ladders = [];
 images = [];
+backgroundArray = [];
 var tilemap = [
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
@@ -80,7 +81,7 @@ var tilemap = [
   "rr                           w               l            w                      ppprrrrrrrrrrrrrrw",
   "r                            w               l            w     ppppppppppppppppprrrrrrrrrrrrrrrrrw",
   "r                                            l           r     prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
-  "r                             ppppppppppppppppppppppppppp    prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                       bbbbbbppppppppppppppppppppppppppp    prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "r                    pppp                                        rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "r  ppppppp           rrrr                                                     rrrrrrrrrrrrrrrrrrrrw",
   "rpprrrrrrrpppppppp                                                                        rrrrrrrrw",
@@ -480,7 +481,7 @@ class IntroScreen{
     this.omega = new Omega(200, 100);
     this.kratos = new Kratos(100, 230, 80);
     this.bg = new bgsky(0,0,400,300);
-    this.grass = [new Platform(200,300),new Platform(160,300),new Platform(120,300),new Platform(80,300),new Platform(40,300),new Platform(0,300),new Platform(200,300),new Platform(240,300),new Platform(280,300),new Platform(320,300),new Platform(360,300)];
+    this.grass = [new Platform(200,300, "p"),new Platform(160,300, "p"),new Platform(120,300, "p"),new Platform(80,300, "p"),new Platform(40,300, "p"),new Platform(0,300, "p"),new Platform(200,300, "p"),new Platform(240,300, "p"),new Platform(280,300, "p"),new Platform(320,300, "p"),new Platform(360,300, "p")];
     this.rocks = [new Wall(200,335,"w"),new Wall(160,335,"w"),new Wall(120,335,"w"),new Wall(80,335,"w"),new Wall(40,335,"w"),new Wall(0,335,"w"),new Wall(200,335,"w"),new Wall(240,335,"w"),new Wall(280,335,"w"),new Wall(320,335,"w"),new Wall(360,335,"w"),new Wall(200,375,"w"),new Wall(160,375,"w"),new Wall(120,375,"w"),new Wall(80,375,"w"),new Wall(40,375,"w"),new Wall(0,375,"w"),new Wall(200,375,"w"),new Wall(240,375,"w"),new Wall(280,375,"w"),new Wall(320,375,"w"),new Wall(360,375,"w")];
     this.mtns = [new mountain(100,120,200,200),new mountain(-100,120,200,200),new mountain(300,120,200,200)];
     this.animateKratos = 1;
@@ -860,18 +861,34 @@ class Wall{
   }
 }
 
-
+class BackGround{
+  constructor(x, y, image){
+    this.x = x;
+    this.y = y;
+    this.image = image;
+  }
+  draw(){
+    image(this.image, this.x, this.y, 40, 40);
+  }
+}
 
 
 //class for grass platform textures
 class Platform{
-  constructor(x, y){
+  constructor(x, y, type){
     this.x = x;
     this.y = y;
-    this.platform = loadImage("grassland_tileset/grassland_tileset/PNG/terrain_platform_center.png");;
+    this.type = type;
+    this.platform = loadImage("grassland_tileset/grassland_tileset/PNG/terrain_platform_center.png");
+    this.bridge = images[3];
   }
   draw(){
-    image(this.platform, this.x, this.y, 40, 40);
+    if(this.type === "p"){
+      image(this.platform, this.x, this.y, 40, 40);
+    }
+    if(this.type === "b"){
+      image(this.bridge, this.x, this.y, 40, 40);
+    }
   }
 }
 
@@ -897,6 +914,9 @@ class Game{
     
   }
   drawBackground(){
+    for(var b = 0; b < backgroundArray.length; b++){
+      backgroundArray[b].draw();
+    }
     for(var i = 0; i < walls.length; i++){
 
       walls[i].draw();
@@ -912,6 +932,7 @@ class Game{
     for(var l = 0; l < ladders.length; l++){
       ladders[l].draw();
     }
+    
     
   }
   platformCollision(){
@@ -1014,6 +1035,7 @@ let zeusarray;
 let rock;
 let wall;
 let ladder;
+let bridge;
 //preloads fonts, music, and images to improve performance
 function preload(){
   myFont = loadFont('Godofwar-wPz6.ttf');
@@ -1039,9 +1061,15 @@ function preload(){
   wall = loadImage("grassland_tileset/grassland_tileset/PNG/terrain_center.png");
   rock = loadImage("grassland_tileset/grassland_tileset/PNG/midground_center.png");
   ladder = loadImage("grassland_tileset/grassland_tileset/PNG/rope_ladder_new.png");
+  bridge = loadImage("grassland_tileset/grassland_tileset/PNG/rope_ladder_new_horiz.png");
+  bg1 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall.png");
+  bg2 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall2.png");
   images.push(wall);
   images.push(rock);
   images.push(ladder);
+  images.push(bridge);
+  images.push(bg1);
+  images.push(bg2);
   kratosarray = [kratossp0,kratossp0,kratossp1,kratossp1];
   kratosarray_rev = [kratossp0_rev,kratossp0_rev,kratossp1_rev,kratossp1_rev];
   kratoswalking = [kratossp0,kratossp0,kratosspwalk,kratosspwalk];
@@ -1064,13 +1092,23 @@ function initTileMap(){
         walls.push(new Wall(j * 40, i * 40, "r"));
       }
       else if(tilemap[i][j] == "p"){
-        grass.push(new Platform(j * 40, i * 40));
+        grass.push(new Platform(j * 40, i * 40, "p"));
       }
       else if(tilemap[i][j] == "e"){
         enemies.push(new Skeleton(j * 40, i * 40, 40));
+        backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
       }
       else if(tilemap[i][j] == "l"){
         ladders.push(new Ladder(j * 40, i * 40, 40));
+      }
+      else if(tilemap[i][j] == "b"){
+        grass.push(new Platform(j * 40, i * 40, "b"));
+      }
+      else if(tilemap[i][j] == "1"){
+        backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
+      }
+      else if(tilemap[i][j] == "2"){
+        backgroundArray.push(new BackGround(j * 40, i * 40, images[5]));
       }
     }
   }
