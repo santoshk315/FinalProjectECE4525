@@ -551,8 +551,14 @@ class skeleWander {
 
   execute(me) {
     if(dist(targetX,targetY,me.x,me.y) >= 350){
-    me.y += this.yDir;
-    me.x += this.xDir;
+      me.y += this.yDir;
+      me.x += this.xDir;
+      if(this.xDir > 0){
+        me.direction = 0;
+      }
+      else{
+        me.direction = 1;
+      }
       if(frameCount % 120 === 0) {
         skelyDir = random([-1,1]);
         skelxDir = random([-1,1]);
@@ -583,6 +589,12 @@ class skeleChase {
       me.step.set(targetX - me.x, targetY - me.y);
       me.step.normalize();
       me.angle = me.step.heading() + PI/2;
+      if(abs(me.step.heading()) > 1.5 && abs(me.step.heading()) < 3.0){
+        me.direction = 0;
+      }
+      else{
+        me.direction = 1;
+      }
       //print(me.y);
       me.x += me.step.x;
       me.y += me.step.y;
@@ -634,7 +646,7 @@ class Skeleton{
     this.state = [new skeleWander(), new skeleChase()];
     this.currState = 0;
     this.ammo = [];
-
+    this.direction = 0;
   }
 
   changeState(x) {
@@ -643,9 +655,13 @@ class Skeleton{
 
   draw(){
     print(this.health)
-    if(this.health > 0){
+    if(this.health > 0 && this.direction === 0){
       let index = floor(this.index) % this.len;
       image(skelarray[index],this.x,this.y,this.scale,this.scale);
+    }
+    else if(this.health > 0 && this.direction === 1){
+      let index = floor(this.index) % this.len;
+      image(skelarray_rev[index],this.x,this.y,this.scale,this.scale);
     }
     else{
       if(this.timer < 500){
@@ -1296,9 +1312,9 @@ class Game{
         //rect(this.kratos.attackRect[0]+this.kratos.position.x,this.kratos.attackRect[1]+this.kratos.position.y,this.kratos.attackRect[2],this.kratos.attackRect[3]);
         if(dist(this.kratos.position.x+30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
 
-          if(this.kratos.timer % 100 === 0 && this.enemies[i].health > 0) {
-          //this.enemies[i].x += 10;
-          //this.enemies[i].y -= 8;
+          if(this.kratos.timer % 25 === 0 && this.enemies[i].health > 0) {
+          this.enemies[i].x += 10;
+          this.enemies[i].y -= 8;
             this.enemies[i].health--;
           }
           
@@ -1310,9 +1326,9 @@ class Game{
         
         if(dist(this.kratos.position.x-30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
 
-          if(this.kratos.timer % 100 === 0 && this.enemies[i].health > 0) {
-            //this.enemies[i].x -= 10;
-            //this.enemies[i].y += 8;
+          if(this.kratos.timer % 5 === 0 && this.enemies[i].health > 0) {
+            this.enemies[i].x -= 10;
+            this.enemies[i].y += 8;
               this.enemies[i].health--;
             }
           //print('hit')
