@@ -13,6 +13,7 @@ var skelxDir;
 let targetX;
 let targetY;
 backgroundArray = [];
+firedWebs = [];
 var tilemap = [
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
@@ -373,66 +374,66 @@ class Runes{
   }
 }
 //class for enemy firing state
-class enemyFire {
-  constructor() {
-    this.currFrameCount = 0;
-    this.enemyBullets = [new enemybulletObj(), new enemybulletObj()];
-    this.angle = 0;
-    this.angleDir = 0;
-    this.vec = new p5.Vector(0,0);
-  }
+// class enemyFire {
+//   constructor() {
+//     this.currFrameCount = 0;
+//     this.enemyBullets = [new enemybulletObj(), new enemybulletObj()];
+//     this.angle = 0;
+//     this.angleDir = 0;
+//     this.vec = new p5.Vector(0,0);
+//   }
 
-  execute(me) {
-    me.position.x += 0;
-    me.position.y += 0;
-    for(var i = 0; i < bullet.length; i++) {
-      if(bullet[i].fire != 0 && dist(me.position.x,me.position.y,bullet[i].position.x,bullet[i].position.y) < 30) {
-        me.changeState(0);
-      }
-    }
-    //if the enemy tank is not dead and player is close enough, shoot missles at the player
-    if(me.dead === 0) {
-      this.vec.set(player.position.x - me.position.x, player.position.y - me.position.y);
-      this.angle = this.vec.heading();
-      var angleDiff = abs(this.angle - me.angle);
-      if (angleDiff > twoDegrees) {
-        me.changeState(1);
-      }
-      if (this.currFrameCount < (frameCount - 70)) {
-        this.currFrameCount = frameCount;
-        this.enemyBullets[index].fire = 1;
+//   execute(me) {
+//     me.position.x += 0;
+//     me.position.y += 0;
+//     for(var i = 0; i < bullet.length; i++) {
+//       if(bullet[i].fire != 0 && dist(me.position.x,me.position.y,bullet[i].position.x,bullet[i].position.y) < 30) {
+//         me.changeState(0);
+//       }
+//     }
+//     //if the enemy tank is not dead and player is close enough, shoot missles at the player
+//     if(me.dead === 0) {
+//       this.vec.set(player.position.x - me.position.x, player.position.y - me.position.y);
+//       this.angle = this.vec.heading();
+//       var angleDiff = abs(this.angle - me.angle);
+//       if (angleDiff > twoDegrees) {
+//         me.changeState(1);
+//       }
+//       if (this.currFrameCount < (frameCount - 70)) {
+//         this.currFrameCount = frameCount;
+//         this.enemyBullets[index].fire = 1;
 
-        this.enemyBullets[index].position.x = me.position.x;
-        this.enemyBullets[index].position.y = me.position.y;
-        this.enemyBullets[index].angle = me.angle+PI/2;
-        index++;
-        if (index > 1) {
-            index = 0;
-        }
-     }
+//         this.enemyBullets[index].position.x = me.position.x;
+//         this.enemyBullets[index].position.y = me.position.y;
+//         this.enemyBullets[index].angle = me.angle+PI/2;
+//         index++;
+//         if (index > 1) {
+//             index = 0;
+//         }
+//      }
 
-     for(var i = 0; i < this.enemyBullets.length; i++) {
-      this.enemyBullets[i].draw();
+//      for(var i = 0; i < this.enemyBullets.length; i++) {
+//       this.enemyBullets[i].draw();
        
-     }
-      for(var i = 0; i < bullet.length; i++) {
-          //checks for collisions with enemy bullets
-        if ((me.dead === 0) && (dist(me.position.x,me.position.y,bullet[i].position.x,bullet[i].position.y) < 15)) {
-          me.dead = 1;
-          score++;
-          bullet[i].fire = 0;
-        }
+//      }
+//       for(var i = 0; i < bullet.length; i++) {
+//           //checks for collisions with enemy bullets
+//         if ((me.dead === 0) && (dist(me.position.x,me.position.y,bullet[i].position.x,bullet[i].position.y) < 15)) {
+//           me.dead = 1;
+//           score++;
+//           bullet[i].fire = 0;
+//         }
 
-        }
-        if(me.dead === 1) {
-          me.changeState(4);
-        }
-      }
-      else {
-        me.changeState(0);
-      }
-    }      
-}
+//         }
+//         if(me.dead === 1) {
+//           me.changeState(4);
+//         }
+//       }
+//       else {
+//         me.changeState(0);
+//       }
+//     }      
+// }
 //class for enemy fireballs
 class enemybulletObj {
   constructor() {
@@ -468,49 +469,38 @@ class enemybulletObj {
     rect(this.position.x+7,this.position.y+4,1,1);
     rect(this.position.x+8,this.position.y+5,1,1);
     rect(this.position.x+7,this.y+6,1,1);
-
-    for(var i = 0; i < enemies.length; i++) {
-      if(enemies[i].dead === 1 && (dist(this.position.x,this.position.y,enemies[i].position.x,enemies[i].position.y) < 15))
-      {
-        this.fire = 0;
-      }
-    //uses the angle of the player to shoot the fireballs
-      if(this.fire === 1){
-        this.position.x += 0.5*sin(enemies[i].angle+PI/2);
-        this.position.y -= 0.5*cos(enemies[i].angle+PI/2);
-      }
-
-      if(this.fire === 2){
-
-        this.position.x += 0.5*sin(this.angle);
-        this.position.y -= 0.5*cos(this.angle);
-      }
-
-      //if the fireball is far enough, it disappears
-      if (dist(this.position.x,this.position.y,enemies[i].position.x,enemies[i].position.y) > 300) {
-        this.fire = 0;
-      }
-
-      if (dist(this.position.x,this.position.y,enemies[i].position.x,enemies[i].position.y) > 20) {
-        this.fire = 2;
-      }
-         
-    }
-
-    if (dist(this.position.x,this.position.y,player.position.x,player.position.y) < 10) {
-      player.dead = 1;
-      this.fire = 0
-    }
-
-    //checks for collisions with walls
-    for (var i = 0; i < walls.length; i++) {
-      if (dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 12) {
-          this.fire = 0;
-        }
-    }
     pop();
   }
 }
+
+class fireBullet{
+  constructor(){
+    this.position = new p5.Vector(0, 0);
+    this.image = images[images.length - 1];
+    this.fire = 1;
+    this.angle = 0;
+  }
+  draw(){
+    image(this.image, this.position.x - 20, this.position.y - 20);
+    fill(0);
+    circle(this.position.x, this.position.y, 20);
+  }
+  move() {
+
+    this.position.x += .5 * sin(this.angle + PI / 2);
+    this.position.y -= .5 * cos(this.angle + PI / 2);
+    print("moving");
+    // if (this.position.y < 0 || this.position.y > 400 || this.position.x > 400 || this.position.x < 0) {
+    //   this.fire = 0;
+    // }
+
+
+  }
+}
+
+
+
+
 //class for basic skeleton enemy type
 class skelBlood{
   constructor(x, y){
@@ -552,19 +542,45 @@ class skeleWander {
 class skeleChase {
   constructor() {
     this.xDir = 1 ;
+    this.bullets = [new fireBullet(), new fireBullet(), new fireBullet(), new fireBullet()];
+    this.vec = new p5.Vector(0, 0);
+    this.angle = 0;
+    this.angleDir = 0;
+    this.val = 0;
+    this.index = 0;
   }
 
   execute(me) {
     if(dist(targetX,targetY,me.x,me.y) < 350) {
-      me.step.set(targetX- me.x, targetY-me.y);
+      me.step.set(targetX - me.x, targetY - me.y);
       me.step.normalize();
       me.angle = me.step.heading() + PI/2;
       me.x += me.step.x;
       me.y += me.step.y;
-      if(dist(targetX, targetY, me.x, me.y) < 120){
-        //shoot at kratos
+      if(me.health != 0){
         
-
+        //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
+          if(this.val < frameCount - 100){
+            this.val = frameCount;
+            this.bullets[this.index].fire = 1;
+            this.bullets[this.index].position.x = me.x + 20;
+            this.bullets[this.index].position.y = me.y + 20;
+            this.bullets[this.index].angle = me.angle;
+            firedWebs.push(this.bullets[this.index]);
+            this.index++;
+            if(this.index > 3){
+              this.index = 0;
+            }
+          //}
+          for(var i = 0; i < 4; i++){
+            if(this.bullets[i].fire === 1){
+              this.bullets[i].draw();
+              print("drawing bullets")
+              this.bullets[i].move();
+            }
+          }
+          
+        }
       }
     }
     else{
@@ -588,6 +604,7 @@ class Skeleton{
     this.state = [new skeleWander(), new skeleChase()];
     this.currState = 0;
     this.ammo = [];
+
   }
 
   changeState(x) {
@@ -1237,6 +1254,8 @@ class Game{
   }
   play(){
     this.drawBackground();
+    var lava = new fireBullet();
+    
     this.kratos.draw();
     this.kratos.animate();
     this.kratos.move();
@@ -1309,12 +1328,16 @@ function preload(){
   bridge = loadImage("grassland_tileset/grassland_tileset/PNG/rope_ladder_new_horiz.png");
   bg1 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall.png");
   bg2 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall2.png");
+  createCanvas(400, 400);
+  lava = new enemybulletObj();
+  lava.draw();
   images.push(wall);
   images.push(rock);
   images.push(ladder);
   images.push(bridge);
   images.push(bg1);
   images.push(bg2);
+  images.push(get(0, 0, 20, 20));
   kratosarray = [kratossp0,kratossp0,kratossp1,kratossp1];
   kratosarray_rev = [kratossp0_rev,kratossp0_rev,kratossp1_rev,kratossp1_rev];
   kratoswalking = [kratossp0,kratossp0,kratosspwalk,kratosspwalk];
