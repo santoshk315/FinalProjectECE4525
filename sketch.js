@@ -8,6 +8,8 @@ walls = [];
 enemies = [];
 ladders = [];
 images = [];
+keys = [];
+potions = [];
 var skelyDir;
 var skelxDir;
 let targetX;
@@ -70,13 +72,13 @@ var tilemap = [
   "rrrrrrrrrrrrrrrrrrrrrrrrppp                                                                       w",
   "r      rrrrrrrrrrrrrrrrrrrrpppppppppppp                                                           w",
   "r             rrrrrrrrrrrrrrrrrrrrrrrrrppppppppppppppppp                                          w",
-  "r                                 rrrrrrrrrrrrrrrrrrrrrrppppppppppppppp                           w",
+  "r                                 rrrrrrrrrrrrrrrrrrrrrrppppppplppppppp                           w",
   "r                                                                                                 w",
   "r                                                                                                 w",
   "r                                                                                                 w",
-  "r                                                                                                 w",
-  "r                                                                                                 w",
-  "r                                                                                                 w",
+  "r                                                              l                                  w",
+  "r                                                              l                                  w",
+  "r                                                              l                                  w",
   "rpppppppppppppppppppppppppppppppppppppppppppplpppppppppppppppppppppppppppppppppppppppp            w",
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrlrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrpp           w",
   "rrrrrrrrrrrrrrrrrrrr         wrrrrr          l       rrrrrw                                 ppppppw",
@@ -96,17 +98,17 @@ var tilemap = [
   "rrrrrrrrrrrrrrrrrrrrrrrr            rrrrrrr              rrr                             pppprrrrrw",
   "rrrrrrrrrrrrr                        rrrrr                r                             prrrrrrrrrw",
   "rrrrrrrr                               r                           pppp                prrrrrrrrrrw",
-  "rrrrr                                                               rr             pppprrrrrrrrrrrw",
+  "rrrrr                                                      p        rr             pppprrrrrrrrrrrw",
   "rrr                                                     pppppp                     r              w",
   "r                                                        rrrr                      r              w",
-  "r                                   e                     rr                       r              w",
+  "r                             k     e                     rr                       r              w",
   "r                    pppppppppppplpppppppppppppppppp                              p               w",
   "r                   prrrrrrrrrrrrlrrrrrrrrrrrrrrrrrrp               rr            r               w",
   "r                  prrrrrrrrrrrrrlrrrrrrrrrrrrrrrrrrrp             rrrr           r               w",
   "r                 prrrrrrrr      l          rrrrrrrrrrp          pprrrrr                          w",
   "r                prrrrr          l              rrrrrrrp       pprrrrrrrrr              p      pppw",
   "r       r       p                l                rrrrrrp      rrrrrrrrrrrr      r     pr     prrrw",
-  "r      rr      p                 l                  rrrrrp    prrrrrrrrrrrrr     r    prr  r  rrrrw",
+  "r      rr  k   p                 l     h            rrrrrp    prrrrrrrrrrrrr     r    prr  r  rrrrw",
   "rpppppprrpppppprrrrrrrrrrrrrrrrrprprrrrrrrrrrrrrrrrrrrrrrrpppprrrrrrrrrrrrrrppppprpppprrrpprpprrrrw",
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
@@ -1174,6 +1176,54 @@ class BackGround{
   }
 }
 
+class Potion{
+  constructor(x, y){
+    this.timer = 0;
+    this.x = x;
+    this.y = y;
+    this.image = images[7];
+    this.collect = 0;
+  }
+  draw(){
+    this.timer++;
+    if(this.collect === 0){
+      image(this.image, this.x, this.y, 20, 20);
+      
+    }
+  }
+  animate(){
+    if(this.timer % 30 === 15){
+      this.y += 5;
+    }
+    else if(this.timer % 30 == 0){
+      this.y -= 5;
+    }
+  }
+}
+
+class Key{
+  constructor(x, y){
+    this.timer = 0;
+    this.x = x;
+    this.y = y;
+    this.image = images[6];
+    this.collect = 0;
+  }
+  draw(){
+    this.timer++;
+    if(this.collect === 0){
+      image(this.image, this.x, this.y, 20, 20);
+    }
+  }
+  animate(){
+    if(this.timer % 30 === 15){
+      this.y += 5;
+    }
+    else if(this.timer % 30 == 0){
+      this.y -= 5;
+    }
+  }
+}
 
 //class for grass platform textures
 class Platform{
@@ -1234,6 +1284,14 @@ class Game{
     }
     for(var l = 0; l < ladders.length; l++){
       ladders[l].draw();
+    }
+    for(var x = 0; x < keys.length; x++){
+      keys[x].draw();
+      keys[x].animate();
+    }
+    for(var y = 0; y < potions.length; y++){
+      potions[y].draw();
+      potions[y].animate();
     }
     fill(0);
     rect(this.kratos.position.x-200,this.kratos.position.y-200,80,40);
@@ -1330,6 +1388,20 @@ class Game{
       }
     }
   }
+
+  itemCollision(){
+    for(var i = 0; i < keys.length; i++){
+      if(dist(this.kratos.position.x, this.kratos.position.y, keys[i].x, keys[i].y) < 20 && keys[i].collect === 0){
+        keys[i].collect = 1;
+      }
+    }
+    for(var j = 0; j < potions.length; j++){
+      if(dist(this.kratos.position.x, this.kratos.position.y, potions[j].x, potions[j].y) < 20 && potions[j].collect === 0){
+        potions[j].collect = 1;
+        this.kratos.health++;
+      }
+    }
+  }
   combat(){
     for(var i = 0; i < this.enemies.length; i++){
       /*if(dist(this.kratos.position.x, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1){
@@ -1387,6 +1459,7 @@ class Game{
     this.kratos.animate();
     this.kratos.move();
     this.platformCollision();
+    this.itemCollision();
     this.combat();
     targetX = this.kratos.position.x;
     targetY = this.kratos.position.y;
@@ -1430,7 +1503,8 @@ let rock;
 let wall;
 let ladder;
 let bridge;
-
+let potion;
+let key;
 let sl1;
 let sl4;
 let sl1_rev;
@@ -1466,6 +1540,8 @@ function preload(){
   rock = loadImage("grassland_tileset/grassland_tileset/PNG/midground_center.png");
   ladder = loadImage("grassland_tileset/grassland_tileset/PNG/rope_ladder_new.png");
   bridge = loadImage("grassland_tileset/grassland_tileset/PNG/rope_ladder_new_horiz.png");
+  potion = loadImage("grassland_tileset/grassland_tileset/PNG/pt1.png");
+  key = loadImage("grassland_tileset/grassland_tileset/PNG/key05_diamonds.png");
   bg1 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall.png");
   bg2 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall2.png");
   sl1 = loadImage("slash1.png");
@@ -1484,6 +1560,8 @@ function preload(){
   images.push(bridge);
   images.push(bg1);
   images.push(bg2);
+  images.push(key);
+  images.push(potion);
   images.push(get(0, 0, 20, 20));
   kratosarray = [kratossp0,kratossp0,kratossp1,kratossp1];
   kratosarray_rev = [kratossp0_rev,kratossp0_rev,kratossp1_rev,kratossp1_rev];
@@ -1529,6 +1607,13 @@ function initTileMap(){
       }
       else if(tilemap[i][j] == "2"){
         backgroundArray.push(new BackGround(j * 40, i * 40, images[5]));
+      }
+      else if(tilemap[i][j] == "k"){
+        keys.push(new Key(j * 40 + 10, i * 40 + 10));
+      }
+      else if(tilemap[i][j] == "h"){
+        potions.push(new Potion(j * 40 + 10, i * 40 + 10));
+        print("potion added");
       }
     }
   }
