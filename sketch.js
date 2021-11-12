@@ -444,8 +444,8 @@ class enemybulletObj {
   }
 
   draw() {
-    push();
-    translate(sin(this.angle)-10,cos(this.angle)-10);
+    //push();
+    //translate(sin(this.angle)-10,cos(this.angle)-10);
     noStroke();
     fill(244,66,54);
     rect(this.position.x+1,this.position.y+1,1,1);
@@ -469,7 +469,7 @@ class enemybulletObj {
     rect(this.position.x+7,this.position.y+4,1,1);
     rect(this.position.x+8,this.position.y+5,1,1);
     rect(this.position.x+7,this.y+6,1,1);
-    pop();
+    //pop();
   }
 }
 
@@ -479,17 +479,18 @@ class fireBullet{
     this.image = images[images.length - 1];
     this.fire = 1;
     this.angle = 0;
+    this.vec = new p5.Vector(0,-1);
   }
   draw(){
-    image(this.image, this.position.x - 20, this.position.y - 20);
+    
+    image(this.image, this.position.x - 20, this.position.y - 20, 40, 40);
     fill(0);
     circle(this.position.x, this.position.y, 20);
   }
   move() {
-
-    this.position.x += .5 * sin(this.angle + PI / 2);
-    this.position.y -= .5 * cos(this.angle + PI / 2);
-    print("moving");
+    this.position.x += 2 * sin(this.angle + PI / 2);
+     this.position.y -= 2 * cos(this.angle + PI / 2);
+    
     // if (this.position.y < 0 || this.position.y > 400 || this.position.x > 400 || this.position.x < 0) {
     //   this.fire = 0;
     // }
@@ -555,31 +556,33 @@ class skeleChase {
       me.step.set(targetX - me.x, targetY - me.y);
       me.step.normalize();
       me.angle = me.step.heading() + PI/2;
+      //print(me.y);
       me.x += me.step.x;
       me.y += me.step.y;
       if(me.health != 0){
         
         //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
           if(this.val < frameCount - 100){
+            print("enter");
             this.val = frameCount;
             this.bullets[this.index].fire = 1;
             this.bullets[this.index].position.x = me.x + 20;
             this.bullets[this.index].position.y = me.y + 20;
-            this.bullets[this.index].angle = me.angle;
+            this.bullets[this.index].angle = me.angle - PI/2;
             firedWebs.push(this.bullets[this.index]);
             this.index++;
             if(this.index > 3){
               this.index = 0;
             }
           //}
-          for(var i = 0; i < 4; i++){
-            if(this.bullets[i].fire === 1){
-              this.bullets[i].draw();
-              print("drawing bullets")
-              this.bullets[i].move();
-            }
-          }
           
+          
+        }
+        for(var i = 0; i < 3; i++){
+          if(this.bullets[i].fire === 1){
+            this.bullets[i].draw();
+            this.bullets[i].move();
+          }
         }
       }
     }
@@ -598,7 +601,7 @@ class Skeleton{
     this.health = 6;
     this.timer = 0;
     this.blood = [];
-    this.angle = random(0, PI);
+    this.angle = 0;
     this.attackTimer = 0;
     this.step = new p5.Vector(0,-1);
     this.state = [new skeleWander(), new skeleChase()];
