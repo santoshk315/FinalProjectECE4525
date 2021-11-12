@@ -135,6 +135,7 @@ class Kratos{
     this.timer = 0;
     this.climb = 0;
     this.health = 6;
+    this.attackRect = [32,0,20,40]
     //this.img = loadImage("kratossprite.png");
   }
   applyForce(force){
@@ -152,6 +153,8 @@ class Kratos{
     push();
     translate(this.position.x, this.position.y);
     let index = floor(this.index) % this.len;
+    stroke(255,0,0);
+    
     if(keyArray[LEFT_ARROW] === 1){
       
       this.angle = 3 * PI/2;
@@ -171,9 +174,12 @@ class Kratos{
       if(this.swing === 1) {
         if(this.dir === -1) {
           image(kratosattack_rev[index], 0, 0,this.scale,this.scale);
+          image(slasharray_rev[index], 0-25, 0,this.scale,this.scale);
         }
         else {
           image(kratosattack[index], 0, 0,this.scale,this.scale);
+          //rect(32,0,20,40);
+          image(slasharray[index], 0+25, 0,this.scale,this.scale);
         }
       }
       if(this.swing === 0) {
@@ -190,9 +196,12 @@ class Kratos{
       if(this.swing === 1) {
         if(this.dir === -1) {
           image(kratosattack_rev[index], 0, 0,this.scale,this.scale);
+          image(slasharray_rev[index], 0-25, 0,this.scale,this.scale);
         }
         else {
           image(kratosattack[index], 0, 0,this.scale,this.scale);
+          //rect(32,0,20,40);
+          image(slasharray[index], 0+25, 0,this.scale,this.scale);
         }
       }
       if(this.swing === 0) {
@@ -484,8 +493,8 @@ class fireBullet{
   draw(){
     
     image(this.image, this.position.x - 20, this.position.y - 20, 40, 40);
-    fill(0);
-    circle(this.position.x, this.position.y, 20);
+    //fill(0);
+    //circle(this.position.x, this.position.y, 20);
   }
   move() {
     this.position.x += 2 * sin(this.angle + PI / 2);
@@ -557,13 +566,13 @@ class skeleChase {
       me.step.normalize();
       me.angle = me.step.heading() + PI/2;
       //print(me.y);
-      me.x += me.step.x;
-      me.y += me.step.y;
+      //me.x += me.step.x;
+     // me.y += me.step.y;
       if(me.health != 0){
         
         //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
           if(this.val < frameCount - 100){
-            print("enter");
+            
             this.val = frameCount;
             this.bullets[this.index].fire = 1;
             this.bullets[this.index].position.x = me.x + 20;
@@ -1247,11 +1256,37 @@ class Game{
   }
   combat(){
     for(var i = 0; i < this.enemies.length; i++){
-      if(dist(this.kratos.position.x, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1){
+      /*if(dist(this.kratos.position.x, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1){
         if(this.kratos.timer % 100 === 0){
           this.enemies[i].health--;
         }
         this.enemies[i].attackedAnimation();
+      }*/
+      //print("kratos")
+      //print(this.kratos.position)
+      //print("")
+      stroke(0,255,0)
+      
+      //print(this.kratos.attackRect[0]+this.kratos.position.x)
+      //print(this.kratos.attackRect[1]+this.kratos.position.y)
+      if(this.kratos.dir === 1)
+      {
+        //rect(this.kratos.attackRect[0]+this.kratos.position.x,this.kratos.attackRect[1]+this.kratos.position.y,this.kratos.attackRect[2],this.kratos.attackRect[3]);
+        if(dist(this.kratos.position.x+30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
+          this.enemies[i].x += 10;
+          this.enemies[i].y -= 8;
+          print('hit')
+          this.enemies[i].attackedAnimation();
+        }
+      }
+      if(this.kratos.dir === -1) {
+        
+        if(dist(this.kratos.position.x-30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
+          this.enemies[i].x -= 10;
+          this.enemies[i].y += 8;
+          //print('hit')
+          this.enemies[i].attackedAnimation();
+        }
       }
     }
   }
@@ -1303,6 +1338,13 @@ let rock;
 let wall;
 let ladder;
 let bridge;
+
+let sl1;
+let sl4;
+let sl1_rev;
+let sl4_rev;
+let slasharray;
+let slasharray_rev;
 //preloads fonts, music, and images to improve performance
 function preload(){
   myFont = loadFont('Godofwar-wPz6.ttf');
@@ -1331,6 +1373,13 @@ function preload(){
   bridge = loadImage("grassland_tileset/grassland_tileset/PNG/rope_ladder_new_horiz.png");
   bg1 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall.png");
   bg2 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall2.png");
+  sl1 = loadImage("slash1.png");
+
+  sl4 = loadImage("slash4.png");
+
+  sl1_rev = loadImage("slash1_rev.png");
+
+  sl4_rev = loadImage("slash4_rev.png");
   createCanvas(400, 400);
   lava = new enemybulletObj();
   lava.draw();
@@ -1349,6 +1398,8 @@ function preload(){
   kratosattack_rev = [kratossp0_rev,kratossp0_rev,kratosspattk_rev,kratosspattk_rev];
   skelarray = [sksp0,sksp0,sksp1,sksp1];
   skelarray_rev = [sksp0_rev,sksp0_rev,sksp1_rev,sksp1_rev];
+  slasharray = [sl1,sl1,sl4,sl4];
+  slasharray_rev = [sl1_rev,sl1_rev,sl4_rev,sl4_rev];
   zeusarray = [zeussp,zeussp];
 }
 
