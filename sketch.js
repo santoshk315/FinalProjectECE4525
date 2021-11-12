@@ -511,7 +511,6 @@ class enemybulletObj {
     pop();
   }
 }
-
 //class for basic skeleton enemy type
 class skelBlood{
   constructor(x, y){
