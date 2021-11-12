@@ -572,6 +572,27 @@ class skeleWander {
   }
 }
 
+//class for enemy hurt state
+class skeleHurt {
+  constructor() {
+    this.timer = 0;
+  }
+
+  execute(me) {
+    this.timer++;
+    print('here')
+    me.x += me.knockback * 2;
+    me.y -= 2;
+    print("timer: ")
+    print(this.timer)
+    print("////")
+    if(this.timer === 30) {
+      me.hurt = 0;
+      this.timer = 0;
+      me.changeState(1);
+    }
+  }
+}
 
 class skeleChase {
   constructor() {
@@ -623,6 +644,10 @@ class skeleChase {
             this.bullets[i].move();
           }
         }
+
+        if(me.hurt === 1) {
+          me.changeState(2);
+        }
       }
     }
     else{
@@ -643,10 +668,12 @@ class Skeleton{
     this.angle = 0;
     this.attackTimer = 0;
     this.step = new p5.Vector(0,-1);
-    this.state = [new skeleWander(), new skeleChase()];
+    this.state = [new skeleWander(), new skeleChase(),new skeleHurt()];
     this.currState = 0;
     this.ammo = [];
     this.direction = 0;
+    this.hurt = 0;
+    this.knockback = 0;
   }
 
   changeState(x) {
@@ -654,14 +681,25 @@ class Skeleton{
   }
 
   draw(){
-    print(this.health)
+    //print(this.health)
     if(this.health > 0 && this.direction === 0){
       let index = floor(this.index) % this.len;
-      image(skelarray[index],this.x,this.y,this.scale,this.scale);
+      if(this.hurt === 0) {
+        image(skelarray[index],this.x,this.y,this.scale,this.scale);
+      }
+      else if(this.hurt === 1) {
+        image(skelarrayhurt[index],this.x,this.y,this.scale,this.scale);
+      }
+      
     }
     else if(this.health > 0 && this.direction === 1){
       let index = floor(this.index) % this.len;
-      image(skelarray_rev[index],this.x,this.y,this.scale,this.scale);
+      if(this.hurt === 0) {
+        image(skelarray_rev[index],this.x,this.y,this.scale,this.scale);
+      }
+      else if(this.hurt === 1) {
+        image(skelarrayhurt_rev[index],this.x,this.y,this.scale,this.scale);
+      }
     }
     else{
       if(this.timer < 500){
@@ -1313,9 +1351,11 @@ class Game{
         if(dist(this.kratos.position.x+30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
 
           if(this.kratos.timer % 25 === 0 && this.enemies[i].health > 0) {
-          this.enemies[i].x += 10;
-          this.enemies[i].y -= 8;
+          //this.enemies[i].x += 10;
+          //this.enemies[i].y -= 8;
             this.enemies[i].health--;
+            this.enemies[i].knockback = 1;
+            this.enemies[i].hurt = 1;
           }
           
           print('hit')
@@ -1327,9 +1367,11 @@ class Game{
         if(dist(this.kratos.position.x-30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
 
           if(this.kratos.timer % 5 === 0 && this.enemies[i].health > 0) {
-            this.enemies[i].x -= 10;
-            this.enemies[i].y += 8;
+            //this.enemies[i].x -= 10;
+            //this.enemies[i].y += 8;
               this.enemies[i].health--;
+              this.enemies[i].knockback = -1;
+              this.enemies[i].hurt = 1;
             }
           //print('hit')
           //this.enemies[i].attackedAnimation();
@@ -1379,6 +1421,9 @@ let sksp0;
 let sksp_rev;
 let sksp1;
 let sksp1_rev;
+
+let sksphurt;
+let sksphurt_rev;
 let zeussp;
 let zeusarray;
 let rock;
@@ -1408,6 +1453,9 @@ function preload(){
 
   sksp0 = loadImage("skeleton_wings.png");
   sksp1 = loadImage("skeleton_flying.png");
+
+  sksphurt = loadImage("skeleton_wings_hurt.png");
+  sksphurt_rev = loadImage("skeleton_wings_hurt_rev.png");
 
   sksp0_rev = loadImage("skeleton_wings_rev.png");
   sksp1_rev = loadImage("skeleton_flying_rev.png");
@@ -1445,6 +1493,9 @@ function preload(){
   kratosattack_rev = [kratossp0_rev,kratossp0_rev,kratosspattk_rev,kratosspattk_rev];
   skelarray = [sksp0,sksp0,sksp1,sksp1];
   skelarray_rev = [sksp0_rev,sksp0_rev,sksp1_rev,sksp1_rev];
+
+  skelarrayhurt = [sksphurt,sksphurt,sksphurt,sksphurt];
+  skelarrayhurt_rev = [sksphurt_rev,sksphurt_rev,sksphurt_rev,sksphurt_rev];
   slasharray = [sl1,sl1,sl4,sl4];
   slasharray_rev = [sl1_rev,sl1_rev,sl4_rev,sl4_rev];
   zeusarray = [zeussp,zeussp];
