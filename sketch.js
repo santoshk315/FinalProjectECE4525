@@ -133,7 +133,7 @@ class Kratos{
     this.health = 6;
     this.timer = 0;
     this.climb = 0;
-    
+    this.health = 6;
     //this.img = loadImage("kratossprite.png");
   }
   applyForce(force){
@@ -394,13 +394,18 @@ class skeleWander {
   }
 
   execute(me) {
+    if(dist(targetX,targetY,me.x,me.y) >= 350){
     me.y += this.yDir;
     me.x += this.xDir;
-    if(frameCount % 120 === 0) {
-      skelyDir = random([-1,1]);
-      skelxDir = random([-1,1]);
-      this.yDir = skelyDir;
-      this.xDir = skelxDir;
+      if(frameCount % 120 === 0) {
+        skelyDir = random([-1,1]);
+        skelxDir = random([-1,1]);
+        this.yDir = skelyDir;
+        this.xDir = skelxDir;
+      }
+    }
+    else{
+      me.changeState(1);
     }
   }
 }
@@ -418,6 +423,14 @@ class skeleChase {
       me.angle = me.step.heading() + PI/2;
       me.x += me.step.x;
       me.y += me.step.y;
+      if(dist(targetX, targetY, me.x, me.y) < 120){
+        //shoot at kratos
+        
+
+      }
+    }
+    else{
+      me.changeState(0);
     }
   }
 }
@@ -435,8 +448,8 @@ class Skeleton{
     this.attackTimer = 0;
     this.step = new p5.Vector(0,-1);
     this.state = [new skeleWander(), new skeleChase()];
-    this.currState = 1;
-    //this.ammo = [];
+    this.currState = 0;
+    this.ammo = [];
   }
 
   changeState(x) {
@@ -1006,12 +1019,12 @@ class Game{
 
     for(var i = 0; i < this.wallsArray.length; i++) {
       if(dist(this.kratos.position.x, this.kratos.position.y, this.wallsArray[i].x, this.wallsArray[i].y) < 40){
-        if(this.kratos.position.y < this.wallsArray[i].y) {
+        if(this.kratos.position.y < this.wallsArray[i].y && this.kratos.velocity.y >= 0) {
           
           this.kratos.position.y = this.wallsArray[i].y - 35;
           this.kratos.jump = 0;
           this.kratos.velocity.set(0, 0);
-          //print("top col");
+          print("top col");
         }
         else {
           if(this.kratos.position.x < this.wallsArray[i].x) {
@@ -1019,7 +1032,7 @@ class Game{
             this.kratos.position.x -= 5;
             //this.kratos.velocity.set(0, 0);
             this.kratos.velocity.x = -this.kratos.velocity.x;
-            //print("left col");
+            print("left col");
           }
 
           if(this.kratos.position.x > this.wallsArray[i].x) {
@@ -1027,14 +1040,14 @@ class Game{
             this.kratos.position.x += 5;
             //this.kratos.velocity.set(0, 0);
             this.kratos.velocity.x = -this.kratos.velocity.x;
-            //print("right col");
+            print("right col");
           }
 
 
           if(this.kratos.position.y > this.wallsArray[i].y) {
             this.kratos.position.y += 5; 
             this.kratos.velocity.y = -this.kratos.velocity.y;
-            //print("bottom col");
+            print("bottom col");
           }
       }
     }
