@@ -586,7 +586,7 @@ class skeleChase {
       //print(me.y);
       me.x += me.step.x;
       me.y += me.step.y;
-      if(me.health != 0){
+      if(me.health > 0){
         
         //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
           if(this.val < frameCount - 100){
@@ -1296,27 +1296,27 @@ class Game{
         //rect(this.kratos.attackRect[0]+this.kratos.position.x,this.kratos.attackRect[1]+this.kratos.position.y,this.kratos.attackRect[2],this.kratos.attackRect[3]);
         if(dist(this.kratos.position.x+30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
 
-          if(this.kratos.timer % 100 === 0) {
+          if(this.kratos.timer % 100 === 0 && this.enemies[i].health > 0) {
           //this.enemies[i].x += 10;
           //this.enemies[i].y -= 8;
             this.enemies[i].health--;
           }
           
           print('hit')
-          this.enemies[i].attackedAnimation();
+          //this.enemies[i].attackedAnimation();
         }
       }
       if(this.kratos.dir === -1) {
         
         if(dist(this.kratos.position.x-30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
 
-          if(this.kratos.timer % 100 === 0) {
+          if(this.kratos.timer % 100 === 0 && this.enemies[i].health > 0) {
             //this.enemies[i].x -= 10;
             //this.enemies[i].y += 8;
               this.enemies[i].health--;
             }
           //print('hit')
-          this.enemies[i].attackedAnimation();
+          //this.enemies[i].attackedAnimation();
         }
       }
     }
