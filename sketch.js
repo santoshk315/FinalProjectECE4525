@@ -498,8 +498,26 @@ class fireBullet{
   }
   move() {
     this.position.x += 2 * sin(this.angle + PI / 2);
-     this.position.y -= 2 * cos(this.angle + PI / 2);
+    this.position.y -= 2 * cos(this.angle + PI / 2);
+
+    for(var i = 0; i < enemies.length; i++) {
+      if(dist(this.position.x,this.position.y,enemies[i].x,enemies[i].y) > 1200) {
+        this.fire = 0;
+      }
+    }
     
+    if(dist(this.position.x,this.position.y,kratos.position.x,kratos.position.y) < 35) {
+      this.fire = 0;
+      kratos.health -= 0.5;
+      //print('noooo')
+    }
+
+    for(var i = 0; i < walls.length; i++) {
+      if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
+        print('wall')
+        this.fire = 0;
+      }
+    }
     // if (this.position.y < 0 || this.position.y > 400 || this.position.x > 400 || this.position.x < 0) {
     //   this.fire = 0;
     // }
@@ -566,8 +584,8 @@ class skeleChase {
       me.step.normalize();
       me.angle = me.step.heading() + PI/2;
       //print(me.y);
-      //me.x += me.step.x;
-     // me.y += me.step.y;
+      me.x += me.step.x;
+      me.y += me.step.y;
       if(me.health != 0){
         
         //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
@@ -624,6 +642,7 @@ class Skeleton{
   }
 
   draw(){
+    print(this.health)
     if(this.health > 0){
       let index = floor(this.index) % this.len;
       image(skelarray[index],this.x,this.y,this.scale,this.scale);
@@ -1162,8 +1181,11 @@ class Game{
     for(var l = 0; l < ladders.length; l++){
       ladders[l].draw();
     }
-    
-    
+    fill(0);
+    rect(this.kratos.position.x-200,this.kratos.position.y-200,80,40);
+    fill(255)
+    text("HP: ",this.kratos.position.x-180,this.kratos.position.y-180)
+    text(this.kratos.health,this.kratos.position.x-150,this.kratos.position.y-180);
   }
   platformCollision(){
     for(var i = 0; i < this.grassArray.length; i++){
@@ -1191,7 +1213,7 @@ class Game{
           this.kratos.position.y = this.wallsArray[i].y - 35;
           this.kratos.jump = 0;
           this.kratos.velocity.set(0, 0);
-          print("top col");
+          //print("top col");
         }
         else {
           if(this.kratos.position.x < this.wallsArray[i].x) {
@@ -1199,7 +1221,7 @@ class Game{
             this.kratos.position.x -= 5;
             //this.kratos.velocity.set(0, 0);
             this.kratos.velocity.x = -this.kratos.velocity.x;
-            print("left col");
+            //print("left col");
           }
 
           if(this.kratos.position.x > this.wallsArray[i].x) {
@@ -1207,14 +1229,14 @@ class Game{
             this.kratos.position.x += 5;
             //this.kratos.velocity.set(0, 0);
             this.kratos.velocity.x = -this.kratos.velocity.x;
-            print("right col");
+            //print("right col");
           }
 
 
           if(this.kratos.position.y > this.wallsArray[i].y) {
             this.kratos.position.y += 5; 
             this.kratos.velocity.y = -this.kratos.velocity.y;
-            print("bottom col");
+            //print("bottom col");
           }
       }
     }
@@ -1226,14 +1248,14 @@ class Game{
 
           if(this.enemies[j].x < this.wallsArray[k].x) {
            
-            this.enemies[j].x -= 5;
+            this.enemies[j].x -= 10;
 
             
           }
   
           if(this.enemies[j].x > this.wallsArray[k].x) {
             
-            this.enemies[j].x += 5;
+            this.enemies[j].x += 10;
  
           }
   
@@ -1246,7 +1268,7 @@ class Game{
   
           if(this.enemies[j].y > this.wallsArray[k].y) {
             
-            this.enemies[j].y += 5; 
+            this.enemies[j].y += 10; 
             skelyDir = 1;
 
           }
@@ -1273,8 +1295,13 @@ class Game{
       {
         //rect(this.kratos.attackRect[0]+this.kratos.position.x,this.kratos.attackRect[1]+this.kratos.position.y,this.kratos.attackRect[2],this.kratos.attackRect[3]);
         if(dist(this.kratos.position.x+30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
-          this.enemies[i].x += 10;
-          this.enemies[i].y -= 8;
+
+          if(this.kratos.timer % 100 === 0) {
+          //this.enemies[i].x += 10;
+          //this.enemies[i].y -= 8;
+            this.enemies[i].health--;
+          }
+          
           print('hit')
           this.enemies[i].attackedAnimation();
         }
@@ -1282,8 +1309,12 @@ class Game{
       if(this.kratos.dir === -1) {
         
         if(dist(this.kratos.position.x-30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
-          this.enemies[i].x -= 10;
-          this.enemies[i].y += 8;
+
+          if(this.kratos.timer % 100 === 0) {
+            //this.enemies[i].x -= 10;
+            //this.enemies[i].y += 8;
+              this.enemies[i].health--;
+            }
           //print('hit')
           this.enemies[i].attackedAnimation();
         }
