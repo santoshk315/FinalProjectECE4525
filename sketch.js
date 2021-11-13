@@ -1083,12 +1083,14 @@ class InstructionScreen{
     if(this.kratos.position.x > -150){
       this.kratos.position.x += -5;
       this.zeus.x += -5;
+      this.zeusbolt.x -= 5;
     }
     else{
       instructionsS = false;
       //introS = true;
       this.kratos.position.x = 100;
       this.zeus.x = 240;
+      this.zeusbolt.x = 290;
       
     }
   }
@@ -1135,10 +1137,11 @@ class InstructionScreen{
       noStroke();
       noFill();
       stroke(255, 0, 0);
-      text("Instructions", 160, 50);
+      text("Instructions", 110, 35);
       textFont('Helvetica');
+      var p = new Potion()
       textSize(7.5);
-      text("Use the Arrow Keys to move Kratos throughout the world, and use the spacebar to attack enemies.  If Kratos attacks enough enemies, shift can engage a special attack.", 160, 60, 100, 50);
+      text("Use the Arrow Keys to move Kratos throughout the world\n\nUse the spacebar to attack enemies\n\nCollect Keys for points and potions to restore health.", 110, 40, 150, 100);
       noStroke();
       //Switch to the base screen
       if((mouseIsPressed) && mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75 && this.instructions){
