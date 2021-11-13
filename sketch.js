@@ -879,7 +879,7 @@ class InstructionScreen{
     this.kratos = new Kratos(100, 230, 80);
     this.zeus = new Zeus(240,180,80);
     this.bg = new redsky(0,0,400,300);
-    this.grass = [new Platform(200,300,40,40),new Platform(160,300,40,40),new Platform(120,300,40,40),new Platform(80,300,40,40),new Platform(40,300,40,40),new Platform(0,300,40,40),new Platform(200,300,40,40),new Platform(240,300,40,40),new Platform(280,300,40,40),new Platform(320,300,40,40),new Platform(360,300,40,40)];
+    this.grass = [new Platform(200,300, "p"),new Platform(160,300, "p"),new Platform(120,300, "p"),new Platform(80,300, "p"),new Platform(40,300, "p"),new Platform(0,300, "p"),new Platform(200,300, "p"),new Platform(240,300, "p"),new Platform(280,300, "p"),new Platform(320,300, "p"),new Platform(360,300, "p")];
     this.rocks = [new Wall(200,335,"w"),new Wall(160,335,"w"),new Wall(120,335,"w"),new Wall(80,335,"w"),new Wall(40,335,"w"),new Wall(0,335,"w"),new Wall(200,335,"w"),new Wall(240,335,"w"),new Wall(280,335,"w"),new Wall(320,335,"w"),new Wall(360,335,"w"),new Wall(200,375,"w"),new Wall(160,375,"w"),new Wall(120,375,"w"),new Wall(80,375,"w"),new Wall(40,375,"w"),new Wall(0,375,"w"),new Wall(200,375,"w"),new Wall(240,375,"w"),new Wall(280,375,"w"),new Wall(320,375,"w"),new Wall(360,375,"w")];
     this.mtns = [new mountain(100,120,200,200),new mountain(-100,120,200,200),new mountain(300,120,200,200)];
     this.animateKratos = 1;
