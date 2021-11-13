@@ -1011,6 +1011,7 @@ class InstructionScreen{
     this.kratMove = new Kratos(260, 40, 20);
 
     this.kratAttack = new Kratos(260, 60, 20);
+    this.timer = 0;
   }
   //Draw various background items and characters and their animations in the screen
   draw(){
@@ -1100,6 +1101,7 @@ class InstructionScreen{
   //State machine that controls instructions panel
   drawInstructs(){
     //Base screen that allows choices from various options
+    this.timer++;
     if(this.base){
       fill(245,245,220);
       rect(50, 25, 300, 100);
@@ -1144,6 +1146,12 @@ class InstructionScreen{
       textFont('Helvetica');
       
       this.kratMove.draw();
+      if(this.timer % 30 < 15){
+        this.kratMove.position.x++;
+      }
+      else{
+        this.kratMove.position.x--;
+      }
       this.kratMove.walkani = 1;
       this.kratMove.animate();
       this.kratAttack.swing = 1;
