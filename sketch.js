@@ -1320,7 +1320,23 @@ class Game{
     // for(var b = 0; b < backgroundArray.length; b++){
     //   backgroundArray[b].draw();
     // }
-    image(images[8], 0, 0, 4000, 3720);
+    image(images[8], 0, 0, 1000, 930);
+    image(images[8], 1000, 0, 1000, 930);
+    image(images[8], 2000, 0, 1000, 930);
+    image(images[8], 3000, 0, 1000, 930);
+    image(images[8], 0, 930, 1000, 930);
+    image(images[8], 0, 1860, 1000, 930);
+    image(images[8], 0, 2790, 1000, 930);
+    image(images[8], 1000, 930, 1000, 930);
+    image(images[8], 1000, 1860, 1000, 930);
+    image(images[8], 1000, 2790, 1000, 930);
+    image(images[8], 2000, 930, 1000, 930);
+    image(images[8], 2000, 1860, 1000, 930);
+    image(images[8], 2000, 2790, 1000, 930);
+    image(images[8], 3000, 930, 1000, 930);
+    image(images[8], 3000, 1860, 1000, 930);
+    image(images[8], 3000, 2790, 1000, 930);
+
     for(var i = 0; i < walls.length; i++){
 
       walls[i].draw();
@@ -1600,7 +1616,7 @@ function preload(){
   key = loadImage("grassland_tileset/grassland_tileset/PNG/key05_diamonds.png");
   bg1 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall.png");
   bg2 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall2.png");
-  backgroundImage = loadImage("grassland_tileset/grassland_tileset/PNG/spooky.png")
+  backgroundImage = loadImage("grassland_tileset/grassland_tileset/PNG/bg_cave.png")
   sl1 = loadImage("slash1.png");
 
   sl4 = loadImage("slash4.png");
