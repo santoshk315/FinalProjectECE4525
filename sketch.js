@@ -149,6 +149,7 @@ class Kratos{
     this.climb = 0;
     this.health = 6;
     this.attackRect = [32,0,20,40]
+    this.score = 0;
     //this.img = loadImage("kratossprite.png");
   }
   //function to apply gravity
@@ -1590,6 +1591,7 @@ class Game{
     for(var i = 0; i < keys.length; i++){
       if(dist(this.kratos.position.x, this.kratos.position.y, keys[i].x, keys[i].y) < 20 && keys[i].collect === 0){
         keys[i].collect = 1;
+        this.kratos.score++;
       }
     }
     for(var j = 0; j < potions.length; j++){
