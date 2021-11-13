@@ -1008,6 +1008,9 @@ class InstructionScreen{
     this.zeusBio = false;
     this.lightning = [new Lightning(295,80,250),new Lightning(200,80,250)];
     this.zeusbolt = new Lightning(290,190,60);
+    this.kratMove = new Kratos(260, 40, 20);
+
+    this.kratAttack = new Kratos(260, 60, 20);
   }
   //Draw various background items and characters and their animations in the screen
   draw(){
@@ -1139,12 +1142,13 @@ class InstructionScreen{
       stroke(255, 0, 0);
       text("Instructions", 110, 35);
       textFont('Helvetica');
-      var kratMove = new Kratos(260, 40, 20);
-      kratMove.swing = 1;
-      kratMove.draw();
-      var kratAttack = new Kratos(260, 60, 20);
-      kratAttack.swing = 1;
-      kratAttack.draw();
+      
+      this.kratMove.draw();
+      this.kratMove.walkani = 1;
+      this.kratMove.animate();
+      this.kratAttack.swing = 1;
+      this.kratAttack.draw();
+      this.kratAttack.animate();
       var p = new Potion(260, 90);
       p.draw();
       p.animate();
