@@ -25,7 +25,7 @@ var tilemap = [
   "r              rrrrrrrrrrrr                 rr                                                    w",
   "r             prrrrrrrrrrrr                  r                                                    w",
   "r              rrrrrrrrrrrr                  r                                                    w",
-  "r            prrrrrrrrrrrr                   r                                                    w",
+  "r            prrrrrrrrrrrr                   r          eeeeeeeeeeeeeeeeeeeeeeeeeeeeee            w",
   "r             rrrrrrrrrrrr                   r                                                    w",
   "r            prrrrrrrrr                      r                                                    w",
   "r             rrrrrrrr                       r                                                    w",
@@ -34,51 +34,51 @@ var tilemap = [
   "r            rrr                             r                                                    w",
   "r            rr                              r                                                    w",
   "r                                            r                                                    w",
-  "r                                                                                                 w",
+  "r hhhhhhhhhhhhhhh                                                                                 w",
   "rppppppppppppppppppppppp                          ppppppppppppppppppppppppppppppppppppppppppppppppw",
-  "rrrrrrrrrrrrrrrrrrrrrrrrpp                    pppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "rrrrrrrrrrrrrrrrrrrrrrrrpp               k    pppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "rrrrrrrrrrrrrrrrr                       pppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "rrrrrrrr                         ppppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "r                           ppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "r                          prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "r                         prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
-  "r                        prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r          k             prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "r    pppppppppppppppppppprrrrrrrrrrrrrrrr                                                         w",
   "r    r                                  r                                                         w",
-  "rp  p                                   r                                                         w",
-  "r                                      r                                                         rw",
+  "rp  p          e                        r                                                         w",
+  "r                                       r                                                         w",
   "rp    ppppp                             r                                                         w",
   "rr     rrrrpppppp                       r                                                         w",
-  "rr r   rrrrrrrrrrp                                                                                w",
+  "rr r   rrrrrrrrrrp            e                                                                   w",
   "rrrrrrrrrrrrrrrrrrpppppppppppppppppppppppppppppppppppppppppppppppppppppppp                        w",
-  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr                                                               w",
+  "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr                                           r                   w",
   "rrrrrrrrrrrrrrrrrrrrrr                                                                            w",
   "rrrrrrrrr                                                   ppppppppppppppppppppppppppppppppppppppw",
   "rrrrr                                                ppppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "r                                               pppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "r                                         pppppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
-  "r                                ppppppppprrrrrrrrrrrrrrrrrrrr                                    w",
+  "r                            e   ppppppppprrrrrrrrrrrrrrrrrrrr                                    w",
   "r                        pppppppprrrrrrrrrrrrrrrr                                                 w",
   "r                 ppppppprrrrrrrrrrrrrrrr                                                         w",
   "r            ppppprrrrrrrrrrrrrrrrrrr                                                             w",
   "r                                                                                                 w",
-  "r                                                                                                 w",
-  "r                                                                                                 w",
-  "r                                                                                                 w",
-  "r                                                                                                 w",
+  "r    ppp                                                                                          w",
+  "r     r                                                                                           w",
+  "rp                                                                                                w",
+  "rr                                                                                                w",
   "rpppppppp                                                                                         w",
-  "rrrrrrrrrpppppp                                                                                   w",
+  "rrrrrrrrrpppppp     k                                                                             w",
   "rrrrrrrrrrrrrrrppppppppp                                                                          w",
-  "rrrrrrrrrrrrrrrrrrrrrrrrppp                                                                       w",
+  "rrrrrrrrrrrrrrrrrrrrrrrrppp      e                                                                w",
   "r      rrrrrrrrrrrrrrrrrrrrpppppppppppp                                                           w",
-  "r             rrrrrrrrrrrrrrrrrrrrrrrrrppppppppppppppppp                                          w",
+  "r             rrrrrrrrrrrrrrrrrrrrrrrrrppppppppppppppppp   k                                      w",
   "r                                 rrrrrrrrrrrrrrrrrrrrrrppppppplppppppp                           w",
   "r                                                                                                 w",
   "r                                                                                                 w",
   "r                                                                                                 w",
   "r                                                              l                                  w",
   "r                                                              l                                  w",
-  "r                                                              l                                  w",
+  "r              k                        k                      l                                  w",
   "rpppppppppppppppppppppppppppppppppppppppppppplpppppppppppppppppppppppppppppppppppppppp            w",
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrlrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrpp           w",
   "rrrrrrrrrrrrrrrrrrrr         wrrrrr          l       rrrrrw                                 ppppppw",
@@ -87,13 +87,13 @@ var tilemap = [
   "rrrr                         wr              l           rw                         rrrrrrrrrrrrrrw",
   "rr                           w               l            w                      ppprrrrrrrrrrrrrrw",
   "r                            w               l            w     ppppppppppppppppprrrrrrrrrrrrrrrrrw",
-  "r                                            l           r     prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r                                    k       l    h      r     prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "r                       bbbbbbppppppppppppppppppppppppppp    prrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
-  "r                    pppp                                        rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
+  "r     h              pppp                                        rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "r  ppppppp           rrrr                                                     rrrrrrrrrrrrrrrrrrrrw",
   "rpprrrrrrrpppppppp                                                                        rrrrrrrrw",
   "rrrrrrrrrrrrrrrrrrppppppp                                                                 rrrrrrrrw",
-  "rrrrrrrrrrrrrrrrrrrrrrrrrppppp           e               e                                rrrrrrrrw",
+  "rrrrrrrrrrrrrrrrrrrrrrrrrppppp          e                e                                rrrrrrrrw",
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrr       ppppppppp         pppppppp                                rrrrrw",
   "rrrrrrrrrrrrrrrrrrrrrrrr            rrrrrrr              rrr                             pppprrrrrw",
   "rrrrrrrrrrrrr                        rrrrr                r                             prrrrrrrrrw",
@@ -105,10 +105,10 @@ var tilemap = [
   "r                    pppppppppppplpppppppppppppppppp                              p               w",
   "r                   prrrrrrrrrrrrlrrrrrrrrrrrrrrrrrrp               rr            r               w",
   "r                  prrrrrrrrrrrrrlrrrrrrrrrrrrrrrrrrrp             rrrr           r               w",
-  "r                 prrrrrrrr      l          rrrrrrrrrrp          pprrrrr                          w",
+  "r                 prrrrrrrr      l          rrrrrrrrrrp          pprrrrr                       h  w",
   "r                prrrrr          l              rrrrrrrp       pprrrrrrrrr              p      pppw",
   "r       r       p                l                rrrrrrp      rrrrrrrrrrrr      r     pr     prrrw",
-  "r      rr  k   p                 l     h            rrrrrp    prrrrrrrrrrrrr     r    prr  r  rrrrw",
+  "r      rr  k   p                 l     h            rrrrrp    prrrrrrrrrrrrr  h  r    prr  r  rrrrw",
   "rpppppprrpppppprrrrrrrrrrrrrrrrrprprrrrrrrrrrrrrrrrrrrrrrrpppprrrrrrrrrrrrrrppppprpppprrrpprpprrrrw",
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrppprrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
@@ -509,11 +509,7 @@ class fireBullet{
     this.position.x += 2 * sin(this.angle + PI / 2);
     this.position.y -= 2 * cos(this.angle + PI / 2);
 
-    for(var i = 0; i < enemies.length; i++) {
-      if(dist(this.position.x,this.position.y,enemies[i].x,enemies[i].y) > 1200) {
-        this.fire = 0;
-      }
-    }
+    
     
     if(dist(this.position.x,this.position.y,kratos.position.x,kratos.position.y) < 35) {
       this.fire = 0;
@@ -560,6 +556,7 @@ class skeleWander {
 
   execute(me) {
     if(dist(targetX,targetY,me.x,me.y) >= 350){
+      print('wandering')
       me.y += this.yDir;
       me.x += this.xDir;
       if(this.xDir > 0){
@@ -616,6 +613,7 @@ class skeleChase {
 
   execute(me) {
     if(dist(targetX,targetY,me.x,me.y) < 350) {
+      print('chasing')
       me.step.set(targetX - me.x, targetY - me.y);
       me.step.normalize();
       me.angle = me.step.heading() + PI/2;
@@ -653,7 +651,11 @@ class skeleChase {
             this.bullets[i].move();
           }
         }
-
+        for(var i = 0; i < this.bullets.length; i++) {
+          if(dist(this.bullets[i].position.x,this.bullets[i].position.y,me.x,me.y) > 1200) {
+            this.bullets[i].fire = 0;
+          }
+        }
         if(me.hurt === 1) {
           me.changeState(2);
         }
