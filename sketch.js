@@ -181,7 +181,14 @@ class Kratos{
         else {
           image(kratosattack[index], 0, 0,this.scale,this.scale);
           //rect(32,0,20,40);
-          image(slasharray[index], 0+25, 0,this.scale,this.scale);
+          if(!instructionsS) {
+            image(slasharray[index], 0+25, 0,this.scale,this.scale);
+          }
+          
+
+          if(instructionsS) {
+            image(slasharray[index], 0+50, 0,this.scale,this.scale);
+          }
         }
       }
       if(this.swing === 0) {
@@ -944,15 +951,15 @@ class InstructionScreen{
     this.drawInstructs();
   }
   animate(){
+    
+    if(frameCount % 70 === 0) {
+      this.kratos.swing = 1;
+    }
     this.kratos.position.x += this.animateKratos;
-    if(this.kratos.position.x > 300 || this.kratos.position.x < 0){
+    if(this.kratos.position.x > 150 || this.kratos.position.x < 25){
       this.animateKratos = -this.animateKratos;
+      this.kratos.swing = 0;
     }
-    this.skeleton.x += this.animateSkeleton;
-    if(this.skeleton.x > 400 || this.skeleton.x < 100){
-      this.animateSkeleton = -this.animateSkeleton;
-    }
-
     
   }
   moveOut(){
@@ -1677,6 +1684,7 @@ function draw() {
   }
   else if(instructionsS){
     instr.draw();
+    instr.animate();
     if((mouseIsPressed) && mouseX > 112 && mouseX < 212 && mouseY > 100 && mouseY < 125 && instr.base){
       instructTrans = true;
       
