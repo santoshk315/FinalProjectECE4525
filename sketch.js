@@ -516,7 +516,7 @@ class fireBullet{
 
     for(var i = 0; i < walls.length; i++) {
       if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
-        print('wall')
+        //print('wall')
         this.fire = 0;
       }
     }
@@ -582,12 +582,12 @@ class skeleHurt {
 
   execute(me) {
     this.timer++;
-    print('here')
+    //print('here')
     me.x += me.knockback * 2;
     me.y -= 2;
-    print("timer: ")
-    print(this.timer)
-    print("////")
+    // print("timer: ")
+    // print(this.timer)
+    // print("////")
     if(this.timer === 30) {
       me.hurt = 0;
       this.timer = 0;
@@ -1613,7 +1613,7 @@ function initTileMap(){
       }
       else if(tilemap[i][j] == "h"){
         potions.push(new Potion(j * 40 + 10, i * 40 + 10));
-        print("potion added");
+        //print("potion added");
       }
     }
   }
