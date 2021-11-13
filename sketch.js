@@ -1139,7 +1139,18 @@ class InstructionScreen{
       stroke(255, 0, 0);
       text("Instructions", 110, 35);
       textFont('Helvetica');
-      var p = new Potion()
+      var kratMove = new Kratos(260, 40, 20);
+      kratMove.swing = 1;
+      kratMove.draw();
+      var kratAttack = new Kratos(260, 60, 20);
+      kratAttack.swing = 1;
+      kratAttack.draw();
+      var p = new Potion(260, 90);
+      p.draw();
+      p.animate();
+      var k = new Key(300, 90);
+      k.draw();
+      k.animate();
       textSize(7.5);
       text("Use the Arrow Keys to move Kratos throughout the world\n\nUse the spacebar to attack enemies\n\nCollect Keys for points and potions to restore health.", 110, 40, 150, 100);
       noStroke();
