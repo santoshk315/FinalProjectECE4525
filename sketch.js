@@ -16,6 +16,17 @@ let targetX;
 let targetY;
 backgroundArray = [];
 firedWebs = [];
+
+/*
+Initialize Tile Map Design
+r - rocks
+p - platforms
+e - enemies
+k - keys
+h - health potions
+*/
+
+
 var tilemap = [
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
   "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrw",
@@ -25,7 +36,7 @@ var tilemap = [
   "r              rrrrrrrrrrrr                 rr                                                    w",
   "r             prrrrrrrrrrrr                  r                                                    w",
   "r              rrrrrrrrrrrr                  r                                                    w",
-  "r            prrrrrrrrrrrr                   r          eeeeeeeeeeeeeeeeeeeeeeeeeeeeee            w",
+  "r            prrrrrrrrrrrr                   r          ee e e e e e e e e e                      w",
   "r             rrrrrrrrrrrr                   r                                                    w",
   "r            prrrrrrrrr                      r                                                    w",
   "r             rrrrrrrr                       r                                                    w",
@@ -140,9 +151,11 @@ class Kratos{
     this.attackRect = [32,0,20,40]
     //this.img = loadImage("kratossprite.png");
   }
+  //function to apply gravity
   applyForce(force){
     this.acceleration.add(force);
   }
+  //Draw Kratos, and flip directions based on key presses
   draw(){
     /*image(kratossp0,this.x, this.y, this.scale, this.scale);
     image(kratossp0,this.x, this.y, this.scale, this.scale);
@@ -151,6 +164,7 @@ class Kratos{
       image(kratossp1, this.x, this.y, this.scale, this.scale);
       image(kratossp1, this.x, this.y, this.scale, this.scale);
     }*/
+    //timer for attack allowances
     this.timer++;
     push();
     translate(this.position.x, this.position.y);
@@ -172,6 +186,9 @@ class Kratos{
     }
 
     //scale(this.scalar, 1);
+    //When to draw the walking and swing animations
+    //Make sure this animation is happening in the game screen and not the
+    //intro screen
     if(this.walkani === 0 && !introS){
       if(this.swing === 1) {
         if(this.dir === -1) {
@@ -232,9 +249,11 @@ class Kratos{
     pop();
     
   }
+  //Add bobbing animations when holding still to show constant action
   animate() {
     this.index += 0.25;
   }
+  //Check if player is properly aligned with ladder
   ladderCol(){
     var c = 0;
     for(var i = 0; i < ladders.length; i++){
@@ -246,6 +265,9 @@ class Kratos{
     }
     return c;
   }
+  //set movements for characters
+  //Define when to attack, move left and right, and jump
+  //Movement also includes gravity for the player
   move(){
     this.acceleration.set(0, 0);
     this.walkani = 0;
@@ -259,6 +281,7 @@ class Kratos{
     else{
       this.climb = 0;
     }
+    //Define up arrow movement
     if(keyArray[UP_ARROW] === 1){
       if(this.ladderCol() === 1){
         //print(this.position.y);
@@ -275,17 +298,20 @@ class Kratos{
       
       
     }
+    //Define down arrow movement
     if(keyArray[DOWN_ARROW] === 1 && this.ladderCol() === 1){
       this.position.y += 5;
       //this.jump = 0;
       //this.velocity.set(0, 0);
     }
+    //Define left movement and animations that need to be triggered
     if(keyArray[LEFT_ARROW] === 1 && this.position.x > 40){
       this.dir = -1;
       this.walkani = 1;
       this.position.x -= 5;
       //this.angle = PI;
     }
+    //Define right movement and animations that need to be triggered
     if(keyArray[RIGHT_ARROW] === 1 && this.position.x < 3880){
       this.walkani = 1;
       this.dir = 1;
@@ -293,18 +319,20 @@ class Kratos{
       //this.angle = 0;
 
     }
+    //Triggers for jumping movement with gravity
     if(this.jump === 2){
       this.walkani = 0;
       this.applyForce(jumpForce);
       this.jump = 1;
     }
+    //What to do if on the ladder(don't apply gravity)
     if(this.climb === 0){
       this.applyForce(gravity);
       this.velocity.add(this.acceleration);
       this.position.add(this.velocity);
       this.acceleration.set(0, 0);
     }
-
+    //Don't keep falling, stop at bottom of map
     if (this.position.y >= 3819.99) {
       this.position.y = 3820;
       this.velocity.y = 0;
@@ -328,6 +356,7 @@ class Omega{
     this.rune4 = new Runes(this.x, this.y + 27.5);
     this.alpha = 0;
   }
+  //Draw omega logo
   draw(){
     noFill();
     strokeWeight(10);
@@ -368,22 +397,25 @@ class Runes{
     this.x = x;
     this.y = y;
   }
-
+  //Draw rune 1
   draw_rune1(){
     line(this.x, this.y, this.x, this.y + 5);
     line(this.x + 5, this.y, this.x + 5, this.y + 5);
     line(this.x, this.y + 3, this.x + 5, this.y + 1.5);
   }
+  //Draw rune 2
   draw_rune2(){
     line(this.x, this.y, this.x + 5, this.y + 5);
     line(this.x + 5, this.y + 5, this.x + 5, this.y);
     line(this.x + 5, this.y, this.x, this.y + 5);
   }
+  //Draw rune 3
   draw_rune3(){
     line(this.x, this.y, this.x, this.y + 5);
     line(this.x, this.y + 3.5, this.x + 2.5, this.y);
     line(this.x, this.y + 3.5, this.x - 2.5, this.y);
   }
+  //Draw rune 4
   draw_rune4(){
     arc(this.x, this.y, 5, 5, PI, 2 * PI);
     fill(0);
@@ -460,7 +492,7 @@ class enemybulletObj {
     this.step = new p5.Vector(0,-1);
     this.angle = 0;
   }
-
+  //draw the bullet in top left corner to be screen grabbed
   draw() {
     //push();
     //translate(sin(this.angle)-10,cos(this.angle)-10);
@@ -490,7 +522,7 @@ class enemybulletObj {
     //pop();
   }
 }
-
+//bullet object fired by the skeleton enemies
 class fireBullet{
   constructor(){
     this.position = new p5.Vector(0, 0);
@@ -499,24 +531,26 @@ class fireBullet{
     this.angle = 0;
     this.vec = new p5.Vector(0,-1);
   }
+  //Start drawing at center of the skeleton
   draw(){
     
     image(this.image, this.position.x - 20, this.position.y - 20, 40, 40);
     //fill(0);
     //circle(this.position.x, this.position.y, 20);
   }
+  //Move with respect to angle set in chase state
   move() {
     this.position.x += 2 * sin(this.angle + PI / 2);
     this.position.y -= 2 * cos(this.angle + PI / 2);
 
     
-    
+    //When it should disappear/not effect character
     if(dist(this.position.x,this.position.y,kratos.position.x,kratos.position.y) < 35) {
       this.fire = 0;
       kratos.health -= 0.5;
       //print('noooo')
     }
-
+    //When it should disappear/not effect character
     for(var i = 0; i < walls.length; i++) {
       if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
         //print('wall')
@@ -555,16 +589,20 @@ class skeleWander {
   }
 
   execute(me) {
+    //check if distance is greater than 350 pixels
     if(dist(targetX,targetY,me.x,me.y) >= 350){
-      print('wandering')
+      //print('wandering')
+      //Move in the set random directions
       me.y += this.yDir;
       me.x += this.xDir;
+      //Make sure skeleton is facing direction of movement
       if(this.xDir > 0){
         me.direction = 0;
       }
       else{
         me.direction = 1;
       }
+      //Every 2 seconds, set random x and y direction
       if(frameCount % 120 === 0) {
         skelyDir = random([-1,1]);
         skelxDir = random([-1,1]);
@@ -573,33 +611,38 @@ class skeleWander {
       }
     }
     else{
+      //change to chase if condition not satisfied
       me.changeState(1);
     }
   }
 }
 
 //class for enemy hurt state
+//Enter here when attacked in the chase state
 class skeleHurt {
   constructor() {
     this.timer = 0;
   }
 
   execute(me) {
+    //Set a timer and have the skeleton float back for set time
     this.timer++;
     //print('here')
+    //Adjust position in direction of knockback set when attack happens
     me.x += me.knockback * 2;
     me.y -= 2;
     // print("timer: ")
     // print(this.timer)
     // print("////")
     if(this.timer === 30) {
+      //Move back for half second before returning to chase state
       me.hurt = 0;
       this.timer = 0;
       me.changeState(1);
     }
   }
 }
-
+//Chase state for the skeleton based on how far it is from kratos
 class skeleChase {
   constructor() {
     this.xDir = 1 ;
@@ -612,11 +655,16 @@ class skeleChase {
   }
 
   execute(me) {
+    //Make sure Kratos is within range
     if(dist(targetX,targetY,me.x,me.y) < 350) {
-      print('chasing')
+      //print('chasing')
+      //Set up vector to help skeleton move in that direction to kratos
       me.step.set(targetX - me.x, targetY - me.y);
+      //Normalize so it only moves 1 unit at a time
       me.step.normalize();
+      //Calculate angle of movement, used in firing
       me.angle = me.step.heading() + PI/2;
+      //Set direction skeleton is facing when it is chasing kratos
       if(abs(me.step.heading()) > 1.5 && abs(me.step.heading()) < 3.0){
         me.direction = 0;
       }
@@ -624,11 +672,14 @@ class skeleChase {
         me.direction = 1;
       }
       //print(me.y);
+      //Adjust position based on this vector calculation
       me.x += me.step.x;
       me.y += me.step.y;
+      //If skeleton is alive
       if(me.health > 0){
         
         //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
+          //Fire a bullet from the array of bullets available in this state
           if(this.val < frameCount - 100){
             
             this.val = frameCount;
@@ -651,21 +702,27 @@ class skeleChase {
             this.bullets[i].move();
           }
         }
+        //If bullets are too far from skeleton, they disappear
         for(var i = 0; i < this.bullets.length; i++) {
           if(dist(this.bullets[i].position.x,this.bullets[i].position.y,me.x,me.y) > 1200) {
             this.bullets[i].fire = 0;
           }
         }
+        //Switch to hurt state
         if(me.hurt === 1) {
           me.changeState(2);
         }
       }
     }
     else{
+      //Otherwise move back to wander state
       me.changeState(0);
     }
   }
 }
+
+//Base NPC skeleton enemy class
+//Set up all flags and values for skeleton in character interactions
 class Skeleton{
   constructor(x, y, scale){
     this.x = x;
@@ -686,11 +743,11 @@ class Skeleton{
     this.hurt = 0;
     this.knockback = 0;
   }
-
+  //change state in state classes
   changeState(x) {
     this.currState = x;
   }
-
+  //Draw skeelton based on whether it is hurt and based on what direction it is moving/facing kratos
   draw(){
     //print(this.health)
     if(this.health > 0 && this.direction === 0){
@@ -713,6 +770,7 @@ class Skeleton{
       }
     }
     else{
+      //Death animation with particle systems
       if(this.timer < 500){
         let index = floor(this.index) % this.len;
         image(skelarray[index],this.x,this.y,this.scale,this.scale);
@@ -724,6 +782,7 @@ class Skeleton{
         }
       }
       else{
+        //Cut off death animation after certain amount of time
         if(this.timer < 5000){
           this.deathAnimation();
           for(var i = 0; i < this.blood.length; i++){
@@ -736,6 +795,7 @@ class Skeleton{
     }
     
   }
+  //Old attack animation to show hits, not used anymore
   attackedAnimation(){
     
     if(this.attackTimer < 1000){
@@ -751,6 +811,7 @@ class Skeleton{
     this.angle = random(0, PI);
     this.attackTimer = 0;
   }
+  //Spray particle system representing blood in waterfall type motion
   deathAnimation(){
     this.blood.push(new skelBlood(random(this.x, this.x + 20), random(this.y + 20, this.y + 40)));
   }
@@ -770,12 +831,14 @@ class Zeus{
     this.len = zeusarray.length;
     this.index = 0;
   }
+  //Draw Zeus character
   draw(){
     let index = floor(this.index) % this.len;
     image(zeusarray[index],this.x,this.y,this.scale,this.scale);
     //image(this.img,this.x,this.y,this.scale,this.scale);
     
   }
+  //Basic Zeus animation
   animate() {
     //this.index += 0.25;
     this.y += this.dir;
@@ -799,12 +862,14 @@ class Lightning{
     this.len = lightningarray.length;
     this.index = 0;
   }
+  //Draw lightning bolt
   draw(){
     let index = floor(this.index) % this.len;
     image(lightningarray[index],this.x,this.y,this.scale,this.scale);
     
     
   }
+  //Animate lightning by switching through array items per frame
   animate() {
     this.index += 0.25;
   }
@@ -835,18 +900,20 @@ class IntroScreen{
     this.textY = 420;
     
   }
+  //Draw the intro screen
   draw(){
-    
+    //Draw background for intro screen
     this.bg.draw();
     //fill(194, 178, 128);
     //rect(0, 300, 400, 100);
     //fill(135,206,235);
     //rect(0, 0, 400, 300);
+    //Draw the omega symbol and have it fade in
     stroke(0, this.omega.alpha);
     //fill(0,154,23);
     //rect(0, 250, 400, 50);
     //fill(135, 206, 235);
-    
+    //Rest of graphics in the intro screen including text and character movements
     rect(0, 0, 100, 50);
     noFill();
     this.omega.draw();
@@ -885,6 +952,8 @@ class IntroScreen{
     noStroke();
     noFill();
   }
+  //Show Kratos moving in tandem with skeleton, also add animations
+  //for text and the omega logo
   animate(){
     this.kratos.position.x += this.animateKratos;
     if(this.kratos.position.x > 300 || this.kratos.position.x < 0){
@@ -902,6 +971,7 @@ class IntroScreen{
     }
     
   }
+  //What to do when going to instruction screen
   moveOut(){
     if(this.kratos.position.x > -150){
       this.kratos.position.x += -5;
@@ -939,6 +1009,7 @@ class InstructionScreen{
     this.lightning = [new Lightning(295,80,250),new Lightning(200,80,250)];
     this.zeusbolt = new Lightning(290,190,60);
   }
+  //Draw various background items and characters and their animations in the screen
   draw(){
     
     this.bg.draw();
@@ -1021,7 +1092,9 @@ class InstructionScreen{
       
     }
   }
+  //State machine that controls instructions panel
   drawInstructs(){
+    //Base screen that allows choices from various options
     if(this.base){
       fill(245,245,220);
       rect(50, 25, 300, 100);
@@ -1035,12 +1108,14 @@ class InstructionScreen{
       text("Instructions", 245, 25, 300, 50);
       text("Go Back To Start", 140, 120);
       noStroke();
+      //move into characters screen
       if((mouseIsPressed) && mouseX > 50 && mouseX < 150 && mouseY > 25 && mouseY < 75 && this.base){
         this.base = false;
         this.characters = true;
         this.instructions = false;
         
       }
+      //move into instructions screen
       if((mouseIsPressed) && mouseX > 245 && mouseX < 350 && mouseY > 25 && mouseY < 75 && this.base){
         this.base = false;
         this.instructions = true;
@@ -1048,7 +1123,7 @@ class InstructionScreen{
         
       }
     }
-    
+    //What to do in instructions screen
     if(this.instructions){
       fill(245,245,220);
       rect(50, 25, 300, 100);
@@ -1065,6 +1140,7 @@ class InstructionScreen{
       textSize(7.5);
       text("Use the Arrow Keys to move Kratos throughout the world, and use the spacebar to attack enemies.  If Kratos attacks enough enemies, shift can engage a special attack.", 160, 60, 100, 50);
       noStroke();
+      //Switch to the base screen
       if((mouseIsPressed) && mouseX > 50 && mouseX < 100 && mouseY > 25 && mouseY < 75 && this.instructions){
         this.base = true;
         this.instructions = false;
@@ -1204,7 +1280,8 @@ class Wall{
     //this.rock = loadImage("grassland_tileset/grassland_tileset/PNG/midground_center.png");
   }
   draw(){
-
+    //Based on tilemap input
+    //Draw different types of walls/rocks
     if(this.type === "w")
     {
       image(images[0], this.x, this.y, 40, 40);
@@ -1217,7 +1294,7 @@ class Wall{
     
   }
 }
-
+//Class that was used for background images, but no longer used
 class BackGround{
   constructor(x, y, image){
     this.x = x;
@@ -1229,6 +1306,11 @@ class BackGround{
   }
 }
 
+
+/*
+Potion class that adds health when collected
+Also bounces up and down for animation
+*/
 class Potion{
   constructor(x, y){
     this.timer = 0;
@@ -1254,6 +1336,11 @@ class Potion{
   }
 }
 
+/*
+Key class that adds to the player when collected
+Also bounces up and down for animation
+Will be used to unlock boss fights
+*/
 class Key{
   constructor(x, y){
     this.timer = 0;
@@ -1296,7 +1383,11 @@ class Platform{
     }
   }
 }
-
+/*
+Create ladders on the tilemap screen
+Item itself used in collision detection when
+doing ladder movement
+*/
 class Ladder{
   constructor(x, y){
     this.x = x;
@@ -1318,10 +1409,13 @@ class Game{
     this.correctionY = 0;
     
   }
+  //Draw the background and tilemap to the screen
   drawBackground(){
     // for(var b = 0; b < backgroundArray.length; b++){
     //   backgroundArray[b].draw();
     // }
+    //Draw the background 16 times to improve quality
+    //break it up into 16 parts
     image(images[8], 0, 0, 1000, 930);
     image(images[8], 1000, 0, 1000, 930);
     image(images[8], 2000, 0, 1000, 930);
@@ -1338,27 +1432,32 @@ class Game{
     image(images[8], 3000, 930, 1000, 930);
     image(images[8], 3000, 1860, 1000, 930);
     image(images[8], 3000, 2790, 1000, 930);
-
+    //Draw the walls identified in tilemap
     for(var i = 0; i < walls.length; i++){
 
       walls[i].draw();
     }
+    //Draw platforms found in tilemap
     for(var j = 0; j < grass.length; j++){
       grass[j].draw();
     }
+    //Draw enemies, animate the wing motion, and activate state for each enemy
     for(var k = 0; k < this.enemies.length; k++){
       this.enemies[k].draw();
       this.enemies[k].animate();
       this.enemies[k].state[enemies[k].currState].execute(enemies[k]);
       //print(this.enemies[k].health);
     }
+    //Draw ladders on the tilemap
     for(var l = 0; l < ladders.length; l++){
       ladders[l].draw();
     }
+    //Draw the keys from tilemaps
     for(var x = 0; x < keys.length; x++){
       keys[x].draw();
       keys[x].animate();
     }
+    //Draw potions from the tilemaps
     for(var y = 0; y < potions.length; y++){
       potions[y].draw();
       potions[y].animate();
@@ -1369,7 +1468,9 @@ class Game{
     text("HP: ",this.kratos.position.x-180,this.kratos.position.y-180)
     text(this.kratos.health,this.kratos.position.x-150,this.kratos.position.y-180);
   }
+  //Method to detect various kinds of platform collisions 
   platformCollision(){
+    //Make sure Kratos can land on the top of the platform
     for(var i = 0; i < this.grassArray.length; i++){
       if(dist(this.kratos.position.x, this.kratos.position.y, this.grassArray[i].x, this.grassArray[i].y) < 40){
         if(this.kratos.position.y < this.grassArray[i].y && this.kratos.velocity.y > 0){
@@ -1378,7 +1479,7 @@ class Game{
           this.kratos.velocity.set(0, 0);
         }
       }
-
+      //Bounce up if the enemies collides with the platform
       for(var j = 0; j < this.enemies.length; j++) {
         if(dist(this.enemies[j].x, this.enemies[j].y, this.grassArray[i].x, this.grassArray[i].y) < 40){
           if(this.enemies[j].y < this.grassArray[i].y) {
@@ -1387,7 +1488,7 @@ class Game{
         }
       }
     }
-
+    //What kratos should do when colliding with the walls in the game map
     for(var i = 0; i < this.wallsArray.length; i++) {
       if(dist(this.kratos.position.x, this.kratos.position.y, this.wallsArray[i].x, this.wallsArray[i].y) < 40){
         if(this.kratos.position.y < this.wallsArray[i].y && this.kratos.velocity.y >= 0) {
@@ -1423,7 +1524,7 @@ class Game{
       }
     }
   }
-
+//What the enemies should do if they collide with the walls
     for(var j = 0; j < this.enemies.length; j++) {
       for(var k = 0; k < this.wallsArray.length; k++) {
         if(dist(this.enemies[j].x, this.enemies[j].y, this.wallsArray[k].x, this.wallsArray[k].y) < 40){
@@ -1458,7 +1559,7 @@ class Game{
       }
     }
   }
-
+//What should happen if the character collects an item
   itemCollision(){
     for(var i = 0; i < keys.length; i++){
       if(dist(this.kratos.position.x, this.kratos.position.y, keys[i].x, keys[i].y) < 20 && keys[i].collect === 0){
@@ -1472,6 +1573,10 @@ class Game{
       }
     }
   }
+  //Combat animation and interactiosn
+  //Define hit box for attacking skeletons
+  //Trigger knockbacks and injury animations
+  //Check if Kratos should be afflicted by fire bullets
   combat(){
     for(var i = 0; i < this.enemies.length; i++){
       /*if(dist(this.kratos.position.x, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1){
@@ -1521,6 +1626,8 @@ class Game{
       }
     }
   }
+
+  //Overall game method
   play(){
     this.drawBackground();
     var lava = new fireBullet();
@@ -1543,7 +1650,9 @@ function keyPressed() {
 function keyReleased() {
   keyArray[keyCode] = 0;
 }
-
+/*
+List of variables used to preload images and drawings for the game
+*/
 let myFont;
 let song;
 let kratossp0;
@@ -1783,11 +1892,16 @@ function draw() {
     }
     
   }
-  else if(gameScreen){
+  //Play game as long as Kratos has health
+  else if(gameScreen && kratos.health > 0){
     push();
     translate(200 - kratos.position.x, 200-kratos.position.y);
     game.play();
     //wall.draw();
     pop();
+  }
+  //Otherwise losing screen
+  else{
+    background(0);
   }
 }
