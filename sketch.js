@@ -786,6 +786,37 @@ class Zeus{
   }
 }
 
+//class for lightning
+class Lightning{
+  constructor(x, y, scale){
+    this.x = x;
+    this.y = y;
+    this.scale = scale;
+    this.dir = 0.5;
+   
+    this.len = lightningarray.length;
+    this.index = 0;
+  }
+  draw(){
+    let index = floor(this.index) % this.len;
+    image(lightningarray[index],this.x,this.y,this.scale,this.scale);
+    
+    
+  }
+  animate() {
+    this.index += 0.25;
+  }
+  ZeusBoltAnimate() {
+    this.y += this.dir;
+    if(this.y > 220) {
+      this.dir = -0.5;
+    }
+    else if(this.y < 180) {
+      this.dir = 0.5;
+    }
+  }
+}
+
 //class for the intro screen, complete with background and ground textures, and player and enemy animations
 class IntroScreen{
   constructor(){
@@ -800,6 +831,7 @@ class IntroScreen{
     this.animateSkeleton = 1;
     this.textX = 100;
     this.textY = 420;
+    
   }
   draw(){
     
@@ -839,6 +871,7 @@ class IntroScreen{
     this.kratos.animate();
     this.skeleton.draw();
     this.skeleton.animate();
+
     stroke(255);
     rect(150, 350, 100, 50);
     textFont(myFont);
@@ -901,6 +934,8 @@ class InstructionScreen{
     this.rightTransition = false;
     this.kratosBio = true;
     this.zeusBio = false;
+    this.lightning = [new Lightning(295,80,250),new Lightning(200,80,250)];
+    this.zeusbolt = new Lightning(290,190,60);
   }
   draw(){
     
@@ -916,6 +951,11 @@ class InstructionScreen{
     }
     for(var i = 0; i < this.grass.length; i++) {
       this.grass[i].draw();
+    }
+
+    for(var i = 0; i <this.lightning.length; i++) {
+      this.lightning[i].draw();
+      this.lightning[i].animate();
     }
     fill(255);
     circle(120, 200, 40);
@@ -945,10 +985,14 @@ class InstructionScreen{
     noStroke();
     this.zeus.draw();
     this.zeus.animate();
+    this.zeusbolt.draw();
+    this.zeusbolt.animate();
+    this.zeusbolt.ZeusBoltAnimate();
     //this.skeleton.animate();
     noStroke();
     noFill();
     this.drawInstructs();
+
   }
   animate(){
     
@@ -1518,6 +1562,8 @@ let sl1_rev;
 let sl4_rev;
 let slasharray;
 let slasharray_rev;
+let l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12;
+let lightningarray;
 //preloads fonts, music, and images to improve performance
 function preload(){
   myFont = loadFont('Godofwar-wPz6.ttf');
@@ -1558,6 +1604,18 @@ function preload(){
   sl1_rev = loadImage("slash1_rev.png");
 
   sl4_rev = loadImage("slash4_rev.png");
+  l1 = loadImage("lightning_line5b1.png");
+  l2 = loadImage("lightning_line5b2.png");
+  l3 = loadImage("lightning_line5b3.png");
+  l4 = loadImage("lightning_line5b4.png");
+  l5 = loadImage("lightning_line5b5.png");
+  l6 = loadImage("lightning_line5b6.png");
+  l7 = loadImage("lightning_line5b7.png");
+  l8 = loadImage("lightning_line5b8.png");
+  l9 = loadImage("lightning_line5b9.png");
+  l10 = loadImage("lightning_line5b10.png");
+  l11 = loadImage("lightning_line5b11.png");
+  l12 = loadImage("lightning_line5b12.png");
   createCanvas(400, 400);
   lava = new enemybulletObj();
   lava.draw();
@@ -1584,6 +1642,8 @@ function preload(){
   slasharray = [sl1,sl1,sl4,sl4];
   slasharray_rev = [sl1_rev,sl1_rev,sl4_rev,sl4_rev];
   zeusarray = [zeussp,zeussp];
+
+  lightningarray = [l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12];
 }
 
 //intializes tilemap based upon the letters in the tilemap array
