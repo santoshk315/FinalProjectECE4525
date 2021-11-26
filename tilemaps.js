@@ -170,9 +170,9 @@ var tilemap = [
     "r  rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr     l     rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr                    w",
     "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr   l        rrrrrrrrrrrrrrrrrrrrrrrrrr                        w",
     "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  l                            rrrr                          w",
-    "r                                      r            r                                             w",
-    "r                                                                                                 w",
-    "r                                                      r                                          w",
+    "r                                      rrrr                                                       w",
+    "r                                             r                                                   w",
+    "r                                             rrr      r                                          w",
     "r                                                                                                 w",
     "r                                                          pppppppp                               w",
     "r                                               fffffp      wwwwww         wppppppppplppppppppppppw",
@@ -207,6 +207,6 @@ var tilemap = [
     "rppppprwwrrrrrwwrrrrrrrrrrrwrwrrprpwwrrwwrrrrrrrrrrrrrrrrr     wwwwwwlwwwwwrppppprpppprrrpprpprrrrw",
     "rrrrrrrwwwwwrrwrrrrrrrrrrrwwwwwrpppwrwwrwrrrrrrrrrrrrrrrrr     wwwwwwlwwwwwrrrrrrrrrrrrrrrrrrrrrrrw",
     "rrrrrrrrrrwwrrwwrrrrrrrrrwrrrrrwrrrwrrrrwrrrrrrrrrrrrrrrrr         k   h   rrrrrrrrrrrrrrrrrrrrrrrw",
-    "rrrrrrwwwwwwrrwrwrrrrrrrwrrrrrrrwrrwrrrrwrrrrrrrrrrrrrrrrrrrrrrwwwwwwwwwwwwrrrrrrrrrrrrrrrrrrrrrrrw"
+    "rrrrrrwwwwwwrrwrwrrrrrrrwrrrrrrrwrrwrrrrwrrrrrrrrrrrrrrrrrwwwwwwwwwwwwwwwwwrrrrrrrrrrrrrrrrrrrrrrrw"
   
   ];
