@@ -1,12 +1,15 @@
 //base game class foundation
 class Game{
-    constructor(walls, grass, kratos, enemies){
+    constructor(walls, grass, kratos, enemies, zeus){
       this.wallsArray = walls;
       this.grassArray = grass;
       this.kratos = kratos;
       this.enemies = enemies;
       this.correctionX = 0;
       this.correctionY = 0;
+      this.finalBoss = 0;
+      this.score = 0;
+      this.zeus = zeus;
       
     }
     //Draw the background and tilemap to the screen
@@ -67,6 +70,9 @@ class Game{
       fill(255)
       text("HP: ",this.kratos.position.x-180,this.kratos.position.y-180)
       text(this.kratos.health,this.kratos.position.x-150,this.kratos.position.y-180);
+    }
+    drawFinalBackground(){
+
     }
     //Method to detect various kinds of platform collisions 
     platformCollision(){
@@ -180,34 +186,16 @@ class Game{
     //Check if Kratos should be afflicted by fire bullets
     combat(){
       for(var i = 0; i < this.enemies.length; i++){
-        /*if(dist(this.kratos.position.x, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1){
-          if(this.kratos.timer % 100 === 0){
-            this.enemies[i].health--;
-          }
-          this.enemies[i].attackedAnimation();
-        }*/
-        //print("kratos")
-        //print(this.kratos.position)
-        //print("")
         stroke(0,255,0)
-        
-        //print(this.kratos.attackRect[0]+this.kratos.position.x)
-        //print(this.kratos.attackRect[1]+this.kratos.position.y)
         if(this.kratos.dir === 1)
         {
-          //rect(this.kratos.attackRect[0]+this.kratos.position.x,this.kratos.attackRect[1]+this.kratos.position.y,this.kratos.attackRect[2],this.kratos.attackRect[3]);
           if(dist(this.kratos.position.x+30, this.kratos.position.y, this.enemies[i].x, this.enemies[i].y) < 40 && this.kratos.swing === 1) {
   
             if(this.kratos.timer % 25 === 0 && this.enemies[i].health > 0) {
-            //this.enemies[i].x += 10;
-            //this.enemies[i].y -= 8;
               this.enemies[i].health--;
               this.enemies[i].knockback = 1;
               this.enemies[i].hurt = 1;
             }
-            
-            print('hit')
-            //this.enemies[i].attackedAnimation();
           }
         }
         if(this.kratos.dir === -1) {
@@ -221,25 +209,71 @@ class Game{
                 this.enemies[i].knockback = -1;
                 this.enemies[i].hurt = 1;
               }
-            //print('hit')
-            //this.enemies[i].attackedAnimation();
           }
         }
       }
     }
+    zeusCombat(){
+      stroke(0,255,0)
+        if(this.kratos.dir === 1)
+        {
+          if(dist(this.kratos.position.x+30, this.kratos.position.y, this.zeus.x, this.zeus.y) < 40 && this.kratos.swing === 1) {
+  
+            if(this.kratos.timer % 25 === 0 && this.enemies[i].health > 0) {
+              this.zeus.level++;
+              this.zeus.knockback = -1;
+              this.zeus.hurt = 1;
+            }
+          }
+        }
+        if(this.kratos.dir === -1) {
+          
+          if(dist(this.kratos.position.x-30, kratos.position.y, zeus.x, zeus.y) < 40 && this.kratos.swing === 1) {
+  
+            if(this.kratos.timer % 5 === 0 && this.zeus.level > 0) {
+                this.zeus.level++;
+                this.zeus.knockback = -1;
+                this.zeus.hurt = 1;
+              }
+          }
+        }
+    }
   
     //Overall game method
     play(){
-      this.drawBackground();
-      var lava = new fireBullet();
-      
-      this.kratos.draw();
-      this.kratos.animate();
-      this.kratos.move();
-      this.platformCollision();
-      this.itemCollision();
-      this.combat();
-      targetX = this.kratos.position.x;
-      targetY = this.kratos.position.y;
+      if(this.kratos.score < 14){
+
+        this.drawBackground();
+        var lava = new fireBullet();
+        
+        this.kratos.draw();
+        this.kratos.animate();
+        this.kratos.move();
+        this.platformCollision();
+        this.itemCollision();
+        this.combat();
+        this.zeus.draw();
+        this.zeus.state[this.zeus.currState].execute(this.zeus);
+        //Fix combat issues
+        this.zeusCombat();
+        targetX = this.kratos.position.x;
+        targetY = this.kratos.position.y;
+      }
+      // else if(this.kratos.score === 14 && this.finalBoss === 0){
+      //   //cutscene code
+      //   this.finalBoss === 1;
+      // }
+      // else{
+      //   this.drawFinalBackground();
+      //   this.kratos.draw();
+      //   this.kratos.animate();
+      //   this.kratos.move();
+      //   targetX = this.kratos.position.x;
+      //   targetY = this.kratos.position.y;
+      //   this.platformCollision();
+      //   this.zeus.draw();
+      //   this.zeus.state[this.currState].execute(this.zeus);
+      //   this.zeusCombat();
+      // }
     }
   }

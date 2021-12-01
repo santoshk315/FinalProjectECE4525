@@ -17,6 +17,206 @@ let targetY;
 backgroundArray = [];
 firedWebs = [];
 
+
+
+class zeusFlyState{
+  constructor(){
+    //this.position = new p5.Vector(0, 0);
+    this.step = new p5.Vector(0, 0);
+    this.xDir = 1 ;
+    this.bullets = [new lightningBullet(), new lightningBullet(), new lightningBullet(), new lightningBullet()];
+    this.vec = new p5.Vector(0, 0);
+    this.angle = 0;
+    this.angleDir = 0;
+    this.val = 0;
+    this.index = 0;
+  }
+  execute(me){
+    if(me.level < 3){
+      if(dist(targetX, targetY, me.x, me.y) > 100){
+        this.step.set(me.x - targetX, me.y - targetY);
+        this.step.normalize();
+        me.x += this.step.x;
+        me.y += this.step.y;
+      }
+      else{
+        this.step.set(targetX - me.x, targetY - me.y);
+        this.step.normalize();
+        me.x -= this.step.x;
+        me.y -= this.step.y;
+      }
+      if(me.alive == 1){
+          
+          //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
+            //Fire a bullet from the array of bullets available in this state
+            if(this.val < frameCount - 100){
+              
+              this.val = frameCount;
+              this.bullets[this.index].fire = 1;
+              this.bullets[this.index].position.x = me.x + 20;
+              this.bullets[this.index].position.y = me.y + 20;
+              this.bullets[this.index].angle = me.angle - PI/2;
+              firedWebs.push(this.bullets[this.index]);
+              this.index++;
+              if(this.index > 3){
+                this.index = 0;
+              }
+            //}
+            
+            
+          }
+          for(var i = 0; i < 3; i++){
+            if(this.bullets[i].fire === 1){
+              this.bullets[i].draw();
+              this.bullets[i].move();
+            }
+          }
+          //If bullets are too far from zeus, they disappear
+          for(var i = 0; i < this.bullets.length; i++) {
+            if(dist(this.bullets[i].position.x,this.bullets[i].position.y,me.x,me.y) > 1200) {
+              this.bullets[i].fire = 0;
+            }
+          }
+        
+      }
+      if(me.hurt == 1){
+        me.changeState(1);
+      }
+    }
+    
+  }
+}
+
+class zeusAggressiveFlyState{
+  constructor(){
+    //this.position = new p5.Vector(0, 0);
+    this.step = new p5.Vector(0, 0);
+    this.xDir = 1 ;
+    this.bullets = [new lightningBullet(), new lightningBullet(), new lightningBullet(), new lightningBullet()];
+    this.vec = new p5.Vector(0, 0);
+    this.angle = 0;
+    this.angleDir = 0;
+    this.val = 0;
+    this.index = 0;
+  }
+  execute(me){
+    if(me.level < 6){
+      if(dist(targetX, targetY, me.x, me.y) > 100){
+        this.step.set(me.x - targetX, me.y - targetY);
+        this.step.normalize();
+        me.x += this.step.x;
+        me.y += this.step.y;
+      }
+      else{
+        this.step.set(targetX - me.x, targetY - me.y);
+        this.step.normalize();
+        me.x -= this.step.x;
+        me.y -= this.step.y;
+      }
+      if(me.alive == 1){
+          
+          //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
+            //Fire a bullet from the array of bullets available in this state
+            if(this.val < frameCount - 100){
+              
+              this.val = frameCount;
+              this.bullets[this.index].fire = 1;
+              this.bullets[this.index].position.x = me.x + 20;
+              this.bullets[this.index].position.y = me.y + 20;
+              this.bullets[this.index].angle = me.angle - PI/2;
+              firedWebs.push(this.bullets[this.index]);
+              this.index++;
+              if(this.index > 3){
+                this.index = 0;
+              }
+            //}
+            
+            
+          }
+          for(var i = 0; i < 3; i++){
+            if(this.bullets[i].fire === 1){
+              this.bullets[i].draw();
+              this.bullets[i].move();
+            }
+          }
+          //If bullets are too far from zeus, they disappear
+          for(var i = 0; i < this.bullets.length; i++) {
+            if(dist(this.bullets[i].position.x,this.bullets[i].position.y,me.x,me.y) > 1200) {
+              this.bullets[i].fire = 0;
+            }
+          }
+        
+      }
+      if(me.hurt == 1){
+        me.changeState(1);
+      }
+    }
+    
+  }
+}
+
+
+class zeusDownState{
+  //Add state transition for this state
+  constructor(){
+
+  }
+  execute(me){
+    if(me.alive === 1){
+      me.move();
+    }
+  } 
+
+}
+
+class zeusHurtState{
+  constructor(){
+    
+  }
+  execute(me){
+    this.timer++;
+    //print('here')
+    //Adjust position in direction of knockback set when attack happens
+    me.x += me.knockback * 2;
+    me.y -= 2;
+    // print("timer: ")
+    // print(this.timer)
+    // print("////")
+    if(this.timer === 30 && me.level < 3) {
+      //Move back for half second before returning to chase state
+      me.hurt = 0;
+      this.timer = 0;
+      me.changeState(0);
+    }
+    else if(this.timer === 30 && me.level === 3){
+      me.changeState(2);
+    }
+    else if(this.timer === 30 && me.level < 6){
+      me.changeState(3);
+    }
+    else if(this.timer === 30 && me.level === 6){
+      me.changeState(3);
+    }
+    else if(this.timer === 30 && me.level < 9){
+      me.changeState(3);
+    }
+    else if(this.timer === 30 && me.level === 9){
+      me.changeState(3);
+    }
+    else{
+      me.alive = 0;
+    }
+  }
+}
+
+class zeusHellFire{
+  //Add the animations and the bullets firing from top of screen
+  execute(me){
+
+  }
+}
+
+
 //class for final boss Zeus
 class Zeus{
   constructor(x, y, scale){
@@ -24,16 +224,27 @@ class Zeus{
     this.y = y;
     this.scale = scale;
     this.dir = 0.5;
-   
+    this.level = 0;
+    this.state = [new zeusFlyState(), new zeusHurtState(), new zeusDownState(), new zeusAggressiveFlyState(), new zeusHellFire()];
+    this.currState = 2;
     this.len = zeusarray.length;
     this.index = 0;
+    this.hurt = 0;
+    this.knockback = 0;
+    this.alive = 1;
+    this.position = new p5.Vector(this.x, this.y);
+    this.velocity = new p5.Vector(0, 0);
+    this.acceleration = new p5.Vector(0, 0);
   }
   //Draw Zeus character
   draw(){
     let index = floor(this.index) % this.len;
-    image(zeusarray[index],this.x,this.y,this.scale,this.scale);
+    image(zeusarray[index],this.position.x,this.position.y,this.scale,this.scale);
     //image(this.img,this.x,this.y,this.scale,this.scale);
     
+  }
+  applyForce(force){
+    this.acceleration.add(force);
   }
   //Basic Zeus animation
   animate() {
@@ -45,6 +256,23 @@ class Zeus{
     else if(this.y < 170) {
       this.dir = 0.5;
     }
+  }
+  baseAttack(){
+
+  }
+
+  specialAttack(){
+    
+  }
+  changeState(statevar){
+    this.currState = statevar;
+  }
+  move(){
+    this.applyForce(gravity);
+        this.velocity.add(this.acceleration);
+        this.position.add(this.velocity);
+        this.acceleration.set(0, 0);
+    
   }
 }
 
@@ -78,6 +306,43 @@ class Lightning{
     else if(this.y < 180) {
       this.dir = 0.5;
     }
+  }
+}
+
+class lightningBullet{
+  constructor(){
+    this.position = new p5.Vector(0, 0);
+    this.image = images[images.length - 1];
+    this.fire = 1;
+    this.angle = 0;
+    this.vec = new p5.Vector(0,-1);
+  }
+  draw(){
+
+  }
+  move() {
+    this.position.x += 2 * sin(this.angle + PI / 2);
+    this.position.y -= 2 * cos(this.angle + PI / 2);
+
+    
+    //When it should disappear/not effect character
+    if(dist(this.position.x,this.position.y,kratos.position.x,kratos.position.y) < 35) {
+      this.fire = 0;
+      kratos.health -= 0.5;
+      //print('noooo')
+    }
+    //When it should disappear/not effect character
+    for(var i = 0; i < walls.length; i++) {
+      if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
+        //print('wall')
+        this.fire = 0;
+      }
+    }
+    // if (this.position.y < 0 || this.position.y > 400 || this.position.x > 400 || this.position.x < 0) {
+    //   this.fire = 0;
+    // }
+
+
   }
 }
 
@@ -225,35 +490,35 @@ function preload(){
 function initTileMap(){
   for (var i = 0; i < tilemap.length; i++) {
     for (var j = 0; j < tilemap[i].length; j++) {
-      if(tilemap2[i][j] == "w"){
+      if(tilemap[i][j] == "w"){
         walls.push(new Wall(j * 40, i * 40, "w"));
       }
-      else if(tilemap2[i][j] == "r"){
+      else if(tilemap[i][j] == "r"){
         walls.push(new Wall(j * 40, i * 40, "r"));
       }
-      else if(tilemap2[i][j] == "p"){
+      else if(tilemap[i][j] == "p"){
         grass.push(new Platform(j * 40, i * 40, "p"));
       }
-      else if(tilemap2[i][j] == "e"){
+      else if(tilemap[i][j] == "e"){
         enemies.push(new Skeleton(j * 40, i * 40, 40));
         backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
       }
-      else if(tilemap2[i][j] == "l"){
+      else if(tilemap[i][j] == "l"){
         ladders.push(new Ladder(j * 40, i * 40, 40));
       }
-      else if(tilemap2[i][j] == "b"){
+      else if(tilemap[i][j] == "b"){
         grass.push(new Platform(j * 40, i * 40, "b"));
       }
-      else if(tilemap2[i][j] == "1"){
+      else if(tilemap[i][j] == "1"){
         backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
       }
-      else if(tilemap2[i][j] == "2"){
+      else if(tilemap[i][j] == "2"){
         backgroundArray.push(new BackGround(j * 40, i * 40, images[5]));
       }
-      else if(tilemap2[i][j] == "k"){
+      else if(tilemap[i][j] == "k"){
         keys.push(new Key(j * 40 + 10, i * 40 + 10));
       }
-      else if(tilemap2[i][j] == "h"){
+      else if(tilemap[i][j] == "h"){
         potions.push(new Potion(j * 40 + 10, i * 40 + 10));
         //print("potion added");
       }
@@ -279,9 +544,10 @@ function setup() {
   // song.loop();
   kratos = new Kratos(120, 3520, 40);
   zeus = new Zeus(210,160,40);
+  gameZeus = new Zeus(120 + 60, 3520, 40);
   intro = new IntroScreen();
   instr = new InstructionScreen();
-  game = new Game(walls, grass, kratos, enemies);
+  game = new Game(walls, grass, kratos, enemies, gameZeus);
 }
 var transition = false;
 var instructTrans = false;
