@@ -93,6 +93,12 @@ class Game{
             }
           }
         }
+        if(dist(this.zeus.position.x, this.zeus.position.y, this.grassArray[i].x, this.grassArray[i].y) < 40){
+          if(this.zeus.position.y < this.grassArray[i].y) {
+            this.zeus.position.y = this.grassArray[i].y -40;
+            print("yolo");
+          }
+        }
       }
       //What kratos should do when colliding with the walls in the game map
       for(var i = 0; i < this.wallsArray.length; i++) {
@@ -164,6 +170,38 @@ class Game{
           }
         }
       }
+
+      for(var k = 0; k < this.wallsArray.length; k++) {
+        if(dist(this.zeus.position.x, this.zeus.position.y, this.wallsArray[k].x, this.wallsArray[k].y) < 40){
+
+          if(this.zeus.position.x < this.wallsArray[k].x) {
+           
+            this.zeus.position.x -= 10;
+
+            
+          }
+  
+          if(this.zeus.position.x > this.wallsArray[k].x) {
+            
+            this.zeus.position.x += 10;
+ 
+          }
+  
+          if(this.zeus.position.y < this.wallsArray[k].y) {
+            
+            this.zeus.position.y = this.wallsArray[k].y - 40 + 5;
+            
+
+          }
+  
+          if(this.zeus.position.y > this.wallsArray[k].y) {
+            
+            this.zeus.position.y += 10; 
+            
+
+          }
+        }
+      }
     }
   //What should happen if the character collects an item
     itemCollision(){
@@ -217,9 +255,9 @@ class Game{
       stroke(0,255,0)
         if(this.kratos.dir === 1)
         {
-          if(dist(this.kratos.position.x+30, this.kratos.position.y, this.zeus.x, this.zeus.y) < 40 && this.kratos.swing === 1) {
+          if(dist(this.kratos.position.x+30, this.kratos.position.y, this.zeus.position.x, this.zeus.position.y) < 40 && this.kratos.swing === 1) {
   
-            if(this.kratos.timer % 25 === 0 && this.enemies[i].health > 0) {
+            if(this.kratos.timer % 25 === 0 && this.zeus.level < 10) {
               this.zeus.level++;
               this.zeus.knockback = -1;
               this.zeus.hurt = 1;
@@ -230,7 +268,7 @@ class Game{
           
           if(dist(this.kratos.position.x-30, kratos.position.y, zeus.x, zeus.y) < 40 && this.kratos.swing === 1) {
   
-            if(this.kratos.timer % 5 === 0 && this.zeus.level > 0) {
+            if(this.kratos.timer % 5 === 0 && this.zeus.level < 10) {
                 this.zeus.level++;
                 this.zeus.knockback = -1;
                 this.zeus.hurt = 1;

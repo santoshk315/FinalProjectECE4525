@@ -32,18 +32,20 @@ class zeusFlyState{
     this.index = 0;
   }
   execute(me){
+    print("flying normal");
+    print(me.level);
     if(me.level < 3){
-      if(dist(targetX, targetY, me.x, me.y) > 100){
-        this.step.set(me.x - targetX, me.y - targetY);
+      if(dist(targetX, targetY, me.position.x, me.position.y) < 350){
+        this.step.set(targetX - me.position.x, targetY - me.position.y);
         this.step.normalize();
-        me.x += this.step.x;
-        me.y += this.step.y;
+        me.position.x += this.step.x;
+        me.position.y += this.step.y;
       }
       else{
-        this.step.set(targetX - me.x, targetY - me.y);
+        this.step.set(targetX - me.position.x, targetY - me.position.y);
         this.step.normalize();
-        me.x -= this.step.x;
-        me.y -= this.step.y;
+        me.position.x -= this.step.x;
+        me.position.y -= this.step.y;
       }
       if(me.alive == 1){
           
@@ -53,8 +55,8 @@ class zeusFlyState{
               
               this.val = frameCount;
               this.bullets[this.index].fire = 1;
-              this.bullets[this.index].position.x = me.x + 20;
-              this.bullets[this.index].position.y = me.y + 20;
+              this.bullets[this.index].position.x = me.position.x + 20;
+              this.bullets[this.index].position.y = me.position.y + 20;
               this.bullets[this.index].angle = me.angle - PI/2;
               firedWebs.push(this.bullets[this.index]);
               this.index++;
@@ -73,15 +75,18 @@ class zeusFlyState{
           }
           //If bullets are too far from zeus, they disappear
           for(var i = 0; i < this.bullets.length; i++) {
-            if(dist(this.bullets[i].position.x,this.bullets[i].position.y,me.x,me.y) > 1200) {
+            if(dist(this.bullets[i].position.x,this.bullets[i].position.y,me.position.x,me.position.y) > 1200) {
               this.bullets[i].fire = 0;
             }
           }
         
       }
-      if(me.hurt == 1){
+      if(me.hurt === 1){
         me.changeState(1);
       }
+    }
+    else{
+      me.changeState(2);
     }
     
   }
@@ -101,17 +106,17 @@ class zeusAggressiveFlyState{
   }
   execute(me){
     if(me.level < 6){
-      if(dist(targetX, targetY, me.x, me.y) > 100){
-        this.step.set(me.x - targetX, me.y - targetY);
+      if(dist(targetX, targetY, me.position.x, me.position.y) > 350){
+        this.step.set(targetX - me.position.x, targetY - me.position.y);
         this.step.normalize();
-        me.x += this.step.x;
-        me.y += this.step.y;
+        me.position.x += 2 * this.step.x;
+        me.position.y += 2 * this.step.y;
       }
       else{
-        this.step.set(targetX - me.x, targetY - me.y);
+        this.step.set(targetX - me.position.x, targetY - me.position.y);
         this.step.normalize();
-        me.x -= this.step.x;
-        me.y -= this.step.y;
+        me.x -= 2 * this.step.x;
+        me.y -= 2 * this.step.y;
       }
       if(me.alive == 1){
           
@@ -162,8 +167,13 @@ class zeusDownState{
 
   }
   execute(me){
+    print("down");
     if(me.alive === 1){
+      print("going to move");
       me.move();
+    }
+    if(me.hurt === 1){
+      me.changeState(1);
     }
   } 
 
@@ -171,17 +181,15 @@ class zeusDownState{
 
 class zeusHurtState{
   constructor(){
-    
+    this.timer = 0;
   }
   execute(me){
     this.timer++;
-    //print('here')
+    //print('hurt');
+    print(me.level);
     //Adjust position in direction of knockback set when attack happens
-    me.x += me.knockback * 2;
-    me.y -= 2;
-    // print("timer: ")
-    // print(this.timer)
-    // print("////")
+    me.position.x += me.knockback * 2;
+    me.position.y -= 2;
     if(this.timer === 30 && me.level < 3) {
       //Move back for half second before returning to chase state
       me.hurt = 0;
@@ -189,30 +197,45 @@ class zeusHurtState{
       me.changeState(0);
     }
     else if(this.timer === 30 && me.level === 3){
+      me.hurt = 0;
+      this.timer = 0;
       me.changeState(2);
     }
     else if(this.timer === 30 && me.level < 6){
+      me.hurt = 0;
+      this.timer = 0;
       me.changeState(3);
     }
     else if(this.timer === 30 && me.level === 6){
+      me.hurt = 0;
+      this.timer = 0;
       me.changeState(3);
     }
     else if(this.timer === 30 && me.level < 9){
+      me.hurt = 0;
+      this.timer = 0;
       me.changeState(3);
     }
     else if(this.timer === 30 && me.level === 9){
+      me.hurt = 0;
+      this.timer = 0;
       me.changeState(3);
     }
-    else{
+    else if(this.timer === 30 && me.level > 9){
       me.alive = 0;
     }
   }
 }
 
 class zeusHellFire{
+  constructor(){
+    this.bullets = [new lightningBullet(), new lightningBullet(), new lightningBullet(), new lightningBullet()];
+  }
   //Add the animations and the bullets firing from top of screen
   execute(me){
-
+    if(me.hurt === 1){
+      me.changeState(1);
+    }
   }
 }
 
@@ -268,10 +291,11 @@ class Zeus{
     this.currState = statevar;
   }
   move(){
+    this.acceleration.set(0, 0);
     this.applyForce(gravity);
-        this.velocity.add(this.acceleration);
-        this.position.add(this.velocity);
-        this.acceleration.set(0, 0);
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.set(0, 0);
     
   }
 }
@@ -312,6 +336,8 @@ class Lightning{
 class lightningBullet{
   constructor(){
     this.position = new p5.Vector(0, 0);
+    this.velocity = new p5.Vector(0, 0);
+    this.acceleration = new p5.Vector(0, 0);
     this.image = images[images.length - 1];
     this.fire = 1;
     this.angle = 0;
@@ -320,6 +346,11 @@ class lightningBullet{
   draw(){
 
   }
+
+  applyForce(force){
+    this.acceleration.add(force);
+  }
+
   move() {
     this.position.x += 2 * sin(this.angle + PI / 2);
     this.position.y -= 2 * cos(this.angle + PI / 2);
@@ -329,12 +360,10 @@ class lightningBullet{
     if(dist(this.position.x,this.position.y,kratos.position.x,kratos.position.y) < 35) {
       this.fire = 0;
       kratos.health -= 0.5;
-      //print('noooo')
     }
     //When it should disappear/not effect character
     for(var i = 0; i < walls.length; i++) {
       if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
-        //print('wall')
         this.fire = 0;
       }
     }
@@ -342,6 +371,9 @@ class lightningBullet{
     //   this.fire = 0;
     // }
 
+
+  }
+  moveHellFire(){
 
   }
 }
@@ -520,7 +552,6 @@ function initTileMap(){
       }
       else if(tilemap[i][j] == "h"){
         potions.push(new Potion(j * 40 + 10, i * 40 + 10));
-        //print("potion added");
       }
     }
   }
@@ -553,6 +584,7 @@ var transition = false;
 var instructTrans = false;
 //draws the intro screen and transitions to the instructions screen when the proper conditions are met
 function draw() {
+  
   background(255);
   if(introS){
     // song.rate(.5)
@@ -606,6 +638,7 @@ function draw() {
     push();
     translate(200 - kratos.position.x, 200-kratos.position.y);
     game.play();
+    print(gameZeus.level);
     //wall.draw();
     pop();
   }
