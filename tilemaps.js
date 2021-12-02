@@ -210,3 +210,6 @@ var tilemap = [
     "rrrrrrwwwwwwrrwrwrrrrrrrwrrrrrrrwrrwrrrrwrrrrrrrrrrrrrrrrrwwwwwwwwwwwwwwwwwrrrrrrrrrrrrrrrrrrrrrrrw"
   
   ];
+
+  var finaltmap1 = [];
+  var finaltmap2 = [];

@@ -17,6 +17,10 @@ let targetY;
 backgroundArray = [];
 firedWebs = [];
 
+finalGrass = [];
+finalWalls = [];
+finalLadders = [];
+
 
 
 
@@ -220,6 +224,10 @@ function initTileMap(){
   }
 }
 
+function initFinalTileMap(){
+  //Initialize Tilemap for final boss battles
+}
+
 var instr;
 var zeus;
 
@@ -233,8 +241,8 @@ function setup() {
   
   song.play();
   getAudioContext().resume();
-  jumpForce = new p5.Vector(0, -5);
-  gravity = new p5.Vector(0, 0.1);
+  jumpForce = new p5.Vector(0, -12.5);
+  gravity = new p5.Vector(0, .5);
   // song.loop();
   kratos = new Kratos(120, 3520, 40);
   zeus = new Zeus(210,160,40);

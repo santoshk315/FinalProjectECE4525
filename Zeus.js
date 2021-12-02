@@ -109,12 +109,32 @@ class zeusFlyState{
           this.step.normalize();
           me.position.x += 2 * this.step.x;
           me.position.y += 2 * this.step.y;
+          me.angle = this.step.heading() + PI/2;
+          //Set direction skeleton is facing when it is chasing kratos
+          if(abs(this.step.heading()) > 1.5 && abs(this.step.heading()) < 3.0){
+            me.direction = 0;
+          }
+          else{
+            me.direction = 1;
+          }
+          me.position.x += this.step.x;
+          me.position.y += this.step.y;
         }
         else{
           this.step.set(targetX - me.position.x, targetY - me.position.y);
           this.step.normalize();
           me.position.x -= 2 * this.step.x;
           me.position.y -= 2 * this.step.y;
+          me.angle = this.step.heading() + PI/2;
+          //Set direction skeleton is facing when it is chasing kratos
+          if(abs(this.step.heading()) > 1.5 && abs(this.step.heading()) < 3.0){
+            me.direction = 0;
+          }
+          else{
+            me.direction = 1;
+          }
+          me.position.x += this.step.x;
+          me.position.y += this.step.y;
         }
         if(me.alive == 1){
             
@@ -124,8 +144,8 @@ class zeusFlyState{
                 
                 this.val = frameCount;
                 this.bullets[this.index].fire = 1;
-                this.bullets[this.index].position.x = me.x + 20;
-                this.bullets[this.index].position.y = me.y + 20;
+                this.bullets[this.index].position.x = me.position.x;
+                this.bullets[this.index].position.y = me.position.y;
                 this.bullets[this.index].angle = me.angle - PI/2;
                 firedWebs.push(this.bullets[this.index]);
                 this.index++;
@@ -166,6 +186,7 @@ class zeusFlyState{
   
     }
     execute(me){
+      me.falling = 1;
       print("down");
       //print(me.level);
       if(me.alive === 1){
@@ -173,6 +194,7 @@ class zeusFlyState{
         me.move();
       }
       if(me.hurt === 1){
+        me.falling = 0;
         me.changeState(1);
       }
     } 
@@ -184,8 +206,10 @@ class zeusFlyState{
       this.timer = 0;
     }
     execute(me){
+      me.hurtAnimation();
       this.timer++;
       print('hurt');
+      
       //print(me.level);
       //Adjust position in direction of knockback set when attack happens
       me.position.x += me.knockback * 2;
@@ -229,8 +253,10 @@ class zeusFlyState{
   
   class zeusHellFire{
     constructor(){
-      this.bullets = [new lightningBullet(), new lightningBullet(), new lightningBullet(), new lightningBullet()];
+      this.bullets = [new lightningBullet(), new lightningBullet(), new lightningBullet(), new lightningBullet(), new lightningBullet(), new lightningBullet(), new lightningBullet(), new lightningBullet()];
       this.timer = 0;
+      this.index = 0;
+      this.val = 0;
     }
     //Add the animations and the bullets firing from top of screen
     execute(me){
@@ -238,9 +264,31 @@ class zeusFlyState{
       print("invincible");
       me.invincible = 1;
       this.timer++;
-      //Activate Animation
       //Draw Bullets
-      if(this.timer === 100){
+      if(this.val < frameCount - 10){
+                
+        this.val = frameCount;
+        this.bullets[this.index].fire = 1;
+        this.bullets[this.index].position.x = me.position.x - 20 + (20 * this.index);
+        this.bullets[this.index].position.y = me.position.y;
+        this.bullets[this.index].angle = PI/2;
+        firedWebs.push(this.bullets[this.index]);
+        this.index++;
+        if(this.index > 7){
+          this.index = 0;
+        }
+      //}
+      
+      
+      } 
+      for(var i = 0; i < 7; i++){
+        if(this.bullets[i].fire === 1){
+          this.bullets[i].draw();
+          this.bullets[i].moveHellFire();
+        }
+      }
+      
+      if(this.timer === 300){
         me.changeState(3);
         me.invincible = 0;
       }
@@ -270,16 +318,27 @@ class zeusFlyState{
       this.direction = 0;
       this.angle = 0;
       this.invincible = 0;
+      this.falling = 0;
     }
     //Draw Zeus character
     draw(){
       let index = floor(this.index) % this.len;
+      if(this.falling === 0){
+        if(this.direction === 0){
+          image(zeusarray[index],this.position.x,this.position.y,this.scale,this.scale);
+        }
+        else{
+          image(zeusarray_rev[index],this.position.x,this.position.y,this.scale,this.scale);
+        }
+    }
+    else{
       if(this.direction === 0){
-        image(zeusarray[index],this.position.x,this.position.y,this.scale,this.scale);
+        image(zeusfallingarray[index], this.position.x, this.position.y, this.scale, this.scale);
       }
       else{
-        image(zeusarray_rev[index],this.position.x,this.position.y,this.scale,this.scale);
+        image(zeusfallingarray_rev[index], this.position.x, this.position.y, this.scale, this.scale);
       }
+    }
       //image(this.img,this.x,this.y,this.scale,this.scale);
       
     }
@@ -307,7 +366,15 @@ class zeusFlyState{
       }
   
     }
-  
+    hurtAnimation(){
+      let index = floor(this.index) % this.len;
+      if(this.direction === 0){
+        image(zeushurtarray[index],this.position.x,this.position.y,this.scale,this.scale);
+      }
+      else{
+        image(zeushurtarray_rev[index],this.position.x,this.position.y,this.scale,this.scale);
+      }
+    }
     specialAttack(){
       let index = floor(this.index) % this.len;
       image(zeushellfire_array[index], this.position.x, this.position.y, this.scale, this.scale);
@@ -367,8 +434,17 @@ class zeusFlyState{
       this.fire = 1;
       this.angle = 0;
       this.vec = new p5.Vector(0,-1);
+      this.scale = 60;
+      this.index = 0;
+      this.len = lightningarray.length;
     }
     draw(){
+      push();
+      translate(this.position.x + 30, this.position.y + 30);
+      let index = floor(this.index) % this.len;
+      rotate(this.angle + PI/2);
+      image(lightningarray[index],0,0,this.scale,this.scale);
+      pop();
   
     }
   
@@ -399,7 +475,23 @@ class zeusFlyState{
   
     }
     moveHellFire(){
-  
+      print(this.position.x);
+      print(this.position.y);
+      this.acceleration.set(0, 0);
+      this.applyForce(gravity);
+      this.velocity.add(this.acceleration);
+      this.position.add(this.velocity);
+      this.acceleration.set(0, 0); 
+      if(dist(this.position.x,this.position.y,kratos.position.x,kratos.position.y) < 35) {
+        this.fire = 0;
+        kratos.health -= 0.5;
+      }
+      //When it should disappear/not effect character
+      for(var i = 0; i < walls.length; i++) {
+        if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
+          this.fire = 0;
+        }
+      }
     }
   }
   
