@@ -266,7 +266,7 @@ class Game{
         }
         if(this.kratos.dir === -1) {
           
-          if(dist(this.kratos.position.x-30, kratos.position.y, zeus.x, zeus.y) < 40 && this.kratos.swing === 1 && this.zeus.invincible === 0) {
+          if(dist(this.kratos.position.x-30, this.kratos.position.y, this.zeus.position.x, this.zeus.position.y) < 40 && this.kratos.swing === 1 && this.zeus.invincible === 0) {
   
             if(this.kratos.timer % 5 === 0 && this.zeus.level < 10) {
                 this.zeus.level++;

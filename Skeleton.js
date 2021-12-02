@@ -311,7 +311,7 @@ class skelBlood{
   
       
       //When it should disappear/not effect character
-      if(dist(this.position.x,this.position.y,kratos.position.x,kratos.position.y) < 35) {
+      if(dist(this.position.x,this.position.y,kratos.position.x+20,kratos.position.y+20) < 35) {
         this.fire = 0;
         kratos.health -= 0.5;
         //print('noooo')
