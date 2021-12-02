@@ -38,12 +38,28 @@ class zeusFlyState{
       if(dist(targetX, targetY, me.position.x, me.position.y) < 350){
         this.step.set(targetX - me.position.x, targetY - me.position.y);
         this.step.normalize();
+        me.angle = this.step.heading() + PI/2;
+        //Set direction skeleton is facing when it is chasing kratos
+        if(abs(this.step.heading()) > 1.5 && abs(this.step.heading()) < 3.0){
+          me.direction = 0;
+        }
+        else{
+          me.direction = 1;
+        }
         me.position.x += this.step.x;
         me.position.y += this.step.y;
       }
       else{
         this.step.set(targetX - me.position.x, targetY - me.position.y);
         this.step.normalize();
+        me.angle = me.step.heading() + PI/2;
+        //Set direction skeleton is facing when it is chasing kratos
+        if(abs(me.step.heading()) > 1.5 && abs(me.step.heading()) < 3.0){
+          me.direction = 0;
+        }
+        else{
+          me.direction = 1;
+        }
         me.position.x -= this.step.x;
         me.position.y -= this.step.y;
       }
@@ -81,12 +97,10 @@ class zeusFlyState{
           }
         
       }
-      if(me.hurt === 1){
-        me.changeState(1);
-      }
+      
     }
-    else{
-      me.changeState(2);
+    if(me.hurt === 1){
+      me.changeState(1);
     }
     
   }
@@ -152,9 +166,10 @@ class zeusAggressiveFlyState{
           }
         
       }
-      if(me.hurt == 1){
-        me.changeState(1);
-      }
+      
+    }
+    if(me.hurt == 1){
+      me.changeState(1);
     }
     
   }
@@ -167,7 +182,7 @@ class zeusDownState{
 
   }
   execute(me){
-    print("down");
+    print(me.level);
     if(me.alive === 1){
       print("going to move");
       me.move();
@@ -209,7 +224,7 @@ class zeusHurtState{
     else if(this.timer === 30 && me.level === 6){
       me.hurt = 0;
       this.timer = 0;
-      me.changeState(3);
+      me.changeState(4);
     }
     else if(this.timer === 30 && me.level < 9){
       me.hurt = 0;
@@ -230,12 +245,19 @@ class zeusHurtState{
 class zeusHellFire{
   constructor(){
     this.bullets = [new lightningBullet(), new lightningBullet(), new lightningBullet(), new lightningBullet()];
+    this.timer = 0;
   }
   //Add the animations and the bullets firing from top of screen
   execute(me){
-    if(me.hurt === 1){
-      me.changeState(1);
+    me.invincible = 1;
+    this.timer++;
+    //Activate Animation
+    //Draw Bullets
+    if(this.timer === 100){
+      me.changeState(3);
+      me.invincible = 0;
     }
+    
   }
 }
 
@@ -258,6 +280,9 @@ class Zeus{
     this.position = new p5.Vector(this.x, this.y);
     this.velocity = new p5.Vector(0, 0);
     this.acceleration = new p5.Vector(0, 0);
+    this.direction = 0;
+    this.angle = 0;
+    this.invincible = 0;
   }
   //Draw Zeus character
   draw(){
