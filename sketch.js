@@ -486,7 +486,13 @@ function preload(){
   sksp0_rev = loadImage("skeleton_wings_rev.png");
   sksp1_rev = loadImage("skeleton_flying_rev.png");
 
-  zeussp = loadImage('zeussprite.png');
+  zeussp = loadImage('zeuscloud.png');
+  zeussp_rev = loadImage('zeuscloud_rev.png');
+  zeusshoot = loadImage('zeusshoot.png');
+  zeusshoot_rev = loadImage('zeusshoot_rev.png');
+  zeushellfire = loadImage('zeustransition.png');
+  zeushellfire_shift = loadImage('zeustransition_shift.png');
+
   kratosspattk = loadImage("kratossprite_attack1.png")
   wall = loadImage("grassland_tileset/grassland_tileset/PNG/terrain_center.png");
   rock = loadImage("grassland_tileset/grassland_tileset/PNG/midground_center.png");
@@ -543,6 +549,13 @@ function preload(){
   slasharray = [sl1,sl1,sl4,sl4];
   slasharray_rev = [sl1_rev,sl1_rev,sl4_rev,sl4_rev];
   zeusarray = [zeussp,zeussp];
+  zeusarray_rev = [zeussp_rev,zeussp_rev];
+
+  zeusshooting = [zeussp,zeussp,zeusshoot,zeusshoot];
+  zeusshooting_rev = [zeussp_rev,zeussp_rev,zeusshoot_rev,zeusshoot_rev];
+
+  zeushellfire = [zeushellfire,zeushellfire,zeushellfire_shift,zeushellfire_shift];
+
 
   lightningarray = [l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12];
 }
