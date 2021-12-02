@@ -96,7 +96,7 @@ class Game{
         if(dist(this.zeus.position.x, this.zeus.position.y, this.grassArray[i].x, this.grassArray[i].y) < 40){
           if(this.zeus.position.y < this.grassArray[i].y) {
             this.zeus.position.y = this.grassArray[i].y -40;
-            print("yolo");
+            //print("yolo");
           }
         }
       }
@@ -259,7 +259,7 @@ class Game{
   
             if(this.kratos.timer % 25 === 0 && this.zeus.level < 10) {
               this.zeus.level++;
-              this.zeus.knockback = -1;
+              this.zeus.knockback = 1;
               this.zeus.hurt = 1;
             }
           }

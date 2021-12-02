@@ -33,7 +33,7 @@ class zeusFlyState{
   }
   execute(me){
     print("flying normal");
-    print(me.level);
+    //print(me.level);
     if(me.level < 3){
       if(dist(targetX, targetY, me.position.x, me.position.y) < 350){
         this.step.set(targetX - me.position.x, targetY - me.position.y);
@@ -52,9 +52,9 @@ class zeusFlyState{
       else{
         this.step.set(targetX - me.position.x, targetY - me.position.y);
         this.step.normalize();
-        me.angle = me.step.heading() + PI/2;
+        me.angle = this.step.heading() + PI/2;
         //Set direction skeleton is facing when it is chasing kratos
-        if(abs(me.step.heading()) > 1.5 && abs(me.step.heading()) < 3.0){
+        if(abs(this.step.heading()) > 1.5 && abs(this.step.heading()) < 3.0){
           me.direction = 0;
         }
         else{
@@ -119,8 +119,10 @@ class zeusAggressiveFlyState{
     this.index = 0;
   }
   execute(me){
-    if(me.level < 6){
-      if(dist(targetX, targetY, me.position.x, me.position.y) > 350){
+    //if(me.level < 9){
+      print("aggressive state");
+      if(dist(targetX, targetY, me.position.x, me.position.y) < 350){
+        print("step faster");
         this.step.set(targetX - me.position.x, targetY - me.position.y);
         this.step.normalize();
         me.position.x += 2 * this.step.x;
@@ -129,8 +131,8 @@ class zeusAggressiveFlyState{
       else{
         this.step.set(targetX - me.position.x, targetY - me.position.y);
         this.step.normalize();
-        me.x -= 2 * this.step.x;
-        me.y -= 2 * this.step.y;
+        me.position.x -= 2 * this.step.x;
+        me.position.y -= 2 * this.step.y;
       }
       if(me.alive == 1){
           
@@ -167,7 +169,7 @@ class zeusAggressiveFlyState{
         
       }
       
-    }
+    //}
     if(me.hurt == 1){
       me.changeState(1);
     }
@@ -182,9 +184,10 @@ class zeusDownState{
 
   }
   execute(me){
-    print(me.level);
+    print("down");
+    //print(me.level);
     if(me.alive === 1){
-      print("going to move");
+      //print("going to move");
       me.move();
     }
     if(me.hurt === 1){
@@ -200,8 +203,8 @@ class zeusHurtState{
   }
   execute(me){
     this.timer++;
-    //print('hurt');
-    print(me.level);
+    print('hurt');
+    //print(me.level);
     //Adjust position in direction of knockback set when attack happens
     me.position.x += me.knockback * 2;
     me.position.y -= 2;
@@ -249,6 +252,7 @@ class zeusHellFire{
   }
   //Add the animations and the bullets firing from top of screen
   execute(me){
+    print("invincible");
     me.invincible = 1;
     this.timer++;
     //Activate Animation
@@ -271,7 +275,7 @@ class Zeus{
     this.dir = 0.5;
     this.level = 0;
     this.state = [new zeusFlyState(), new zeusHurtState(), new zeusDownState(), new zeusAggressiveFlyState(), new zeusHellFire()];
-    this.currState = 2;
+    this.currState = 0;
     this.len = zeusarray.length;
     this.index = 0;
     this.hurt = 0;
@@ -663,7 +667,7 @@ function draw() {
     push();
     translate(200 - kratos.position.x, 200-kratos.position.y);
     game.play();
-    print(gameZeus.level);
+    //print(gameZeus.level);
     //wall.draw();
     pop();
   }
