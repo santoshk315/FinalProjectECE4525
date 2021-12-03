@@ -46,6 +46,9 @@ class skelBlood{
             firedWebs[t].draw();
             firedWebs[t].move();
           }
+          else{
+            firedWebs[t].fire = 0;
+          }
         }
       }
       else{
@@ -67,6 +70,9 @@ class skelBlood{
         if(firedWebs[t].fire === 1){
           firedWebs[t].draw();
           firedWebs[t].move();
+        }
+        else{
+          firedWebs[t].fire = 0;
         }
       }
       //Set a timer and have the skeleton float back for set time
@@ -124,7 +130,7 @@ class skelBlood{
           
           //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
             //Fire a bullet from the array of bullets available in this state
-            if(this.val < frameCount - 500){
+            if(this.val < frameCount - 200){
               
               this.val = frameCount;
               this.bullets[this.index].fire = 1;
@@ -319,8 +325,8 @@ class skelBlood{
     }
     //Move with respect to angle set in chase state
     move() {
-      this.position.x += 2 * sin(this.angle + PI / 2);
-      this.position.y -= 2 * cos(this.angle + PI / 2);
+      this.position.x += .5 * sin(this.angle + PI / 2);
+      this.position.y -= .5 * cos(this.angle + PI / 2);
   
       
       //When it should disappear/not effect character
@@ -330,10 +336,20 @@ class skelBlood{
         //print('noooo')
       }
       //When it should disappear/not effect character
-      for(var i = 0; i < walls.length; i++) {
-        if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
-          //print('wall')
-          this.fire = 0;
+      if(level === 1){
+        for(var i = 0; i < walls.length; i++) {
+          if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
+            //print('wall')
+            this.fire = 0;
+          }
+        }
+      }
+      else{
+        for(var i = 0; i < walls2.length; i++) {
+          if(dist(this.position.x,this.position.y,walls2[i].x,walls2[i].y) < 40) {
+            //print('wall')
+            this.fire = 0;
+          }
         }
       }
       // if (this.position.y < 0 || this.position.y > 400 || this.position.x > 400 || this.position.x < 0) {

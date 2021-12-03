@@ -130,12 +130,25 @@ class Kratos{
     //Check if player is properly aligned with ladder
     ladderCol(){
       var c = 0;
-      for(var i = 0; i < ladders.length; i++){
-        if(this.position.x === ladders[i].x && this.position.y > ladders[i].y - 40 && this.position.y < ladders[i].y + 40){
-          c = 1;
-          //print(c);
+      if(level === 1){
+        for(var i = 0; i < ladders.length; i++){
+          if(this.position.x === ladders[i].x && this.position.y > ladders[i].y - 40 && this.position.y < ladders[i].y + 40){
+          // if(dist(this.position.x, this.position.y, ladders[i].x, ladders[i].y) < 40){
+            c = 1;
+            //print(c);
+          }
+          
         }
-        
+      }
+      else{
+        for(var i = 0; i < ladders2.length; i++){
+          if(this.position.x === ladders2[i].x && this.position.y > ladders2[i].y - 40 && this.position.y < ladders2[i].y + 40){
+          // if(dist(this.position.x, this.position.y, ladders[i].x, ladders[i].y) < 40){
+            c = 1;
+            //print(c);
+          }
+          
+        }
       }
       return c;
     }

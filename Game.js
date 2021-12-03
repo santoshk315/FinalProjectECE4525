@@ -1,7 +1,7 @@
 
 //base game class foundation
 class Game{
-    constructor(walls, grass, kratos, enemies, zeus, potions, keys){
+    constructor(walls, grass, kratos, enemies, zeus, potions, keys, ladders){
       this.wallsArray = walls;
       this.grassArray = grass;
       this.kratos = kratos;
@@ -19,6 +19,7 @@ class Game{
       this.potions = potions;
       this.keys = keys;
       this.inFinal = 0;
+      this.ladders = ladders;
     }
     //Draw the background and tilemap to the screen
     drawBackground(){
@@ -56,12 +57,12 @@ class Game{
       for(var k = 0; k < this.enemies.length; k++){
         this.enemies[k].draw();
         this.enemies[k].animate();
-        this.enemies[k].state[enemies[k].currState].execute(enemies[k]);
+        this.enemies[k].state[this.enemies[k].currState].execute(this.enemies[k]);
         //print(this.enemies[k].health);
       }
       //Draw ladders on the tilemap
-      for(var l = 0; l < ladders.length; l++){
-        ladders[l].draw();
+      for(var l = 0; l < this.ladders.length; l++){
+        this.ladders[l].draw();
       }
       //Draw the keys from tilemaps
       for(var x = 0; x < this.keys.length; x++){
@@ -140,10 +141,10 @@ class Game{
       for(var i = 0; i < finalWalls2.length; i++){
         finalWalls2[i].draw();
       }
-      for(var j = 0; j < finalGrass.length; j++){
+      for(var j = 0; j < finalGrass2.length; j++){
         finalGrass2[j].draw();
       }
-      for(var k = 0; k < finalEnemies.length; k++){
+      for(var k = 0; k < finalEnemies2.length; k++){
         finalEnemies2[k].draw();
         finalEnemies2[k].animate();
         finalEnemies2[k].state[finalEnemies2[k].currState].execute(finalEnemies2[k]);
@@ -773,7 +774,6 @@ class Game{
         }
       }
       else{
-        print("final battle 1");
         this.drawFinalBackground();
         if(this.inFinal === 0){
           this.kratos.position.x = 40;
@@ -782,8 +782,6 @@ class Game{
           this.zeus.position.y = 100;
           this.inFinal = 1;
         }
-        print(this.kratos.position.x);
-        print(this.kratos.position.y);
         this.kratos.draw();
         this.kratos.animate();
         this.kratos.move();
@@ -846,7 +844,6 @@ class Game{
         //this.drawBackground();
         this.timer++;
         if(this.timer < 100){
-          print("cutting to scene");
           fill(0);
           rect(targetX - 200 + this.timer * 4, targetY - 200, 400, 400);
           noFill();
@@ -900,7 +897,6 @@ class Game{
         }
       }
       else{
-        print("final battle 1");
         this.drawFinalBackground2();
         if(this.inFinal === 0){
           this.kratos.position.x = 40;
@@ -909,8 +905,6 @@ class Game{
           this.zeus.position.y = 100;
           this.inFinal = 1;
         }
-        print(this.kratos.position.x);
-        print(this.kratos.position.y);
         this.kratos.draw();
         this.kratos.animate();
         this.kratos.move();

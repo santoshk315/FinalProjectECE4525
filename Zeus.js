@@ -11,7 +11,6 @@ class zeusFlyState{
       this.index = 0;
     }
     execute(me){
-      print("flying normal");
       me.baseAttack();
       me.animate1();
       //print(me.level);
@@ -104,7 +103,6 @@ class zeusFlyState{
       me.baseAttack();
       me.animate1();
       //if(me.level < 9){
-        print("aggressive state");
         if(dist(targetX, targetY, me.position.x, me.position.y) > 100){
           this.step.set(targetX - me.position.x, targetY - me.position.y);
           this.step.normalize();
@@ -188,7 +186,6 @@ class zeusFlyState{
     }
     execute(me){
       me.falling = 1;
-      print("down");
       //print(me.level);
       if(me.alive === 1){
         //print("going to move");
@@ -209,7 +206,6 @@ class zeusFlyState{
     execute(me){
       me.hurtAnimation();
       this.timer++;
-      print('hurt');
       
       //print(me.level);
       //Adjust position in direction of knockback set when attack happens
@@ -264,7 +260,6 @@ class zeusFlyState{
     execute(me){
       me.specialAttack();
       me.animate1();
-      print("invincible");
       me.invincible = 1;
       this.timer++;
       //Draw Bullets
@@ -490,8 +485,6 @@ class zeusFlyState{
   
     }
     moveHellFire(){
-      print(this.position.x);
-      print(this.position.y);
       this.acceleration.set(0, 0);
       this.applyForce(gravity);
       this.velocity.add(this.acceleration);

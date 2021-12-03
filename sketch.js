@@ -331,6 +331,7 @@ function initFinalTileMap2(){
 
 var instr;
 var zeus;
+let level;
 //creates canvas and necessary assets
 function setup() {
   createCanvas(400, 400);
@@ -352,10 +353,10 @@ function setup() {
   gameZeus = new Zeus(120 + 60, 3520, 40);
   intro = new IntroScreen();
   instr = new InstructionScreen();
-  game = new Game(walls, grass, kratos, enemies, gameZeus, potions, keys);
-  game2 = new Game(walls2, grass2, kratos, enemies2, gameZeus, potions2, keys2);
+  game = new Game(walls, grass, kratos, enemies, gameZeus, potions, keys, ladders);
+  game2 = new Game(walls2, grass2, kratos, enemies2, gameZeus, potions2, keys2, ladders2);
   timer = 0;
-  level = 1;
+  level = 2;
 }
 var transition = false;
 var instructTrans = false;
@@ -418,9 +419,12 @@ function draw() {
       game.play();
       if(game.zeus.alive === 0){
         level = 2;
+        kratos.score = 0;
       }
     }
-    else if(timer < 1000){
+    else if(timer < 50){
+      kratos.position.x = 120;
+      kratos.position.y = 3520;
       fill(255, 0, 0);
       rect(0, 0, 400, 400);
       noFill();
