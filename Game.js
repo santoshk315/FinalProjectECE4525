@@ -12,8 +12,10 @@ class Game{
       this.score = 0;
       this.zeus = zeus;
       this.timer = 0;
-      this.kratCut = new Kratos(320 - 200, 3520 +50, 100);
-      this.zeusCut = new Zeus(320 + 100, 3520 - 150, 100);
+      this.kratCut = new Kratos(this.kratos.position.x, this.kratos.position.y +50, 100);
+      this.zeusCut = new Zeus(this.kratos.position.x + 200, this.kratos.position.y - 150, 100);
+      this.kratosFinal = new Kratos(20, 230, 40);
+      this.zeusFinal = new Zeus(20, 20, 40);
       this.potions = potions;
       this.keys = keys;
     }
@@ -286,17 +288,294 @@ class Game{
         }
       }
     }
+
+    final1platformCollision(){
+      //Make sure Kratos can land on the top of the platform
+      for(var i = 0; i < finalGrass.length; i++){
+        if(dist(this.kratosFinal.position.x, this.kratosFinal.position.y, finalGrass[i].x, finalGrass[i].y) < 40){
+          if(this.kratosFinal.position.y < finalGrass[i].y && this.kratosFinal.velocity.y > 0){
+            this.kratosFinal.position.y = finalGrass[i].y - 40 + 5;
+            this.kratosFinal.jump = 0;
+            this.kratosFinal.velocity.set(0, 0);
+          }
+        }
+        //Bounce up if the enemies collides with the platform
+        for(var j = 0; j < finalEnemies.length; j++) {
+          if(dist(finalEnemies[j].x, finalEnemies[j].y, finalGrass[i].x, finalGrass[i].y) < 40){
+            if(finalEnemies[j].y < finalGrass[i].y) {
+              finalEnemies[j].y = finalGrass[i].y -40;
+            }
+          }
+        }
+        if(dist(this.zeus.position.x, this.zeus.position.y, finalGrass[i].x, finalGrass[i].y) < 40){
+          if(this.zeus.position.y < finalGrass[i].y) {
+            this.zeus.position.y = finalGrass[i].y -40;
+            //print("yolo");
+          }
+        }
+      }
+      //What kratos should do when colliding with the walls in the game map
+      for(var i = 0; i < finalWalls.length; i++) {
+        if(dist(this.kratosFinal.position.x, this.kratosFinal.position.y, finalWalls[i].x, finalWalls[i].y) < 40){
+          if(this.kratosFinal.position.y < finalWalls[i].y && this.kratosFinal.velocity.y >= 0) {
+            
+            this.kratosFinal.position.y = finalWalls[i].y - 35;
+            this.kratosFinal.jump = 0;
+            this.kratosFinal.velocity.set(0, 0);
+            //print("top col");
+          }
+          else {
+            if(this.kratosFinal.position.x < finalWalls[i].x) {
+              
+              this.kratosFinal.position.x -= 5;
+              //this.kratosFinal.velocity.set(0, 0);
+              this.kratosFinal.velocity.x = -this.kratosFinal.velocity.x;
+              //print("left col");
+            }
+  
+            if(this.kratosFinal.position.x > finalWalls[i].x) {
+              
+              this.kratosFinal.position.x += 5;
+              //this.kratosFinal.velocity.set(0, 0);
+              this.kratosFinal.velocity.x = -this.kratosFinal.velocity.x;
+              //print("right col");
+            }
+  
+  
+            if(this.kratosFinal.position.y > finalWalls[i].y) {
+              this.kratosFinal.position.y += 5; 
+              this.kratosFinal.velocity.y = -this.kratosFinal.velocity.y;
+              //print("bottom col");
+            }
+        }
+      }
+    }
+  //What the enemies should do if they collide with the walls
+      for(var j = 0; j < finalEnemies.length; j++) {
+        for(var k = 0; k < finalWalls.length; k++) {
+          if(dist(finalEnemies[j].x, finalEnemies[j].y, finalWalls[k].x, finalWalls[k].y) < 40){
+  
+            if(finalEnemies[j].x < finalWalls[k].x) {
+             
+              finalEnemies[j].x -= 10;
+  
+              
+            }
+    
+            if(finalEnemies[j].x > finalWalls[k].x) {
+              
+              finalEnemies[j].x += 10;
+   
+            }
+    
+            if(finalEnemies[j].y < finalWalls[k].y) {
+              
+              finalEnemies[j].y = finalWalls[k].y - 40 + 5;
+              
+  
+            }
+    
+            if(finalEnemies[j].y > finalWalls[k].y) {
+              
+              finalEnemies[j].y += 10; 
+              skelyDir = 1;
+  
+            }
+          }
+        }
+      }
+
+      for(var k = 0; k < finalWalls.length; k++) {
+        if(dist(this.zeus.position.x, this.zeus.position.y, finalWalls[k].x, finalWalls[k].y) < 40){
+
+          if(this.zeus.position.x < finalWalls[k].x) {
+           
+            this.zeus.position.x -= 10;
+
+            
+          }
+  
+          if(this.zeus.position.x > finalWalls[k].x) {
+            
+            this.zeus.position.x += 10;
+ 
+          }
+  
+          if(this.zeus.position.y < finalWalls[k].y) {
+            
+            this.zeus.position.y = finalWalls[k].y - 40 + 5;
+            
+
+          }
+  
+          if(this.zeus.position.y > finalWalls[k].y) {
+            
+            this.zeus.position.y += 10; 
+            
+
+          }
+        }
+      }
+    }
+
+    final2platformCollision(){
+      //Make sure Kratos can land on the top of the platform
+      for(var i = 0; i < finalGrass2.length; i++){
+        if(dist(this.kratos.position.x, this.kratos.position.y, finalGrass2[i].x, finalGrass2[i].y) < 40){
+          if(this.kratos.position.y < finalGrass2[i].y && this.kratos.velocity.y > 0){
+            this.kratos.position.y = finalGrass2[i].y - 40 + 5;
+            this.kratos.jump = 0;
+            this.kratos.velocity.set(0, 0);
+          }
+        }
+        //Bounce up if the enemies collides with the platform
+        for(var j = 0; j < finalEnemies2.length; j++) {
+          if(dist(finalEnemies2[j].x, finalEnemies2[j].y, finalGrass2[i].x, finalGrass2[i].y) < 40){
+            if(finalEnemies2[j].y < finalGrass2[i].y) {
+              finalEnemies2[j].y = finalGrass2[i].y -40;
+            }
+          }
+        }
+        if(dist(this.zeus.position.x, this.zeus.position.y, finalGrass2[i].x, finalGrass2[i].y) < 40){
+          if(this.zeus.position.y < finalGrass2[i].y) {
+            this.zeus.position.y = finalGrass2[i].y -40;
+            //print("yolo");
+          }
+        }
+      }
+      //What kratos should do when colliding with the walls in the game map
+      for(var i = 0; i < finalWalls2.length; i++) {
+        if(dist(this.kratos.position.x, this.kratos.position.y, finalWalls2[i].x, finalWalls2[i].y) < 40){
+          if(this.kratos.position.y < finalWalls2[i].y && this.kratos.velocity.y >= 0) {
+            
+            this.kratos.position.y = finalWalls2[i].y - 35;
+            this.kratos.jump = 0;
+            this.kratos.velocity.set(0, 0);
+            //print("top col");
+          }
+          else {
+            if(this.kratos.position.x < finalWalls2[i].x) {
+              
+              this.kratos.position.x -= 5;
+              //this.kratos.velocity.set(0, 0);
+              this.kratos.velocity.x = -this.kratos.velocity.x;
+              //print("left col");
+            }
+  
+            if(this.kratos.position.x > finalWalls2[i].x) {
+              
+              this.kratos.position.x += 5;
+              //this.kratos.velocity.set(0, 0);
+              this.kratos.velocity.x = -this.kratos.velocity.x;
+              //print("right col");
+            }
+  
+  
+            if(this.kratos.position.y > finalWalls2[i].y) {
+              this.kratos.position.y += 5; 
+              this.kratos.velocity.y = -this.kratos.velocity.y;
+              //print("bottom col");
+            }
+        }
+      }
+    }
+  //What the enemies should do if they collide with the walls
+      for(var j = 0; j < finalEnemies2.length; j++) {
+        for(var k = 0; k < finalWalls2.length; k++) {
+          if(dist(finalEnemies2[j].x, finalEnemies2[j].y, finalWalls2[k].x, finalWalls2[k].y) < 40){
+  
+            if(finalEnemies2[j].x < finalWalls2[k].x) {
+             
+              finalEnemies2[j].x -= 10;
+  
+              
+            }
+    
+            if(finalEnemies2[j].x > finalWalls2[k].x) {
+              
+              finalEnemies2[j].x += 10;
+   
+            }
+    
+            if(finalEnemies2[j].y < finalWalls2[k].y) {
+              
+              finalEnemies2[j].y = finalWalls2[k].y - 40 + 5;
+              
+  
+            }
+    
+            if(finalEnemies2[j].y > finalWalls2[k].y) {
+              
+              finalEnemies2[j].y += 10; 
+              skelyDir = 1;
+  
+            }
+          }
+        }
+      }
+
+      for(var k = 0; k < finalWalls2.length; k++) {
+        if(dist(this.zeus.position.x, this.zeus.position.y, finalWalls2[k].x, finalWalls2[k].y) < 40){
+
+          if(this.zeus.position.x < finalWalls2[k].x) {
+           
+            this.zeus.position.x -= 10;
+
+            
+          }
+  
+          if(this.zeus.position.x > finalWalls2[k].x) {
+            
+            this.zeus.position.x += 10;
+ 
+          }
+  
+          if(this.zeus.position.y < finalWalls2[k].y) {
+            
+            this.zeus.position.y = finalWalls2[k].y - 40 + 5;
+            
+
+          }
+  
+          if(this.zeus.position.y > finalWalls2[k].y) {
+            
+            this.zeus.position.y += 10; 
+            
+
+          }
+        }
+      }
+    }
   //What should happen if the character collects an item
     itemCollision(){
-      for(var i = 0; i < keys.length; i++){
-        if(dist(this.kratos.position.x, this.kratos.position.y, keys[i].x, keys[i].y) < 20 && keys[i].collect === 0){
-          keys[i].collect = 1;
+      for(var i = 0; i < this.keys.length; i++){
+        if(dist(this.kratos.position.x, this.kratos.position.y, this.keys[i].x, this.keys[i].y) < 20 && this.keys[i].collect === 0){
+          this.keys[i].collect = 1;
           this.kratos.score++;
         }
       }
-      for(var j = 0; j < potions.length; j++){
-        if(dist(this.kratos.position.x, this.kratos.position.y, potions[j].x, potions[j].y) < 20 && potions[j].collect === 0){
-          potions[j].collect = 1;
+      for(var j = 0; j < this.potions.length; j++){
+        if(dist(this.kratos.position.x, this.kratos.position.y, this.potions[j].x, this.potions[j].y) < 20 && this.potions[j].collect === 0){
+          this.potions[j].collect = 1;
+          this.kratos.health++;
+        }
+      }
+    }
+
+    final1itemCollision(){
+      for(var j = 0; j < finalPotions.length; j++){
+        if(dist(this.kratos.position.x, this.kratos.position.y, finalPotions[j].x, finalPotions[j].y) < 20 && finalPotions[j].collect === 0){
+          finalPotions[j].collect = 1;
+          this.kratos.health++;
+        }
+      }
+    }
+
+    final2itemCollision(){
+
+      for(var j = 0; j < finalPotions2.length; j++){
+        if(dist(this.kratos.position.x, this.kratos.position.y, finalPotions2[j].x, finalPotions2[j].y) < 20 && finalPotions2[j].collect === 0){
+          finalPotions2[j].collect = 1;
           this.kratos.health++;
         }
       }
@@ -385,7 +664,10 @@ class Game{
         this.kratos.position.x = 320;
         targetX = this.kratos.position.x;
         targetY = this.kratos.position.y;
-
+        this.kratCut.position.x = targetX - 200;
+        this.kratCut.position.y = targetY + 50;
+        this.zeusCut.position.x = targetX + 50;
+        this.zeusCut.position.y = targetY - 150;
 
         image(images[8], 0, 0, 1000, 930);
       image(images[8], 1000, 0, 1000, 930);
@@ -462,12 +744,13 @@ class Game{
       }
       else{
         this.drawFinalBackground();
-        this.kratos.draw();
-        this.kratos.animate();
-        this.kratos.move();
-        targetX = this.kratos.position.x;
-        targetY = this.kratos.position.y;
-        this.platformCollision();
+        this.kratosFinal.draw();
+        this.kratosFinal.animate();
+        this.kratosFinal.move();
+        targetX = this.kratosFinal.position.x;
+        targetY = this.kratosFinal.position.y;
+        this.final1platformCollision();
+        this.final1itemCollision();
         this.zeus.draw();
         this.zeus.state[this.currState].execute(this.zeus);
         this.zeusCombat();

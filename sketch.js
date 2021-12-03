@@ -220,6 +220,9 @@ function initTileMap(){
       else if(tilemap[i][j] == "p"){
         grass.push(new Platform(j * 40, i * 40, "p"));
       }
+      else if(tilemap[i][j] == "b"){
+        grass.push(new Platform(j * 40, i * 40, "b"));
+      }
       else if(tilemap[i][j] == "e"){
         enemies.push(new Skeleton(j * 40, i * 40, 40));
         backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
@@ -297,6 +300,7 @@ function setup() {
   //customChar();
   textFont(myFont);
   initTileMap();
+  initFinalTileMap();
   song.stop();
   
   song.play();
