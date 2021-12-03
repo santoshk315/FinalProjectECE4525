@@ -15,7 +15,7 @@ class zeusFlyState{
       me.baseAttack();
       //print(me.level);
       if(me.level < 3){
-        if(dist(targetX, targetY, me.position.x, me.position.y) < 350){
+        if(dist(targetX, targetY, me.position.x, me.position.y) > 100){
           this.step.set(targetX - me.position.x, targetY - me.position.y);
           this.step.normalize();
           me.angle = this.step.heading() + PI/2;
@@ -103,7 +103,7 @@ class zeusFlyState{
       me.baseAttack();
       //if(me.level < 9){
         print("aggressive state");
-        if(dist(targetX, targetY, me.position.x, me.position.y) < 350){
+        if(dist(targetX, targetY, me.position.x, me.position.y) > 100){
           print("step faster");
           this.step.set(targetX - me.position.x, targetY - me.position.y);
           this.step.normalize();

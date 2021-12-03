@@ -20,7 +20,7 @@ class Kratos{
       this.climb = 0;
       this.health = 6;
       this.attackRect = [32,0,20,40]
-      this.score = 0;
+      this.score = 9;
       //this.img = loadImage("kratossprite.png");
     }
     //function to apply gravity
