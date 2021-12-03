@@ -124,7 +124,7 @@ class skelBlood{
           
           //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
             //Fire a bullet from the array of bullets available in this state
-            if(this.val < frameCount - 100){
+            if(this.val < frameCount - 500){
               
               this.val = frameCount;
               this.bullets[this.index].fire = 1;

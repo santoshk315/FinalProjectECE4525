@@ -214,7 +214,7 @@ function preload(){
 }
 
 //intializes tilemap based upon the letters in the tilemap array
-function initTileMap(){
+function initTileMap2(){
   for (var i = 0; i < tilemap.length; i++) {
     for (var j = 0; j < tilemap[i].length; j++) {
       if(tilemap[i][j] == "w"){
@@ -241,6 +241,38 @@ function initTileMap(){
       }
       else if(tilemap[i][j] == "h"){
         potions.push(new Potion(j * 40 + 10, i * 40 + 10));
+      }
+    }
+  }
+}
+
+function initTileMap(){
+  for (var i = 0; i < tilemap2.length; i++) {
+    for (var j = 0; j < tilemap2[i].length; j++) {
+      if(tilemap2[i][j] == "w"){
+        walls2.push(new GothicWall(j * 40, i * 40, "w"));
+      }
+      else if(tilemap2[i][j] == "r"){
+        walls2.push(new GothicWall(j * 40, i * 40, "r"));
+      }
+      else if(tilemap2[i][j] == "p"){
+        grass2.push(new GothicPlatform(j * 40, i * 40, "p"));
+      }
+      else if(tilemap2[i][j] == "b"){
+        grass2.push(new GothicPlatform(j * 40, i * 40, "b"));
+      }
+      else if(tilemap2[i][j] == "e"){
+        enemies2.push(new Skeleton(j * 40, i * 40, 40));
+        backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
+      }
+      else if(tilemap2[i][j] == "l"){
+        ladders2.push(new Ladder(j * 40, i * 40, 40));
+      }
+      else if(tilemap2[i][j] == "k"){
+        keys2.push(new Key(j * 40 + 10, i * 40 + 10));
+      }
+      else if(tilemap2[i][j] == "h"){
+        potions2.push(new Potion(j * 40 + 10, i * 40 + 10));
       }
     }
   }
@@ -277,20 +309,20 @@ function initFinalTileMap2(){
   for (var i = 0; i < finaltmap2.length; i++) {
     for (var j = 0; j < finaltmap2[i].length; j++) {
       if(finaltmap2[i][j] == "w"){
-        finalWalls.push(new Wall(j * 40, i * 40, "w"));
+        finalWalls2.push(new GothicWall(j * 40, i * 40, "w"));
       }
       else if(finaltmap2[i][j] == "r"){
-        finalWalls.push(new Wall(j * 40, i * 40, "r"));
+        finalWalls2.push(new GothicWall(j * 40, i * 40, "r"));
       }
       else if(finaltmap2[i][j] == "p"){
-        finalGrass.push(new Platform(j * 40, i * 40, "p"));
+        finalGrass2.push(new GothicPlatform(j * 40, i * 40, "p"));
       }
       else if(finaltmap2[i][j] == "e"){
-        finalEnemies.push(new Skeleton(j * 40, i * 40, 40));
+        finalEnemies2.push(new Skeleton(j * 40, i * 40, 40));
         backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
       }
       else if(finaltmap2[i][j] == "h"){
-        potions.push(new Potion(j * 40 + 10, i * 40 + 10));
+        potions2.push(new Potion(j * 40 + 10, i * 40 + 10));
       }
     }
   }
@@ -299,14 +331,15 @@ function initFinalTileMap2(){
 
 var instr;
 var zeus;
-
 //creates canvas and necessary assets
 function setup() {
   createCanvas(400, 400);
   //customChar();
   textFont(myFont);
   initTileMap();
+  initTileMap2();
   initFinalTileMap();
+  initFinalTileMap2();
   song.stop();
   
   song.play();
@@ -320,6 +353,9 @@ function setup() {
   intro = new IntroScreen();
   instr = new InstructionScreen();
   game = new Game(walls, grass, kratos, enemies, gameZeus, potions, keys);
+  game2 = new Game(walls2, grass2, kratos, enemies2, gameZeus, potions2, keys2);
+  timer = 0;
+  level = 1;
 }
 var transition = false;
 var instructTrans = false;
@@ -378,7 +414,21 @@ function draw() {
   else if(gameScreen && kratos.health > 0){
     push();
     translate(200 - kratos.position.x, 200-kratos.position.y);
-    game.play();
+    if(level === 1){
+      game.play();
+      if(game.zeus.alive === 0){
+        level = 2;
+      }
+    }
+    else if(timer < 1000){
+      fill(255, 0, 0);
+      rect(0, 0, 400, 400);
+      noFill();
+      timer++;
+    }
+    else{
+      game2.play2();
+    }
     //print(gameZeus.level);
     //wall.draw();
     pop();

@@ -248,6 +248,7 @@ class zeusFlyState{
       }
       else if(this.timer === 30 && me.level > 9){
         me.alive = 0;
+        
       }
     }
   }
