@@ -21,6 +21,7 @@ class skelBlood{
   
     execute(me) {
       //check if distance is greater than 350 pixels
+      
       if(dist(targetX,targetY,me.x,me.y) >= 350){
         //print('wandering')
         //Move in the set random directions
@@ -40,6 +41,12 @@ class skelBlood{
           this.yDir = skelyDir;
           this.xDir = skelxDir;
         }
+        for(var t = 0; t < firedWebs.length; t++){
+          if(firedWebs[t].fire === 1){
+            firedWebs[t].draw();
+            firedWebs[t].move();
+          }
+        }
       }
       else{
         //change to chase if condition not satisfied
@@ -56,6 +63,12 @@ class skelBlood{
     }
   
     execute(me) {
+      for(var t = 0; t < firedWebs.length; t++){
+        if(firedWebs[t].fire === 1){
+          firedWebs[t].draw();
+          firedWebs[t].move();
+        }
+      }
       //Set a timer and have the skeleton float back for set time
       this.timer++;
       //print('here')
@@ -311,7 +324,7 @@ class skelBlood{
   
       
       //When it should disappear/not effect character
-      if(dist(this.position.x,this.position.y,kratos.position.x+20,kratos.position.y+20) < 35) {
+      if(dist(this.position.x,this.position.y,kratos.position.x+20,kratos.position.y+20) < 25) {
         this.fire = 0;
         kratos.health -= 0.5;
         //print('noooo')

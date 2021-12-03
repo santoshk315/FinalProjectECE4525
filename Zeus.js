@@ -165,7 +165,7 @@ class zeusFlyState{
             }
             //If bullets are too far from zeus, they disappear
             for(var i = 0; i < this.bullets.length; i++) {
-              if(dist(this.bullets[i].position.x,this.bullets[i].position.y,me.x,me.y) > 1200) {
+              if(dist(this.bullets[i].position.x,this.bullets[i].position.y,me.position.x,me.position.y) > 1200) {
                 this.bullets[i].fire = 0;
               }
             }
@@ -293,6 +293,7 @@ class zeusFlyState{
       if(this.timer === 300){
         me.changeState(3);
         me.invincible = 0;
+        this.timer = 0;
       }
       
     }
@@ -470,8 +471,14 @@ class zeusFlyState{
         kratos.health -= 0.5;
       }
       //When it should disappear/not effect character
-      for(var i = 0; i < walls.length; i++) {
-        if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
+      
+      for(var i = 0; i < finalWalls.length; i++) {
+        if(dist(this.position.x,this.position.y, finalWalls[i].x, finalWalls[i].y) < 40) {
+          this.fire = 0;
+        }
+      }
+      for(var j = 0; j < finalWalls2.length; j++) {
+        if(dist(this.position.x,this.position.y, finalWalls2[j].x,finalWalls2[j].y) < 40) {
           this.fire = 0;
         }
       }
@@ -494,8 +501,14 @@ class zeusFlyState{
         kratos.health -= 0.5;
       }
       //When it should disappear/not effect character
-      for(var i = 0; i < walls.length; i++) {
-        if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
+      
+      for(var i = 0; i < finalWalls.length; i++) {
+        if(dist(this.position.x,this.position.y, finalWalls[i].x, finalWalls[i].y) < 40) {
+          this.fire = 0;
+        }
+      }
+      for(var j = 0; j < finalWalls2.length; j++) {
+        if(dist(this.position.x,this.position.y, finalWalls2[j].x, finalWalls2[j].y) < 40) {
           this.fire = 0;
         }
       }
