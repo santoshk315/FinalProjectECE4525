@@ -61,6 +61,7 @@ class Kratos{
       //When to draw the walking and swing animations
       //Make sure this animation is happening in the game screen and not the
       //intro screen
+      //tint(255, 0, 165);
       if(this.walkani === 0 && !introS){
         if(this.swing === 1) {
           if(this.dir === -1) {
