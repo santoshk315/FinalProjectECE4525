@@ -299,7 +299,6 @@ class skelBlood{
       rect(this.position.x+9,this.position.y+4,1,3);
       rect(this.position.x+5,this.position.y+4,1,1);
       rect(this.position.x+5,this.position.y+7,1,1);
-  
       fill(255);
       rect(this.position.x+7,this.position.y+4,1,1);
       rect(this.position.x+8,this.position.y+5,1,1);
@@ -343,11 +342,22 @@ class skelBlood{
             this.fire = 0;
           }
         }
+        for (var i = 0; i < grass.length; i++) {
+          if(dist(this.position.x,this.position.y,grass[i].x,grass[i].y) < 40) {
+            this.fire = 0;
+          }
+        }
       }
       else{
         for(var i = 0; i < walls2.length; i++) {
           if(dist(this.position.x,this.position.y,walls2[i].x,walls2[i].y) < 40) {
             //print('wall')
+            this.fire = 0;
+          }
+        }
+
+        for (var i = 0; i < grass2.length; i++) {
+          if(dist(this.position.x,this.position.y,grass2[i].x,grass2[i].y) < 40) {
             this.fire = 0;
           }
         }

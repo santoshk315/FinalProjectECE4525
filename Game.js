@@ -32,6 +32,7 @@ class Game{
       image(images[8], 1000, 0, 1000, 930);
       image(images[8], 2000, 0, 1000, 930);
       image(images[8], 3000, 0, 1000, 930);
+      image(images[8], 4000, 0, 1000, 930);
       image(images[8], 0, 930, 1000, 930);
       image(images[8], 0, 1860, 1000, 930);
       image(images[8], 0, 2790, 1000, 930);
@@ -44,6 +45,20 @@ class Game{
       image(images[8], 3000, 930, 1000, 930);
       image(images[8], 3000, 1860, 1000, 930);
       image(images[8], 3000, 2790, 1000, 930);
+      image(images[8], 0,  3720, 1000, 930);
+      image(images[8], 1000, 3720, 1000, 930);
+      image(images[8], 2000, 3720, 1000, 930);
+      image(images[8], 3000, 3720, 1000, 930);
+      image(images[8], 4000,  0, 1000, 930);
+      image(images[8], 4000,  930, 1000, 930);
+      image(images[8], 4000,  1820, 1000, 930);
+      image(images[8], 4000,  2790, 1000, 930);
+      image(images[8], 4000,  3720, 1000, 930);
+      image(images[8], -1000,  0, 1000, 930);
+      image(images[8], -1000,  930, 1000, 930);
+      image(images[8], -1000,  1820, 1000, 930);
+      image(images[8], -1000,  2790, 1000, 930);
+      image(images[8], -1000,  3720, 1000, 930);
       //Draw the walls identified in tilemap
       for(var i = 0; i < this.wallsArray.length; i++){
   
