@@ -47,7 +47,7 @@ class zeusFlyState{
             
             //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
               //Fire a bullet from the array of bullets available in this state
-              if(this.val < frameCount - 100){
+              if(this.val < frameCount - 50){
                 
                 this.val = frameCount;
                 this.bullets[this.index].fire = 1;
@@ -139,7 +139,7 @@ class zeusFlyState{
             
             //if(dist(me.x, me.y, kratos.position.x, kratos.position.y) < 120){
               //Fire a bullet from the array of bullets available in this state
-              if(this.val < frameCount - 100){
+              if(this.val < frameCount - 50){
                 
                 this.val = frameCount;
                 this.bullets[this.index].fire = 1;
@@ -457,8 +457,8 @@ class zeusFlyState{
     }
   
     move() {
-      this.position.x +=  sin(this.angle + PI / 2);
-      this.position.y -=  cos(this.angle + PI / 2);
+      this.position.x +=  4 * sin(this.angle + PI / 2);
+      this.position.y -=  4 * cos(this.angle + PI / 2);
   
       
       //When it should disappear/not effect character
