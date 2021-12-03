@@ -726,7 +726,7 @@ class Game{
         }
         
         if(this.timer > 100 && this.timer < 300){
-          this.kratCut.swing = 0;
+          this.kratCut.swing = 1;
           this.kratCut.walkani = 0;
           fill(255);
           rect(targetX - 200, targetY + 150, 400, 200);
