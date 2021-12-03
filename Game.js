@@ -1,3 +1,4 @@
+
 //base game class foundation
 class Game{
     constructor(walls, grass, kratos, enemies, zeus){
@@ -11,7 +12,8 @@ class Game{
       this.score = 0;
       this.zeus = zeus;
       this.timer = 0;
-      
+      this.kratCut = new Kratos(320 - 200, 3520 +50, 100);
+      this.zeusCut = new Zeus(320 + 100, 3520 - 150, 100);
     }
     //Draw the background and tilemap to the screen
     drawBackground(){
@@ -303,8 +305,8 @@ class Game{
         this.kratos.position.x = 320;
         targetX = this.kratos.position.x;
         targetY = this.kratos.position.y;
-        var kratCut = new Kratos(targetX - 200, targetY +50, 100);
-        var zeusCut = new Zeus(targetX + 100, targetY - 150, 100);
+
+
         image(images[8], 0, 0, 1000, 930);
       image(images[8], 1000, 0, 1000, 930);
       image(images[8], 2000, 0, 1000, 930);
@@ -332,23 +334,24 @@ class Game{
         }
         
         if(this.timer > 100 && this.timer < 300){
-          kratCut.swing = 0;
-          kratCut.walkani = 0;
+          this.kratCut.swing = 0;
+          this.kratCut.walkani = 0;
           fill(255);
           rect(targetX - 200, targetY + 150, 400, 200);
           noFill();
           textSize(10);
-          kratCut.draw();
-          zeusCut.draw();
-          kratCut.animate();
+          this.kratCut.draw();
+          this.zeusCut.draw();
+          this.kratCut.animate();
           fill(0, 0, 255);
           text("Kratos: Boi you my dad and u abandoned me", targetX - 200, targetY + 150, 400, 200);
           noFill();
         }
         else if(this.timer > 300 && this.timer < 600){
-          kratCut.draw();
-          zeusCut.specialAttack();
-          zeusCut.animate();
+          this.kratCut.draw();
+          this.kratCut.animate();
+          this.zeusCut.specialAttack();
+          this.zeusCut.animate1();
           fill(255);
           rect(targetX - 200, targetY + 150, 400, 200);
           noFill();
@@ -357,8 +360,8 @@ class Game{
           text("Zeus: Son I left so that you wouldn't kill me as you were prophesized to", targetX - 200, targetY + 150, 400, 200);
         }
         else if(this.timer > 600 && this.timer < 1000){
-          kratCut.swing = 0;
-          kratCut.walkani = 0;
+          this.kratCut.swing = 0;
+          this.kratCut.walkani = 0;
           fill(255);
           rect(targetX - 200, targetY + 150, 400, 200);
           noFill();
@@ -367,10 +370,10 @@ class Game{
           text("Kratos: I GUESS I HAVE NO CHOICE BUT TO KILL YOU", targetX - 200, targetY + 150, 400, 200);
           fill(255, 0, 255);
           text("Zeus: I GUESS I HAVE NO CHOICE BUT TO KILL YOU", targetX - 200, targetY + 170, 400, 200);
-          kratCut.draw();
-          zeusCut.specialAttack();
-          kratCut.animate();
-          zeusCut.animate();
+          this.kratCut.draw();
+          this.zeusCut.specialAttack();
+          this.kratCut.animate();
+          this.zeusCut.animate1();
           
         }
         if(this.timer == 1000){

@@ -348,14 +348,19 @@ class zeusFlyState{
     //Basic Zeus animation
     animate() {
       //this.index += 0.25;
-      this.y += this.dir;
-      if(this.y > 210) {
+      this.position.y += this.dir;
+      if(this.position.y > 210) {
         this.dir = -0.5;
       }
-      else if(this.y < 170) {
+      else if(this.position.y < 170) {
         this.dir = 0.5;
       }
     }
+
+    animate1() {
+      this.index += 0.25;
+    }
+    
     baseAttack(){
       let index = floor(this.index) % this.len;
       if(this.direction === 0){
