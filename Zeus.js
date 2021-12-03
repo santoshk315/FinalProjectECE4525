@@ -244,7 +244,7 @@ class zeusFlyState{
       else if(this.timer === 30 && me.level === 9){
         me.hurt = 0;
         this.timer = 0;
-        me.changeState(3);
+        me.changeState(4);
       }
       else if(this.timer === 30 && me.level > 9){
         me.alive = 0;
