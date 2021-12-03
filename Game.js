@@ -20,6 +20,8 @@ class Game{
       this.keys = keys;
       this.inFinal = 0;
       this.ladders = ladders;
+      this.inFinal2 = 0;
+      this.finalBoss2 = 0;
     }
     //Draw the background and tilemap to the screen
     drawBackground(){
@@ -659,6 +661,35 @@ class Game{
         }
       }
     }
+    final2combat(){
+      for(var i = 0; i < finalEnemies2.length; i++){
+        stroke(0,255,0)
+        if(this.kratos.dir === 1)
+        {
+          if(dist(this.kratos.position.x+30, this.kratos.position.y, finalEnemies2[i].x, finalEnemies2[i].y) < 40 && this.kratos.swing === 1) {
+  
+            if(this.kratos.timer % 25 === 0 && finalEnemies2[i].health > 0) {
+              finalEnemies2[i].health--;
+              finalEnemies2[i].knockback = 1;
+              finalEnemies2[i].hurt = 1;
+            }
+          }
+        }
+        if(this.kratos.dir === -1) {
+          
+          if(dist(this.kratos.position.x-30, this.kratos.position.y, finalEnemies2[i].x, finalEnemies2[i].y) < 40 && this.kratos.swing === 1) {
+  
+            if(this.kratos.timer % 5 === 0 && finalEnemies2[i].health > 0) {
+              //finalEnemies[i].x -= 10;
+              //finalEnemies[i].y += 8;
+                finalEnemies2[i].health--;
+                finalEnemies2[i].knockback = -1;
+                finalEnemies2[i].hurt = 1;
+              }
+          }
+        }
+      }
+    }
     zeusCombat(){
       stroke(0,255,0)
         if(this.kratos.dir === 1)
@@ -829,7 +860,7 @@ class Game{
         targetX = this.kratos.position.x;
         targetY = this.kratos.position.y;
       }
-      else if(this.kratos.score === 9 && this.finalBoss === 0){
+      else if(this.kratos.score === 9 && this.finalBoss2 === 0){
         
         this.kratos.position.x = 320;
         targetX = this.kratos.position.x;
@@ -908,17 +939,17 @@ class Game{
           
         }
         if(this.timer == 1000){
-          this.finalBoss = 1;
+          this.finalBoss2 = 1;
         }
       }
       else{
         this.drawFinalBackground2();
-        if(this.inFinal === 0){
-          this.kratos.position.x = 40;
+        if(this.inFinal2 === 0){
+          this.kratos.position.x = 80;
           this.kratos.position.y = 220;
           this.zeus.position.x = 40;
-          this.zeus.position.y = 100;
-          this.inFinal = 1;
+          this.zeus.position.y = 1760;
+          this.inFinal2 = 1;
         }
         this.kratos.draw();
         this.kratos.animate();

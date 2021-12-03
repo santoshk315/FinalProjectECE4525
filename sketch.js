@@ -322,7 +322,7 @@ function initFinalTileMap2(){
         backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
       }
       else if(finaltmap2[i][j] == "h"){
-        potions2.push(new Potion(j * 40 + 10, i * 40 + 10));
+        finalPotions2.push(new Potion(j * 40 + 10, i * 40 + 10));
       }
     }
   }

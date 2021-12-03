@@ -54,7 +54,7 @@ class zeusFlyState{
                 this.bullets[this.index].position.x = me.position.x + 20;
                 this.bullets[this.index].position.y = me.position.y + 20;
                 this.bullets[this.index].angle = me.angle - PI/2;
-                firedWebs.push(this.bullets[this.index]);
+                //firedWebs.push(this.bullets[this.index]);
                 this.index++;
                 if(this.index > 3){
                   this.index = 0;
@@ -146,7 +146,7 @@ class zeusFlyState{
                 this.bullets[this.index].position.x = me.position.x;
                 this.bullets[this.index].position.y = me.position.y;
                 this.bullets[this.index].angle = me.angle - PI/2;
-                firedWebs.push(this.bullets[this.index]);
+                //firedWebs.push(this.bullets[this.index]);
                 this.index++;
                 if(this.index > 3){
                   this.index = 0;
@@ -270,7 +270,7 @@ class zeusFlyState{
         this.bullets[this.index].position.x = me.position.x - 20 + (20 * this.index);
         this.bullets[this.index].position.y = me.position.y;
         this.bullets[this.index].angle = PI/2;
-        firedWebs.push(this.bullets[this.index]);
+        //firedWebs.push(this.bullets[this.index]);
         this.index++;
         if(this.index > 7){
           this.index = 0;
@@ -457,8 +457,8 @@ class zeusFlyState{
     }
   
     move() {
-      this.position.x += 2 * sin(this.angle + PI / 2);
-      this.position.y -= 2 * cos(this.angle + PI / 2);
+      this.position.x +=  sin(this.angle + PI / 2);
+      this.position.y -=  cos(this.angle + PI / 2);
   
       
       //When it should disappear/not effect character
