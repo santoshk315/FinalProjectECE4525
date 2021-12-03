@@ -70,6 +70,29 @@ class bgsky{
       
     }
   }
+  
+  //class for gothic wall textures
+  class GothicWall{
+    constructor(x, y,walltype){
+      this.x = x;
+      this.y = y;
+      this.type = walltype;
+    }
+    draw(){
+      //Based on tilemap input
+      //Draw different types of walls/rocks
+      if(this.type === "w")
+      {
+        image(images[0], this.x, this.y, 40, 40);
+      }
+    
+      if(this.type === "r")
+      {
+        image(images[9], this.x, this.y, 40, 40);
+      }
+        
+    }
+  }
   //Class that was used for background images, but no longer used
   class BackGround{
     constructor(x, y, image){
@@ -148,6 +171,24 @@ class bgsky{
       this.y = y;
       this.type = type;
       this.platform = loadImage("grassland_tileset/grassland_tileset/PNG/terrain_platform_center.png");
+      this.bridge = images[3];
+    }
+    draw(){
+      if(this.type === "p"){
+        image(this.platform, this.x, this.y, 40, 40);
+      }
+      if(this.type === "b"){
+        image(this.bridge, this.x, this.y, 40, 40);
+      }
+    }
+  }
+
+  class GothicPlatform{
+    constructor(x, y, type){
+      this.x = x;
+      this.y = y;
+      this.type = type;
+      this.platform = loadImage("grassland_tileset/grassland_tileset/PNG/gothicbrick.png");
       this.bridge = images[3];
     }
     draw(){

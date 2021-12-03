@@ -100,6 +100,8 @@ let slasharray_rev;
 let l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12;
 let lightningarray;
 let backgroundImage;
+
+let gothbrick;
 //preloads fonts, music, and images to improve performance
 function preload(){
   
@@ -144,7 +146,9 @@ function preload(){
   key = loadImage("grassland_tileset/grassland_tileset/PNG/key05_diamonds.png");
   bg1 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall.png");
   bg2 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall2.png");
-  backgroundImage = loadImage("grassland_tileset/grassland_tileset/PNG/bg_cave.png")
+  backgroundImage = loadImage("grassland_tileset/grassland_tileset/PNG/bg_cave.png");
+  gothbrick = loadImage("grassland_tileset/grassland_tileset/PNG/gothicbrick.png");
+  gothrock = loadImage("grassland_tileset/grassland_tileset/PNG/gothrock.png")
   sl1 = loadImage("slash1.png");
 
   sl4 = loadImage("slash4.png");
@@ -176,7 +180,9 @@ function preload(){
   images.push(key);
   images.push(potion);
   images.push(backgroundImage);
+  images.push(gothrock)
   images.push(get(0, 0, 20, 20));
+  
   kratosarray = [kratossp0,kratossp0,kratossp1,kratossp1];
   kratosarray_rev = [kratossp0_rev,kratossp0_rev,kratossp1_rev,kratossp1_rev];
   kratoswalking = [kratossp0,kratossp0,kratosspwalk,kratosspwalk];
