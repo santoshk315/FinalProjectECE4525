@@ -101,14 +101,14 @@ class InstructionScreen{
     moveOut(){
       if(this.kratos.position.x > -150){
         this.kratos.position.x += -5;
-        this.zeus.x += -5;
+        this.zeus.position.x += -5;
         this.zeusbolt.x -= 5;
       }
       else{
         instructionsS = false;
         //introS = true;
         this.kratos.position.x = 100;
-        this.zeus.x = 240;
+        this.zeus.position.x = 240;
         this.zeusbolt.x = 290;
         
       }

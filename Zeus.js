@@ -13,6 +13,7 @@ class zeusFlyState{
     execute(me){
       print("flying normal");
       me.baseAttack();
+      me.animate1();
       //print(me.level);
       if(me.level < 3){
         if(dist(targetX, targetY, me.position.x, me.position.y) > 100){
@@ -101,10 +102,10 @@ class zeusFlyState{
     }
     execute(me){
       me.baseAttack();
+      me.animate1();
       //if(me.level < 9){
         print("aggressive state");
         if(dist(targetX, targetY, me.position.x, me.position.y) > 100){
-          print("step faster");
           this.step.set(targetX - me.position.x, targetY - me.position.y);
           this.step.normalize();
           me.position.x += 2 * this.step.x;
@@ -261,6 +262,7 @@ class zeusFlyState{
     //Add the animations and the bullets firing from top of screen
     execute(me){
       me.specialAttack();
+      me.animate1();
       print("invincible");
       me.invincible = 1;
       this.timer++;

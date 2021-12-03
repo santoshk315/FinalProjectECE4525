@@ -17,9 +17,31 @@ let targetY;
 backgroundArray = [];
 firedWebs = [];
 
+//Final Boss 1 Arrays
+
 finalGrass = [];
 finalWalls = [];
 finalLadders = [];
+finalEnemies = [];
+finalPotions = [];
+
+//Level 2 Arrays
+
+grass2 = [];
+walls2 = [];
+enemies2 = [];
+ladders2 = [];
+keys2 = [];
+potions2 = [];
+
+//Final Boss 2 Arrays
+
+finalGrass2 = [];
+finalWalls2 = [];
+finalLadders2 = [];
+finalEnemies2 = [];
+finalPotions2 = [];
+
 
 
 
@@ -205,15 +227,6 @@ function initTileMap(){
       else if(tilemap[i][j] == "l"){
         ladders.push(new Ladder(j * 40, i * 40, 40));
       }
-      else if(tilemap[i][j] == "b"){
-        grass.push(new Platform(j * 40, i * 40, "b"));
-      }
-      else if(tilemap[i][j] == "1"){
-        backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
-      }
-      else if(tilemap[i][j] == "2"){
-        backgroundArray.push(new BackGround(j * 40, i * 40, images[5]));
-      }
       else if(tilemap[i][j] == "k"){
         keys.push(new Key(j * 40 + 10, i * 40 + 10));
       }
@@ -224,8 +237,55 @@ function initTileMap(){
   }
 }
 
+
 function initFinalTileMap(){
   //Initialize Tilemap for final boss battles
+  for (var i = 0; i < finaltmap1.length; i++) {
+    for (var j = 0; j < finaltmap1[i].length; j++) {
+      if(finaltmap1[i][j] == "w"){
+        finalWalls.push(new Wall(j * 40, i * 40, "w"));
+      }
+      else if(finaltmap1[i][j] == "r"){
+        finalWalls.push(new Wall(j * 40, i * 40, "r"));
+      }
+      else if(finaltmap1[i][j] == "p"){
+        finalGrass.push(new Platform(j * 40, i * 40, "p"));
+      }
+      else if(finaltmap1[i][j] == "e"){
+        finalEnemies.push(new Skeleton(j * 40, i * 40, 40));
+        backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
+      }
+      else if(finaltmap1[i][j] == "h"){
+        potions.push(new Potion(j * 40 + 10, i * 40 + 10));
+      }
+    }
+  }
+
+}
+
+function initFinalTileMap2(){
+  //Initialize Tilemap for final boss battles
+  for (var i = 0; i < finaltmap2.length; i++) {
+    for (var j = 0; j < finaltmap2[i].length; j++) {
+      if(finaltmap2[i][j] == "w"){
+        finalWalls.push(new Wall(j * 40, i * 40, "w"));
+      }
+      else if(finaltmap2[i][j] == "r"){
+        finalWalls.push(new Wall(j * 40, i * 40, "r"));
+      }
+      else if(finaltmap2[i][j] == "p"){
+        finalGrass.push(new Platform(j * 40, i * 40, "p"));
+      }
+      else if(finaltmap2[i][j] == "e"){
+        finalEnemies.push(new Skeleton(j * 40, i * 40, 40));
+        backgroundArray.push(new BackGround(j * 40, i * 40, images[4]));
+      }
+      else if(finaltmap2[i][j] == "h"){
+        potions.push(new Potion(j * 40 + 10, i * 40 + 10));
+      }
+    }
+  }
+
 }
 
 var instr;
@@ -249,7 +309,7 @@ function setup() {
   gameZeus = new Zeus(120 + 60, 3520, 40);
   intro = new IntroScreen();
   instr = new InstructionScreen();
-  game = new Game(walls, grass, kratos, enemies, gameZeus);
+  game = new Game(walls, grass, kratos, enemies, gameZeus, potions, keys);
 }
 var transition = false;
 var instructTrans = false;

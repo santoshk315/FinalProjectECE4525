@@ -1,7 +1,7 @@
 
 //base game class foundation
 class Game{
-    constructor(walls, grass, kratos, enemies, zeus){
+    constructor(walls, grass, kratos, enemies, zeus, potions, keys){
       this.wallsArray = walls;
       this.grassArray = grass;
       this.kratos = kratos;
@@ -14,6 +14,8 @@ class Game{
       this.timer = 0;
       this.kratCut = new Kratos(320 - 200, 3520 +50, 100);
       this.zeusCut = new Zeus(320 + 100, 3520 - 150, 100);
+      this.potions = potions;
+      this.keys = keys;
     }
     //Draw the background and tilemap to the screen
     drawBackground(){
@@ -39,13 +41,13 @@ class Game{
       image(images[8], 3000, 1860, 1000, 930);
       image(images[8], 3000, 2790, 1000, 930);
       //Draw the walls identified in tilemap
-      for(var i = 0; i < walls.length; i++){
+      for(var i = 0; i < this.wallsArray.length; i++){
   
-        walls[i].draw();
+        this.wallsArray[i].draw();
       }
       //Draw platforms found in tilemap
-      for(var j = 0; j < grass.length; j++){
-        grass[j].draw();
+      for(var j = 0; j < this.grassArray.length; j++){
+        this.grassArray[j].draw();
       }
       //Draw enemies, animate the wing motion, and activate state for each enemy
       for(var k = 0; k < this.enemies.length; k++){
@@ -59,14 +61,14 @@ class Game{
         ladders[l].draw();
       }
       //Draw the keys from tilemaps
-      for(var x = 0; x < keys.length; x++){
-        keys[x].draw();
-        keys[x].animate();
+      for(var x = 0; x < this.keys.length; x++){
+        this.keys[x].draw();
+        this.keys[x].animate();
       }
       //Draw potions from the tilemaps
-      for(var y = 0; y < potions.length; y++){
-        potions[y].draw();
-        potions[y].animate();
+      for(var y = 0; y < this.potions.length; y++){
+        this.potions[y].draw();
+        this.potions[y].animate();
       }
       fill(0);
       rect(this.kratos.position.x-200,this.kratos.position.y-200,80,40);
@@ -75,6 +77,84 @@ class Game{
       text(this.kratos.health,this.kratos.position.x-150,this.kratos.position.y-180);
     }
     drawFinalBackground(){
+      image(images[8], 0, 0, 1000, 930);
+      image(images[8], 1000, 0, 1000, 930);
+      image(images[8], 2000, 0, 1000, 930);
+      image(images[8], 3000, 0, 1000, 930);
+      image(images[8], 0, 930, 1000, 930);
+      image(images[8], 0, 1860, 1000, 930);
+      image(images[8], 0, 2790, 1000, 930);
+      image(images[8], 1000, 930, 1000, 930);
+      image(images[8], 1000, 1860, 1000, 930);
+      image(images[8], 1000, 2790, 1000, 930);
+      image(images[8], 2000, 930, 1000, 930);
+      image(images[8], 2000, 1860, 1000, 930);
+      image(images[8], 2000, 2790, 1000, 930);
+      image(images[8], 3000, 930, 1000, 930);
+      image(images[8], 3000, 1860, 1000, 930);
+      image(images[8], 3000, 2790, 1000, 930);
+      for(var i = 0; i < finalWalls.length; i++){
+        finalWalls[i].draw();
+      }
+      for(var j = 0; j < finalGrass.length; j++){
+        finalGrass[j].draw();
+      }
+      for(var k = 0; k < finalEnemies.length; k++){
+        finalEnemies[k].draw();
+        finalEnemies[k].animate();
+        finalEnemies[k].state[finalEnemies[k].currState].execute(finalEnemies[k]);
+        //print(this.enemies[k].health);
+      }
+      for(var y = 0; y < finalPotions.length; y++){
+        finalPotions[y].draw();
+        finalPotions[y].animate();
+      }
+      fill(0);
+      rect(this.kratos.position.x-200,this.kratos.position.y-200,80,40);
+      fill(255)
+      text("HP: ",this.kratos.position.x-180,this.kratos.position.y-180)
+      text(this.kratos.health,this.kratos.position.x-150,this.kratos.position.y-180);
+
+
+    }
+    drawFinalBackground2(){
+      image(images[8], 0, 0, 1000, 930);
+      image(images[8], 1000, 0, 1000, 930);
+      image(images[8], 2000, 0, 1000, 930);
+      image(images[8], 3000, 0, 1000, 930);
+      image(images[8], 0, 930, 1000, 930);
+      image(images[8], 0, 1860, 1000, 930);
+      image(images[8], 0, 2790, 1000, 930);
+      image(images[8], 1000, 930, 1000, 930);
+      image(images[8], 1000, 1860, 1000, 930);
+      image(images[8], 1000, 2790, 1000, 930);
+      image(images[8], 2000, 930, 1000, 930);
+      image(images[8], 2000, 1860, 1000, 930);
+      image(images[8], 2000, 2790, 1000, 930);
+      image(images[8], 3000, 930, 1000, 930);
+      image(images[8], 3000, 1860, 1000, 930);
+      image(images[8], 3000, 2790, 1000, 930);
+      for(var i = 0; i < finalWalls2.length; i++){
+        finalWalls2[i].draw();
+      }
+      for(var j = 0; j < finalGrass.length; j++){
+        finalGrass2[j].draw();
+      }
+      for(var k = 0; k < finalEnemies.length; k++){
+        finalEnemies2[k].draw();
+        finalEnemies2[k].animate();
+        finalEnemies2[k].state[finalEnemies2[k].currState].execute(finalEnemies2[k]);
+        //print(this.enemies[k].health);
+      }
+      for(var y = 0; y < finalPotions2.length; y++){
+        finalPotions2[y].draw();
+        finalPotions2[y].animate();
+      }
+      fill(0);
+      rect(this.kratos.position.x-200,this.kratos.position.y-200,80,40);
+      fill(255)
+      text("HP: ",this.kratos.position.x-180,this.kratos.position.y-180)
+      text(this.kratos.health,this.kratos.position.x-150,this.kratos.position.y-180);
 
     }
     //Method to detect various kinds of platform collisions 
