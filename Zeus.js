@@ -307,7 +307,7 @@ class zeusFlyState{
       this.level = 0;
       this.state = [new zeusFlyState(), new zeusHurtState(), new zeusDownState(), new zeusAggressiveFlyState(), new zeusHellFire()];
       this.currState = 0;
-      this.len = zeusarray.length;
+      this.len = zeushellfire_array.length;
       this.index = 0;
       this.hurt = 0;
       this.knockback = 0;

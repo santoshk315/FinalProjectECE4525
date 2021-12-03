@@ -168,19 +168,19 @@ function preload(){
   skelarrayhurt_rev = [sksphurt_rev,sksphurt_rev,sksphurt_rev,sksphurt_rev];
   slasharray = [sl1,sl1,sl4,sl4];
   slasharray_rev = [sl1_rev,sl1_rev,sl4_rev,sl4_rev];
-  zeusarray = [zeussp,zeussp];
-  zeusarray_rev = [zeussp_rev,zeussp_rev];
+  zeusarray = [zeussp,zeussp,zeussp,zeussp];
+  zeusarray_rev = [zeussp_rev,zeussp_rev,zeussp_rev,zeussp_rev];
 
   zeusshooting = [zeussp,zeussp,zeusshoot,zeusshoot];
   zeusshooting_rev = [zeussp_rev,zeussp_rev,zeusshoot_rev,zeusshoot_rev];
 
   zeushellfire_array = [zeushellfire,zeushellfire,zeushellfire_shift,zeushellfire_shift];
 
-  zeusfallingarray = [zeusfall,zeusfall];
-  zeusfallingarray_rev = [zeusfall_rev,zeusfall_rev];
+  zeusfallingarray = [zeusfall,zeusfall,zeusfall,zeusfall];
+  zeusfallingarray_rev = [zeusfall_rev,zeusfall_rev,zeusfall_rev,zeusfall_rev];
 
-  zeushurtarray = [zeushurt,zeushurt];
-  zeushurtarray_rev = [zeushurt_rev,zeushurt_rev];
+  zeushurtarray = [zeushurt,zeushurt,zeushurt,zeushurt];
+  zeushurtarray_rev = [zeushurt_rev,zeushurt_rev,zeushurt_rev,zeushurt_rev];
 
   lightningarray = [l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12];
 }

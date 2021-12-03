@@ -349,7 +349,7 @@ class Game{
         }
         else if(this.timer > 300 && this.timer < 600){
           this.kratCut.draw();
-          this.kratCut.animate();
+          //this.kratCut.animate();
           this.zeusCut.specialAttack();
           this.zeusCut.animate1();
           fill(255);
