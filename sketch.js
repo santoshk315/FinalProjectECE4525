@@ -162,8 +162,8 @@ function preload(){
   bg2 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall2.png");
   backgroundImage = loadImage("grassland_tileset/grassland_tileset/PNG/bg_cave.png");
   bg_lev2 = loadImage("grassland_tileset/grassland_tileset/PNG/bg_forest.png")
-  gothbrick = loadImage("grassland_tileset/grassland_tileset/PNG/gothicbrick.PNG");
-  gothrock = loadImage("grassland_tileset/grassland_tileset/PNG/gothrock.PNG")
+  gothbrick = loadImage("grassland_tileset/grassland_tileset/PNG/gothicbrick.png");
+  gothrock = loadImage("grassland_tileset/grassland_tileset/PNG/gothrock.png")
   sl1 = loadImage("slash1.png");
 
   sl4 = loadImage("slash4.png");
