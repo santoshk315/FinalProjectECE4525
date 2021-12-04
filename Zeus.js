@@ -14,7 +14,7 @@ class zeusFlyState{
       me.baseAttack();
       me.animate1();
       //print(me.level);
-      if(me.level < 3 && me.alive === 1){
+      if(me.alive === 1){
         if(dist(targetX, targetY, me.position.x, me.position.y) > 100){
           this.step.set(targetX - me.position.x, targetY - me.position.y);
           this.step.normalize();
@@ -100,6 +100,7 @@ class zeusFlyState{
       this.index = 0;
     }
     execute(me){
+      print(me.invincible);
       me.baseAttack();
       me.animate1();
       //if(me.level < 9){
@@ -172,6 +173,7 @@ class zeusFlyState{
         
       //}
       if(me.hurt == 1){
+        
         me.changeState(1);
       }
       
@@ -182,18 +184,22 @@ class zeusFlyState{
   class zeusDownState{
     //Add state transition for this state
     constructor(){
-  
+      this.timer = 0;
     }
     execute(me){
       me.falling = 1;
       //print(me.level);
       if(me.alive === 1){
         //print("going to move");
-        me.move();
+        this.timer++;
+        if(this.timer < 50){
+          me.move();
+        }
       }
       if(me.hurt === 1){
         me.falling = 0;
         me.changeState(1);
+        this.timer = 0;
       }
     } 
   
@@ -217,32 +223,32 @@ class zeusFlyState{
         this.timer = 0;
         me.changeState(0);
       }
-      else if(this.timer === 30 && me.level === 3){
+      else if(this.timer === 30 && me.level < 5){
         me.hurt = 0;
         this.timer = 0;
         me.changeState(2);
       }
-      else if(this.timer === 30 && me.level < 6){
+      else if(this.timer === 30 && me.level < 10){
         me.hurt = 0;
         this.timer = 0;
         me.changeState(3);
       }
-      else if(this.timer === 30 && me.level === 6){
+      else if(this.timer === 30 && me.level < 12){
         me.hurt = 0;
         this.timer = 0;
         me.changeState(4);
       }
-      else if(this.timer === 30 && me.level < 9){
+      else if(this.timer === 30 && me.level < 17){
         me.hurt = 0;
         this.timer = 0;
         me.changeState(3);
       }
-      else if(this.timer === 30 && me.level === 9){
+      else if(this.timer === 30 && me.level < 19){
         me.hurt = 0;
         this.timer = 0;
         me.changeState(4);
       }
-      else if(this.timer === 30 && me.level > 9){
+      else if(this.timer === 30 && me.level >= 19){
         me.alive = 0;
         me.level = 0;
         this.timer = 0;
@@ -289,8 +295,13 @@ class zeusFlyState{
         }
       }
       
-      if(this.timer === 300){
+      if(this.timer === 300 && kratos.health > 0){
+        me.invincible = 0;
+        this.timer = 0;
         me.changeState(3);
+
+      }
+      if(kratos.health <= 0){
         me.invincible = 0;
         this.timer = 0;
       }
@@ -325,7 +336,7 @@ class zeusFlyState{
     //Draw Zeus character
     draw(){
       let index = floor(this.index) % this.len;
-      if(this.alive === 1){
+      if(this.alive === 1 && this.currState != 4){
         if(this.falling === 0){
           if(this.direction === 0){
             image(zeusarray[index],this.position.x,this.position.y,this.scale,this.scale);
@@ -333,7 +344,7 @@ class zeusFlyState{
           else{
             image(zeusarray_rev[index],this.position.x,this.position.y,this.scale,this.scale);
           }
-      }
+        }
         else{
           if(this.direction === 0){
             image(zeusfallingarray[index], this.position.x, this.position.y, this.scale, this.scale);

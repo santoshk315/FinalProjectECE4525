@@ -347,12 +347,14 @@ function setup() {
   
   song.play();
   getAudioContext().resume();
-  jumpForce = new p5.Vector(0, -5);
-  gravity = new p5.Vector(0, .1);
+  jumpForce = new p5.Vector(0, -8);
+  gravity = new p5.Vector(0, .25);
   // song.loop();
   kratos = new Kratos(120, 3520, 40);
   kratCut2 = new Kratos(50,3520,100);
   zeusCut2 = new Zeus(50,3520,130);
+  kratCut3 = new Kratos(200,300,100);
+  zeusCut3 = new Zeus(150,100,130);
   zeus = new Zeus(210,160,40);
   gameZeus = new Zeus(120 + 60, 3520, 40);
   intro = new IntroScreen();
@@ -367,6 +369,7 @@ function setup() {
   zeusCut2.position.x = kratos.position.x+50;
   zeusCut2.position.y = kratos.position.y-150;
   blood = [];
+  moveAmount = 5;
 }
 var transition = false;
 var instructTrans = false;
@@ -423,6 +426,7 @@ function draw() {
   }
   //Play game as long as Kratos has health
   else if(gameScreen && kratos.health > 0){
+    // gameScreen = false;
     push();
     translate(200 - kratos.position.x, 200-kratos.position.y);
     if(level === 1){
@@ -433,6 +437,37 @@ function draw() {
       }
     }
     else if(timer < 1000){
+      image(images[10], 0, 0, 1000, 930);
+      image(images[10], 1000, 0, 1000, 930);
+      image(images[10], 2000, 0, 1000, 930);
+      image(images[10], 3000, 0, 1000, 930);
+      image(images[10], 4000, 0, 1000, 930);
+      image(images[10], 0, 930, 1000, 930);
+      image(images[10], 0, 1860, 1000, 930);
+      image(images[10], 0, 2790, 1000, 930);
+      image(images[10], 1000, 930, 1000, 930);
+      image(images[10], 1000, 1860, 1000, 930);
+      image(images[10], 1000, 2790, 1000, 930);
+      image(images[10], 2000, 930, 1000, 930);
+      image(images[10], 2000, 1860, 1000, 930);
+      image(images[10], 2000, 2790, 1000, 930);
+      image(images[10], 3000, 930, 1000, 930);
+      image(images[10], 3000, 1860, 1000, 930);
+      image(images[10], 3000, 2790, 1000, 930);
+      image(images[10], 0,  3720, 1000, 930);
+      image(images[10], 1000, 3720, 1000, 930);
+      image(images[10], 2000, 3720, 1000, 930);
+      image(images[10], 3000, 3720, 1000, 930);
+      image(images[10], 4000,  0, 1000, 930);
+      image(images[10], 4000,  930, 1000, 930);
+      image(images[10], 4000,  1820, 1000, 930);
+      image(images[10], 4000,  2790, 1000, 930);
+      image(images[10], 4000,  3720, 1000, 930);
+      image(images[10], -1000,  0, 1000, 930);
+      image(images[10], -1000,  930, 1000, 930);
+      image(images[10], -1000,  1820, 1000, 930);
+      image(images[10], -1000,  2790, 1000, 930);
+      image(images[10], -1000,  3720, 1000, 930);  
       //Add background from previous level
       kratos.position.x = 120;
       kratos.position.y = 3520;
@@ -443,6 +478,17 @@ function draw() {
         zeusCut2.draw();
         zeusCut2.animate1();
         zeusCut2.position.y++;
+
+        if(timer > 100) {
+          fill(255);
+          rect(kratos.position.x - 200, kratos.position.y + 150, 400, 200);
+          noFill();
+          textSize(20);
+          fill(0, 0, 255);
+          text("(As Zeus Crashes): THUD!!!!", kratos.position.x - 200, kratos.position.y + 150, 400, 200);
+          noFill();
+        }
+
       }
       else if(timer < 400){
         kratCut2.walkani = 1;
@@ -455,6 +501,7 @@ function draw() {
         kratCut2.position.x += 1;
       }
       else if(timer < 500){
+        kratCut2.swing = 1;
         kratCut2.walkani = 0;
         kratCut2.draw();
         kratCut2.animate();
@@ -468,6 +515,12 @@ function draw() {
             blood[i].x--;
           }
         }
+        fill(255);
+        rect(kratos.position.x - 200, kratos.position.y + 150, 400, 200);
+        noFill();
+        textSize(20);
+        fill(0, 0, 255);
+        text("Kratos: AHHHHH!  HOW. COULD. YOU. LEAVE. ME!", kratos.position.x - 200, kratos.position.y + 150, 400, 200);
       }
       else if(timer < 600){
         kratCut2.walkani = 1;
@@ -476,12 +529,25 @@ function draw() {
         kratCut2.animate();
         zeusCut2.hurtAnimation();
         zeusCut2.animate1();
+        fill(255);
+        rect(kratos.position.x - 200, kratos.position.y + 150, 400, 200);
+        noFill();
+        textSize(20);
+        fill(255, 0, 0);
+        text("Zeus: GET. OFF. ME. BOI", kratos.position.x - 200, kratos.position.y + 150, 400, 200);
+        
       }
       else if(timer < 700){
         kratCut2.draw();
         kratCut2.animate();
         zeusCut2.hurtAnimation();
         zeusCut2.animate1();
+        fill(255);
+        rect(kratos.position.x - 200, kratos.position.y + 150, 400, 200);
+        noFill();
+        textSize(20);
+        fill(255, 0, 0);
+        text("Zeus: I'VE HAD ENOUGH ONCE I HEAL I'LL KILL YOU", kratos.position.x - 200, kratos.position.y + 150, 400, 200);
       }
       else{
         zeusCut2.direction = 1;
@@ -491,21 +557,69 @@ function draw() {
         kratCut2.animate();
         zeusCut2.hurtAnimation();
         zeusCut2.animate1();
+        fill(255);
+        rect(kratos.position.x - 200, kratos.position.y + 150, 400, 200);
+        noFill();
+        textSize(20);
+        fill(0, 0, 255);
+        text("Kratos: GET BACK HERE AND LET'S SETTLE THIS!", kratos.position.x - 200, kratos.position.y + 150, 400, 200);
       }
       timer++;
     }
     else{
       game2.play2();
-      print(game2.zeus.currState);
       print(game2.zeus.position.x);
       print(game2.zeus.position.y);
+      
+      
     }
     //print(gameZeus.level);
     //wall.draw();
     pop();
   }
   //Otherwise losing screen
-  else{
-    background(0);
+  else if(gameScreen === false){
+    image(images[10], 0, 0, 1000, 930);
+    kratCut3.swing = 1;
+    kratCut3.walkani = 0;
+    fill(255);
+    text("Where's your Daddy?  Not leaving you!", 50, 50);
+    text("Congratulations!  You Win and No Longer Have", 0, 75, 450, 450);
+    text(" Daddy Issues!", 150, 100);
+    noFill();
+    tint(255, 0, 0);
+    kratCut3.position.x = 150;
+    kratCut3.draw();
+    kratCut3.animate();
+    zeusCut3.falling = 1;
+    zeusCut3.draw();
+    zeusCut3.animate1();
+    zeusCut3.position.y = kratCut3.position.y;
+    zeusCut3.position.x = kratCut3.position.x + 50;
+    blood.push(new skelBlood(random(zeusCut3.position.x + 50, zeusCut3.position.x + 70), random(zeusCut3.position.y + 40, zeusCut3.position.y + 60)));
+    for(var i = 0; i < blood.length; i++){
+      if(blood[i].y > zeusCut3.position.x - 100){
+        blood[i].draw();
+        blood[i].x--;
+      }
+    }
+  }
+  else if(kratos.health <= 0){
+    
+    image(images[8], 0, 0, 1000, 930);
+    fill(255);
+    text("HAHA YOUR DADDY DID YOU DIRTY", 50, 50);
+    noFill();
+    kratCut3.walkani = 1;
+    kratCut3.draw();
+    kratCut3.animate();
+    zeusCut3.specialAttack();
+    zeusCut3.currState = 4;
+    zeusCut3.state[zeusCut3.currState].execute(zeusCut3);
+    zeusCut3.animate1();
+    if(kratCut3.position.x == 0 || kratCut3.position.x == 300){
+      moveAmount = -moveAmount;
+    }
+    kratCut3.position.x += moveAmount;
   }
 }

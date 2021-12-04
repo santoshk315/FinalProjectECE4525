@@ -115,7 +115,7 @@ class IntroScreen{
       textFont(myFont);
       text("Instructions", 10, 25);
       textSize(15);
-      text("GOD OF WAR: LOST IN TIME", this.textX, this.textY);
+      text("GOD OF WAR: LOST FATHER", this.textX, this.textY);
       }
       for(var j = 0; j < this.mtns.length; j++) {
         this.mtns[j].draw();

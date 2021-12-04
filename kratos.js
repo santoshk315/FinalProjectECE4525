@@ -18,7 +18,6 @@ class Kratos{
       this.health = 6;
       this.timer = 0;
       this.climb = 0;
-      this.health = 6;
       this.attackRect = [32,0,20,40]
       this.score = 0;
       this.rage = 0;

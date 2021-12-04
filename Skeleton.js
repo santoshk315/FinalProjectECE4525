@@ -337,27 +337,27 @@ class skelBlood{
       //When it should disappear/not effect character
       if(level === 1){
         for(var i = 0; i < walls.length; i++) {
-          if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 40) {
+          if(dist(this.position.x,this.position.y,walls[i].x,walls[i].y) < 20) {
             //print('wall')
             this.fire = 0;
           }
         }
         for (var i = 0; i < grass.length; i++) {
-          if(dist(this.position.x,this.position.y,grass[i].x,grass[i].y) < 40) {
+          if(dist(this.position.x,this.position.y,grass[i].x,grass[i].y) < 20) {
             this.fire = 0;
           }
         }
       }
       else{
         for(var i = 0; i < walls2.length; i++) {
-          if(dist(this.position.x,this.position.y,walls2[i].x,walls2[i].y) < 40) {
+          if(dist(this.position.x,this.position.y,walls2[i].x,walls2[i].y) < 20) {
             //print('wall')
             this.fire = 0;
           }
         }
 
         for (var i = 0; i < grass2.length; i++) {
-          if(dist(this.position.x,this.position.y,grass2[i].x,grass2[i].y) < 40) {
+          if(dist(this.position.x,this.position.y,grass2[i].x,grass2[i].y) < 20) {
             this.fire = 0;
           }
         }

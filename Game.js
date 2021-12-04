@@ -14,6 +14,8 @@ class Game{
       this.timer = 0;
       this.kratCut = new Kratos(this.kratos.position.x, this.kratos.position.y +50, 100);
       this.zeusCut = new Zeus(this.kratos.position.x + 200, this.kratos.position.y - 150, 100);
+      this.kratCut2 = new Kratos(this.kratos.position.x-100, this.kratos.position.y +50, 100);
+      this.zeusCut2 = new Zeus(this.kratos.position.x-50, this.kratos.position.y - 100, 100);
       this.kratosFinal = new Kratos(20, 230, 40);
       this.zeusFinal = new Zeus(20, 20, 40);
       this.potions = potions;
@@ -22,6 +24,7 @@ class Game{
       this.ladders = ladders;
       this.inFinal2 = 0;
       this.finalBoss2 = 0;
+      this.cut = 0;
     }
     //Draw the background and tilemap to the screen
     drawBackground(){
@@ -731,7 +734,7 @@ class Game{
         {
           if(dist(this.kratos.position.x+30, this.kratos.position.y, this.zeus.position.x, this.zeus.position.y) < 40 && this.kratos.swing === 1 && this.zeus.invincible === 0) {
   
-            if(this.kratos.timer % 25 === 0 && this.zeus.level < 10) {
+            if(this.kratos.timer % 25 === 0 && this.zeus.level < 19) {
               this.zeus.level++;
               this.zeus.knockback = 1;
               this.zeus.hurt = 1;
@@ -742,7 +745,7 @@ class Game{
           
           if(dist(this.kratos.position.x-30, this.kratos.position.y, this.zeus.position.x, this.zeus.position.y) < 40 && this.kratos.swing === 1 && this.zeus.invincible === 0) {
   
-            if(this.kratos.timer % 5 === 0 && this.zeus.level < 10) {
+            if(this.kratos.timer % 5 === 0 && this.zeus.level < 19) {
                 this.zeus.level++;
                 this.zeus.knockback = -1;
                 this.zeus.hurt = 1;
@@ -781,22 +784,22 @@ class Game{
         this.zeusCut.position.x = targetX + 50;
         this.zeusCut.position.y = targetY - 150;
 
-        image(images[8], 0, 0, 1000, 930);
-      image(images[8], 1000, 0, 1000, 930);
-      image(images[8], 2000, 0, 1000, 930);
-      image(images[8], 3000, 0, 1000, 930);
-      image(images[8], 0, 930, 1000, 930);
-      image(images[8], 0, 1860, 1000, 930);
-      image(images[8], 0, 2790, 1000, 930);
-      image(images[8], 1000, 930, 1000, 930);
-      image(images[8], 1000, 1860, 1000, 930);
-      image(images[8], 1000, 2790, 1000, 930);
-      image(images[8], 2000, 930, 1000, 930);
-      image(images[8], 2000, 1860, 1000, 930);
-      image(images[8], 2000, 2790, 1000, 930);
-      image(images[8], 3000, 930, 1000, 930);
-      image(images[8], 3000, 1860, 1000, 930);
-      image(images[8], 3000, 2790, 1000, 930);
+        image(images[10], 0, 0, 1000, 930);
+        image(images[10], 1000, 0, 1000, 930);
+        image(images[10], 2000, 0, 1000, 930);
+        image(images[10], 3000, 0, 1000, 930);
+        image(images[10], 0, 930, 1000, 930);
+        image(images[10], 0, 1860, 1000, 930);
+        image(images[10], 0, 2790, 1000, 930);
+        image(images[10], 1000, 930, 1000, 930);
+        image(images[10], 1000, 1860, 1000, 930);
+        image(images[10], 1000, 2790, 1000, 930);
+        image(images[10], 2000, 930, 1000, 930);
+        image(images[10], 2000, 1860, 1000, 930);
+        image(images[10], 2000, 2790, 1000, 930);
+        image(images[10], 3000, 930, 1000, 930);
+        image(images[10], 3000, 1860, 1000, 930);
+        image(images[10], 3000, 2790, 1000, 930);
         //cutscene code
         //this.drawBackground();
         this.timer++;
@@ -900,10 +903,6 @@ class Game{
         this.kratos.position.x = 320;
         targetX = this.kratos.position.x;
         targetY = this.kratos.position.y;
-        this.kratCut.position.x = targetX - 200;
-        this.kratCut.position.y = targetY + 50;
-        this.zeusCut.position.x = targetX + 50;
-        this.zeusCut.position.y = targetY - 150;
 
         image(images[8], 0, 0, 1000, 930);
         image(images[8], 1000, 0, 1000, 930);
@@ -923,56 +922,66 @@ class Game{
         image(images[8], 3000, 2790, 1000, 930);
         //cutscene code
         //this.drawBackground();
-        this.timer++;
+        this.timer+=2;
         if(this.timer < 100){
           fill(0);
           rect(targetX - 200 + this.timer * 4, targetY - 200, 400, 400);
           noFill();
         }
-        
-        if(this.timer > 100 && this.timer < 300){
-          this.kratCut.swing = 0;
-          this.kratCut.walkani = 0;
+        if(this.cut === 0){
+          this.kratCut2.position.x = targetX - 250;
+          this.kratCut2.position.y = targetY;
+          this.zeusCut2.position.x = targetX - 200;
+          this.zeusCut2.position.y = targetY - 100;
+          this.cut = 1;
+        }
+        if(this.timer > 100 && this.timer < 200){
+
+          this.kratCut2.swing = 0;
+          this.kratCut2.walkani = 0;
           fill(255);
           rect(targetX - 200, targetY + 150, 400, 200);
           noFill();
           textSize(10);
-          this.kratCut.draw();
-          this.zeusCut.draw();
-          this.kratCut.animate();
+          this.kratCut2.draw();
+          this.zeusCut2.draw();
+          this.kratCut2.animate();
+          this.kratCut2.position.x += 2;
+          this.zeusCut2.position.x += 4;
           fill(0, 0, 255);
-          text("Kratos: Boi you my dad and u abandoned me", targetX - 200, targetY + 150, 400, 200);
           noFill();
         }
-        else if(this.timer > 300 && this.timer < 600){
-          this.kratCut.draw();
+        else if(this.timer > 200 && this.timer < 600){
+          this.kratCut2.draw();
           //this.kratCut.animate();
-          this.zeusCut.specialAttack();
-          this.zeusCut.animate1();
+          this.zeusCut2.specialAttack();
+          this.zeusCut2.animate1();
+          this.zeusCut2.position.y+= (this.timer/600);
+          this.zeusCut2.position.x += 1;
+          
           fill(255);
           rect(targetX - 200, targetY + 150, 400, 200);
           noFill();
           textSize(10);
           fill(255, 0, 0);
-          text("Zeus: Son I left so that you wouldn't kill me as you were prophesized to", targetX - 200, targetY + 150, 400, 200);
+          text("Zeus: You should have killed me when you had the chance BOI!", targetX - 200, targetY + 150, 400, 200);
         }
-        else if(this.timer > 600 && this.timer < 1000){
-          this.kratCut.swing = 0;
-          this.kratCut.walkani = 0;
+        else if(this.timer >= 600 && this.timer < 1000){
+          this.kratCut2.draw();
+          //this.kratCut.animate();
+          this.zeusCut2.specialAttack();
+          this.zeusCut2.animate1();
+          this.zeusCut2.position.y+= (this.timer/600);
+          this.zeusCut2.position.x += 1;
+          
           fill(255);
           rect(targetX - 200, targetY + 150, 400, 200);
           noFill();
           textSize(10);
-          fill(255, 0, 255);
-          text("Kratos: I GUESS I HAVE NO CHOICE BUT TO KILL YOU", targetX - 200, targetY + 150, 400, 200);
-          fill(255, 0, 255);
-          text("Zeus: I GUESS I HAVE NO CHOICE BUT TO KILL YOU", targetX - 200, targetY + 170, 400, 200);
-          this.kratCut.draw();
-          this.zeusCut.specialAttack();
-          this.kratCut.animate();
-          this.zeusCut.animate1();
-          
+          fill(255, 0, 0);
+          text("Zeus: (Echoing as he descends) THE CYCLE OF PATRICIDE ENDS HERE!", targetX - 200, targetY + 150, 400, 200);
         }
+        
         if(this.timer == 1000){
           this.finalBoss2 = 1;
         }
@@ -1000,6 +1009,9 @@ class Game{
         this.zeus.draw();
         this.zeus.state[this.zeus.currState].execute(this.zeus);
         this.zeusCombat();
+        if(this.zeus.alive === 0){
+          gameScreen = false;
+        }
       }
      
     }
