@@ -728,6 +728,9 @@ class Game{
         }
       }
     }
+
+    //Combat when fighting zeus
+    //similar to skeleton except only for one object and different health requirements
     zeusCombat(){
       stroke(0,255,0)
         if(this.kratos.dir === 1)
@@ -802,6 +805,7 @@ class Game{
         image(images[10], 3000, 2790, 1000, 930);
         //cutscene code
         //this.drawBackground();
+        //Enter cutscene 1
         this.timer++;
         if(this.timer < 100){
           print("cutting to scene");
@@ -899,7 +903,7 @@ class Game{
         targetY = this.kratos.position.y;
       }
       else if(this.kratos.score === 9 && this.finalBoss2 === 0){
-        
+        //Enter cutscene 3
         this.kratos.position.x = 320;
         targetX = this.kratos.position.x;
         targetY = this.kratos.position.y;
@@ -987,6 +991,7 @@ class Game{
         }
       }
       else{
+        //Final boss
         this.drawFinalBackground2();
         if(this.inFinal2 === 0){
           this.kratos.position.x = 80;

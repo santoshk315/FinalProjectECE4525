@@ -1,3 +1,17 @@
+/*
+Authors: Santosh Krishnan, Aman Mathur
+Date: 12/3/2021
+Description:  God of War: Lost Father is a parody 2D metroidvania type game based off the 
+acclaimed God of War series.  In this game, Kratos goes in search of his father to figure out
+why he left and to get revenge with leaving him with daddy issues.  You travel across diverse terrains and meet Zeus
+in multiple boss levels before either succumbing to him or vanquishing his prescense.  This game has the standard platformer
+controls with a hack/slash attack rather than shooting to retain one of the main features of God of War, while trying to avoid
+scary monsters and Zeus who have projectile attacks.  This game also utilizes FSMs for intelligent behavior and evasion from attacks(in the case of Zeus),
+while also utilizing particle systems for some animations.  The game also features intelligent shooting and motion to make the game more realistic
+*/
+
+
+
 introS = true;
 instructionsS = false;
 gameScreen = false;
@@ -437,6 +451,7 @@ function draw() {
       }
     }
     else if(timer < 1000){
+      //enter cut scene 2
       image(images[10], 0, 0, 1000, 930);
       image(images[10], 1000, 0, 1000, 930);
       image(images[10], 2000, 0, 1000, 930);
@@ -567,9 +582,8 @@ function draw() {
       timer++;
     }
     else{
+      //play second level and second boss
       game2.play2();
-      print(game2.zeus.position.x);
-      print(game2.zeus.position.y);
       
       
     }
@@ -577,7 +591,7 @@ function draw() {
     //wall.draw();
     pop();
   }
-  //Otherwise losing screen
+  //Otherwise winning screen
   else if(gameScreen === false){
     image(images[10], 0, 0, 1000, 930);
     kratCut3.swing = 1;
@@ -605,7 +619,7 @@ function draw() {
     }
   }
   else if(kratos.health <= 0){
-    
+    //losing screen
     image(images[8], 0, 0, 1000, 930);
     fill(255);
     text("HAHA YOUR DADDY DID YOU DIRTY", 50, 50);
