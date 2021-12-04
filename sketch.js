@@ -147,6 +147,7 @@ function preload(){
   bg1 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall.png");
   bg2 = loadImage("grassland_tileset/grassland_tileset/PNG/bgwall2.png");
   backgroundImage = loadImage("grassland_tileset/grassland_tileset/PNG/bg_cave.png");
+  bg_lev2 = loadImage("grassland_tileset/grassland_tileset/PNG/bg_forest.png")
   gothbrick = loadImage("grassland_tileset/grassland_tileset/PNG/gothicbrick.png");
   gothrock = loadImage("grassland_tileset/grassland_tileset/PNG/gothrock.png")
   sl1 = loadImage("slash1.png");
@@ -181,6 +182,7 @@ function preload(){
   images.push(potion);
   images.push(backgroundImage);
   images.push(gothrock)
+  images.push(bg_lev2);
   images.push(get(0, 0, 20, 20));
   
   kratosarray = [kratossp0,kratossp0,kratossp1,kratossp1];
@@ -349,6 +351,8 @@ function setup() {
   gravity = new p5.Vector(0, .1);
   // song.loop();
   kratos = new Kratos(120, 3520, 40);
+  kratCut2 = new Kratos(50,3520,100);
+  zeusCut2 = new Zeus(50,3520,130);
   zeus = new Zeus(210,160,40);
   gameZeus = new Zeus(120 + 60, 3520, 40);
   intro = new IntroScreen();
@@ -356,7 +360,13 @@ function setup() {
   game = new Game(walls, grass, kratos, enemies, gameZeus, potions, keys, ladders);
   game2 = new Game(walls2, grass2, kratos, enemies2, gameZeus, potions2, keys2, ladders2);
   timer = 0;
-  level = 2;
+  level = 1;
+
+  kratCut2.position.x = kratos.position.x-200;
+  kratCut2.position.y = kratos.position.y+50;
+  zeusCut2.position.x = kratos.position.x+50;
+  zeusCut2.position.y = kratos.position.y-150;
+  blood = [];
 }
 var transition = false;
 var instructTrans = false;
@@ -422,16 +432,73 @@ function draw() {
         kratos.score = 0;
       }
     }
-    else if(timer < 50){
+    else if(timer < 1000){
+      //Add background from previous level
       kratos.position.x = 120;
       kratos.position.y = 3520;
-      fill(255, 0, 0);
-      rect(0, 0, 400, 400);
-      noFill();
+      if(timer < 200){
+        kratCut2.draw();
+        kratCut2.animate();
+        zeusCut2.falling = 1;
+        zeusCut2.draw();
+        zeusCut2.animate1();
+        zeusCut2.position.y++;
+      }
+      else if(timer < 400){
+        kratCut2.walkani = 1;
+        kratCut2.swing = 1;
+        kratCut2.draw();
+        kratCut2.animate();
+        zeusCut2.falling = 1;
+        zeusCut2.draw();
+        zeusCut2.animate1();
+        kratCut2.position.x += 1;
+      }
+      else if(timer < 500){
+        kratCut2.walkani = 0;
+        kratCut2.draw();
+        kratCut2.animate();
+        zeusCut2.falling = 1;
+        zeusCut2.draw();
+        zeusCut2.animate1();
+        blood.push(new skelBlood(random(zeusCut2.position.x + 50, zeusCut2.position.x + 70), random(zeusCut2.position.y + 40, zeusCut2.position.y + 60)));
+        for(var i = 0; i < blood.length; i++){
+          if(blood[i].y > zeusCut2.position.y - 100){
+            blood[i].draw();
+            blood[i].x--;
+          }
+        }
+      }
+      else if(timer < 600){
+        kratCut2.walkani = 1;
+        kratCut2.position.x--;
+        kratCut2.draw();
+        kratCut2.animate();
+        zeusCut2.hurtAnimation();
+        zeusCut2.animate1();
+      }
+      else if(timer < 700){
+        kratCut2.draw();
+        kratCut2.animate();
+        zeusCut2.hurtAnimation();
+        zeusCut2.animate1();
+      }
+      else{
+        zeusCut2.direction = 1;
+        kratCut2.position.x += 2;
+        zeusCut2.position.x += 4;
+        kratCut2.draw();
+        kratCut2.animate();
+        zeusCut2.hurtAnimation();
+        zeusCut2.animate1();
+      }
       timer++;
     }
     else{
       game2.play2();
+      print(game2.zeus.currState);
+      print(game2.zeus.position.x);
+      print(game2.zeus.position.y);
     }
     //print(gameZeus.level);
     //wall.draw();

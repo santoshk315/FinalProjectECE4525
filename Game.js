@@ -30,6 +30,40 @@ class Game{
       // }
       //Draw the background 16 times to improve quality
       //break it up into 16 parts
+      if(level === 1){
+        image(images[10], 0, 0, 1000, 930);
+        image(images[10], 1000, 0, 1000, 930);
+        image(images[10], 2000, 0, 1000, 930);
+        image(images[10], 3000, 0, 1000, 930);
+        image(images[10], 4000, 0, 1000, 930);
+        image(images[10], 0, 930, 1000, 930);
+        image(images[10], 0, 1860, 1000, 930);
+        image(images[10], 0, 2790, 1000, 930);
+        image(images[10], 1000, 930, 1000, 930);
+        image(images[10], 1000, 1860, 1000, 930);
+        image(images[10], 1000, 2790, 1000, 930);
+        image(images[10], 2000, 930, 1000, 930);
+        image(images[10], 2000, 1860, 1000, 930);
+        image(images[10], 2000, 2790, 1000, 930);
+        image(images[10], 3000, 930, 1000, 930);
+        image(images[10], 3000, 1860, 1000, 930);
+        image(images[10], 3000, 2790, 1000, 930);
+        image(images[10], 0,  3720, 1000, 930);
+        image(images[10], 1000, 3720, 1000, 930);
+        image(images[10], 2000, 3720, 1000, 930);
+        image(images[10], 3000, 3720, 1000, 930);
+        image(images[10], 4000,  0, 1000, 930);
+        image(images[10], 4000,  930, 1000, 930);
+        image(images[10], 4000,  1820, 1000, 930);
+        image(images[10], 4000,  2790, 1000, 930);
+        image(images[10], 4000,  3720, 1000, 930);
+        image(images[10], -1000,  0, 1000, 930);
+        image(images[10], -1000,  930, 1000, 930);
+        image(images[10], -1000,  1820, 1000, 930);
+        image(images[10], -1000,  2790, 1000, 930);
+        image(images[10], -1000,  3720, 1000, 930);
+      }
+      else{
       image(images[8], 0, 0, 1000, 930);
       image(images[8], 1000, 0, 1000, 930);
       image(images[8], 2000, 0, 1000, 930);
@@ -61,6 +95,7 @@ class Game{
       image(images[8], -1000,  1820, 1000, 930);
       image(images[8], -1000,  2790, 1000, 930);
       image(images[8], -1000,  3720, 1000, 930);
+      }
       //Draw the walls identified in tilemap
       for(var i = 0; i < this.wallsArray.length; i++){
   
@@ -949,6 +984,9 @@ class Game{
           this.kratos.position.y = 220;
           this.zeus.position.x = 40;
           this.zeus.position.y = 1760;
+          this.zeus.alive = 1;
+          this.zeus.level = 0;
+          this.zeus.currState = 0;
           this.inFinal2 = 1;
         }
         this.kratos.draw();

@@ -14,7 +14,7 @@ class zeusFlyState{
       me.baseAttack();
       me.animate1();
       //print(me.level);
-      if(me.level < 3){
+      if(me.level < 3 && me.alive === 1){
         if(dist(targetX, targetY, me.position.x, me.position.y) > 100){
           this.step.set(targetX - me.position.x, targetY - me.position.y);
           this.step.normalize();
@@ -244,6 +244,9 @@ class zeusFlyState{
       }
       else if(this.timer === 30 && me.level > 9){
         me.alive = 0;
+        me.level = 0;
+        this.timer = 0;
+        me.changeState(0);
         
       }
     }
@@ -322,22 +325,24 @@ class zeusFlyState{
     //Draw Zeus character
     draw(){
       let index = floor(this.index) % this.len;
-      if(this.falling === 0){
-        if(this.direction === 0){
-          image(zeusarray[index],this.position.x,this.position.y,this.scale,this.scale);
-        }
+      if(this.alive === 1){
+        if(this.falling === 0){
+          if(this.direction === 0){
+            image(zeusarray[index],this.position.x,this.position.y,this.scale,this.scale);
+          }
+          else{
+            image(zeusarray_rev[index],this.position.x,this.position.y,this.scale,this.scale);
+          }
+      }
         else{
-          image(zeusarray_rev[index],this.position.x,this.position.y,this.scale,this.scale);
-        }
-    }
-    else{
-      if(this.direction === 0){
-        image(zeusfallingarray[index], this.position.x, this.position.y, this.scale, this.scale);
+          if(this.direction === 0){
+            image(zeusfallingarray[index], this.position.x, this.position.y, this.scale, this.scale);
+          }
+          else{
+            image(zeusfallingarray_rev[index], this.position.x, this.position.y, this.scale, this.scale);
+          }
+        } 
       }
-      else{
-        image(zeusfallingarray_rev[index], this.position.x, this.position.y, this.scale, this.scale);
-      }
-    }
       //image(this.img,this.x,this.y,this.scale,this.scale);
       
     }
